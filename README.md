@@ -6,7 +6,7 @@
 <br>
 
 ## 待議：
-1. 股價更新速度 (看API?) 
+1. 股價更新速度 (由計時器決定) (看API?) 
 
 <br>
 
@@ -48,6 +48,7 @@
 ### 5. 登入
 > 1. 使用者 (user) 
 > > * 一開始要輸入。要用來交易的 alpaca 帳號
+> > * 沒帳號要跳轉到alpaca網頁 
 > > * 會存起來
 > 2. 股票機器人 (agent) 
 > > * 用使用者一開始輸的帳號來登入
@@ -71,8 +72,12 @@
 
 ## 架構：
 ### Use Case
-> !["架構圖1"](./架構圖/期末專題架構1.png) 
-> !["架構圖2"](./架構圖/期末專題架構2.png) 
+> !["UseCase1"](./架構圖/UseCase1.png) 
+> !["UseCase2"](./架構圖/UseCase2.png) 
+
+### Activity Diagram
+> !["ActivityDiagram1"](./架構圖/ActivityDiagram1.jpeg) 
+> !["ActivityDiagram2"](./架構圖/ActivityDiagram2.jpeg) 
 
 ### system、GUI 的功能
-!["架構圖3"](./架構圖/期末專題架構3.png)
+> !["架構圖"](./架構圖/期末專題架構.png) 
