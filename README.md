@@ -33,11 +33,11 @@
 > * 根據股價更新速度來決定要不要買賣
 
 ### 3. 買賣設定
-> 1. User預算
-> 2. 設定多少錢買
-> 3. 設定多少錢賣 
-> 4. 設定隔多少錢要買賣 
-> 5. 分別設定每個股票的買賣價格 
+> 1. 設定多少錢買 
+> 2. 設定多少錢賣 
+> 3. 設定隔多少錢要買賣 
+> 4. 分別設定每個股票的買賣價格 
+<!-- > 5. User預算  -->
 
 ### 4. 買賣建議
 > 1. K線 
@@ -67,17 +67,25 @@
 > > * 買賣紀錄 
 > > * 獲利、賠本（顯示 綠、紅）
 > 3. 登入頁面 
+> 
+> ### 草稿： 
+> !["GUIdraft"](./design_diagram/GUIdraft.jpeg)
 
 <br>
 
 ## 架構：
 ### Use Case
-> !["UseCase1"](./架構圖/UseCase1.png) 
-> !["UseCase2"](./架構圖/UseCase2.png) 
+> !["UseCase1"](./design_diagram/UseCase1.png) 
+> !["UseCase2"](./design_diagram/UseCase2.png) 
 
 ### Activity Diagram
-> !["ActivityDiagram1"](./架構圖/ActivityDiagram1.jpeg) 
-> !["ActivityDiagram2"](./架構圖/ActivityDiagram2.jpeg) 
+> !["ActivityDiagram1"](./design_diagram/ActivityDiagram1.jpeg) 
+> !["ActivityDiagram2"](./design_diagram/ActivityDiagram2.jpeg) 
 
 ### system、GUI 的功能
-> !["架構圖"](./架構圖/期末專題架構.png) 
+> !["架構圖"](./design_diagram/期末專題架構.png) 
+
+<br>
+
+## 分工表：
+> !["work table"](./design_diagram/work_table.jpeg)
