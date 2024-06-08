@@ -28,7 +28,7 @@
 > * 儲存交易資料
 > ```java
 > public void saveDeal(String stockName, int stockCount, double profitAndLoss, Date dateAndTime)
-> ```java
+> ```
 
 > * 儲存買賣設定
 > ```java
