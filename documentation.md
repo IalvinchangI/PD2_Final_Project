@@ -47,7 +47,7 @@
 > public String getStockName()
 > ```
 
-> *取得該股票的股價
+> * 取得該股票的股價
 > ```java
 > public double getStockPrice()
 > ```
