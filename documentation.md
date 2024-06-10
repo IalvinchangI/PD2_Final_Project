@@ -119,6 +119,7 @@
 
 <br>
 
+
 ## KeyAndID
 ### 功能：
 > 存 Alpaca API 的帳號、金鑰
@@ -141,4 +142,53 @@
 > * 寫入API的ID
 > ```java
 > public void setAPIID(String ID)
-> ```  
+> ```
+
+
+<br>
+
+
+## StockBuyingSetting
+### 功能:
+>買賣設定
+
+###方法: 
+> * 取得要交易的股票名稱
+> ```java
+> public String getStockName()
+> ```
+
+> * 取得目標賣價
+> ```java
+> public double getSellPrice()
+> ```
+
+> * 取得目標買價
+> ```java
+> public double getBuyPrice()
+> ```
+
+> * 取得買賣間隔
+> ```java
+> public double getStep()
+> ```
+
+> * 設定要交易的股票名稱
+> ```java
+> public void setStockName(String stockName)
+> ```
+
+> * 設定目標賣價
+> ```java
+> public void setSellPrice(double sellPrice)
+> ```
+
+> * 設定目標買價
+> ```java
+> public void setBuyPrice(double buyPrice)
+> ```
+
+> * 設定買賣間隔
+> ```java
+> public void setStep(double step)
+> ``` 
