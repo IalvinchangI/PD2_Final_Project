@@ -7,12 +7,12 @@
 ### 方法：
 > * 取得所有股票的資料
 > ```java
-> public HashMap<String, Stock> getStocks()
+> public Map<String, Stock> getStocks()
 > ```
 
 > * 取得有買賣設定的股票集合
 > ```java
-> public HashSet<String> getStockNamesHasBuyingSetting()
+> public Set<String> getStockNamesHasBuyingSetting()
 > ``` 
 
 > * 取得某股票的買賣設定
