@@ -148,7 +148,7 @@ public class AlpacaAPICall {
         return response.toString();
     }
 
-    String urlString2 = "https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL&timeframe=1D&start=2024-05-03T00%3A00%3A00Z&end=2024-06-04T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=asc";
+    static String urlString2 = "https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL&timeframe=1D&start=2024-05-03T00%3A00%3A00Z&end=2024-06-04T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=asc";
 
     private static void getStockData(String symbol) {
         try {
@@ -180,6 +180,7 @@ public class AlpacaAPICall {
                 JsonNode jsonResponse = mapper.readTree(response.toString());
 
                 JsonNode bars = jsonResponse.get("bars");
+                System.out.println(bars);
                 for (JsonNode bar : bars) {
                     String date = bar.get("t").asText();
                     double open = bar.get("o").asDouble();

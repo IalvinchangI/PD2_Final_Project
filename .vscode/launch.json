@@ -8,6 +8,12 @@
             "type": "java",
             "name": "AlpacaAPICall",
             "request": "launch",
+            "mainClass": "project.AlpacaAPICall.AlpacaAPICall"
+        },
+        {
+            "type": "java",
+            "name": "AlpacaAPICall",
+            "request": "launch",
             "mainClass": "project.AlpacaAPICall.AlpacaAPICall",
             "projectName": "ProjectGitHub_1b9bced"
         },
