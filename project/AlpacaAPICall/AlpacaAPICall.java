@@ -69,7 +69,7 @@ public class AlpacaAPICall {
 
     /**
      * @author JackWu
-     * 獲取當前股市資訊
+     * 獲取當前股市資訊 AAPL, GOOGL, AMZN, MSFT, FB, TSLA為基本股票，其餘用添加的
      * 需要有Market 的 url 去寫請求，並且response回傳200為成功
      */
     private static String sendGetRequest_Market(String endpoint) throws Exception {
