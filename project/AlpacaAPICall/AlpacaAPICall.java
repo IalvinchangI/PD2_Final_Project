@@ -6,13 +6,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AlpacaAPICall {
     // 處理有沒有開市
@@ -25,20 +22,23 @@ public class AlpacaAPICall {
     private static final String BASE_URL = "https://paper-api.alpaca.markets/v2";
     private static final String MARKET_URL = "https://data.alpaca.markets/v2/stocks/bars?symbols=";
 
+    // 儲存股票30天的資料，用於畫k線圖
+    HashMap<String, ArrayList> map = new HashMap<>();
+
     public static void main(String[] args) {
         try {
             //user.get();
-            getStockData("AAPL");
-
-            /*
-             * /account 取得帳戶資訊
-             * /orders 獲取所有訂單列表
-             * /orders/{order_id} 獲取指定訂單的資料 {order_id} 要換成實際訂單id
-             * /assets 取得目前資產
-             * /assets{asset_id} 獲取指定資產 {asset_id} 要替換成實際id
-             */
             checkMarketOpen();
 
+            // String[] all_Stocks = {"AAPL", "GOOGL", "AMZN", "FB", "MSFT", "TSLA"};
+            // for(String each_Stock : all_Stocks){
+            //     getStockData(each_Stock);
+            // }
+            // ArrayList stockInformation = new ArrayList<>();
+
+            getStockData("AAPL");
+
+            // TODO 改寫成歷史資料
             //getStockData("AAPL");
             // // 獲取訂單狀態
             // String orders = sendGetRequest_PaperTrading("/orders");
@@ -147,61 +147,84 @@ public class AlpacaAPICall {
 
         return response.toString();
     }
-
-    static String urlString2 = "https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL&timeframe=1D&start=2024-05-03T00%3A00%3A00Z&end=2024-06-04T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=asc";
-
+    
+    /**
+     * 獲取三十天內的股票開盤、收盤、最高、最低價
+     * @author吳宗翰
+     * @param symbol
+     */
     private static void getStockData(String symbol) {
         try {
-            LocalDate endDate = LocalDate.now();
-            LocalDate startDate = endDate.minusDays(30);
+            LocalDate endDate = LocalDate.now().minusDays(2);
+            LocalDate startDate = endDate.minusDays(32);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             String urlString = MARKET_URL + symbol + "&timeframe=1D&start=" + startDate.format(formatter) + "T00%3A00%3A00Z&end=" + endDate.format(formatter) + "T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=asc";
-            URL url = new URL(urlString2);
+            URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("APCA-API-KEY-ID", API_KEY_ID);
             connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
             int responseCode = connection.getResponseCode();
+            System.out.println(responseCode);
 
             if (responseCode == 200) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String inputLine;
-
+            
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
-
-                // 使用 Jackson 解析 JSON
-                ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonResponse = mapper.readTree(response.toString());
-
-                JsonNode bars = jsonResponse.get("bars");
-                System.out.println(bars);
-                for (JsonNode bar : bars) {
-                    String date = bar.get("t").asText();
-                    double open = bar.get("o").asDouble();
-                    double close = bar.get("c").asDouble();
-                    double high = bar.get("h").asDouble();
-                    double low = bar.get("l").asDouble();
-
-                    System.out.println("Date: " + date);
-                    System.out.println("Open: " + open);
-                    System.out.println("Close: " + close);
-                    System.out.println("High: " + high);
-                    System.out.println("Low: " + low);
-                    System.out.println("-----------------------------");
-                }
-            } else {
-                System.out.println("GET request not worked, Response Code: " + responseCode);
+                
+                String responseBody = response.toString();
+                extractAndPrintStockData(responseBody);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    private static void extractAndPrintStockData(String responseBody) {
+        String dataArray = responseBody.substring(responseBody.indexOf("[") + 1, responseBody.lastIndexOf("]"));
+        String[] dataEntries = dataArray.split("\\},\\{");
+
+        for (String entry : dataEntries) {
+            entry = entry.replace("{", "").replace("}", "").replace("\"", "");
+
+            String[] keyValuePairs = entry.split(",");
+            double open = 0, close = 0, high = 0, low = 0;
+            String date = "";
+
+            for (String pair : keyValuePairs) {
+                String[] keyValue = pair.split(":");
+                switch (keyValue[0]) {
+                    case "o":
+                        open = Double.parseDouble(keyValue[1]);
+                        break;
+                    case "c":
+                        close = Double.parseDouble(keyValue[1]);
+                        break;
+                    case "h":
+                        high = Double.parseDouble(keyValue[1]);
+                        break;
+                    case "l":
+                        low = Double.parseDouble(keyValue[1]);
+                        break;
+                    case "t":
+                        date = keyValue[1];
+                        break;
+                }
+            }
+
+            System.out.println("Date: " + date);
+            System.out.println("Open: " + open);
+            System.out.println("Close: " + close);
+            System.out.println("High: " + high);
+            System.out.println("Low: " + low);
+            System.out.println("-----------------------------");
+        }
+    }
 }
-// https://data.alpaca.markets/v2/stocks/bars?symbols=AAPL&timeframe=1D&start=2024-05-03T00%3A00%3A00Z&end=2024-06-04T00%3A00%3A00Z&limit=1000&adjustment=raw&feed=sip&sort=asc
