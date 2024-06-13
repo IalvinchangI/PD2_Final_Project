@@ -113,7 +113,7 @@
 
 > * 寫入該次交易的時間
 > ```java
-> public void setDateAndTime(int yeat, int month, int date, int hour, int minute, int second)
+> public void setDateAndTime(int year, int month, int date, int hour, int minute, int second)
 > ```
 
 > * 寫入該次交易的盈虧
