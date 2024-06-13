@@ -3,6 +3,7 @@ package project.GUI.GUITools;
 import java.awt.FlowLayout;
 
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 
 
@@ -13,6 +14,15 @@ import javax.swing.JPasswordField;
  * @author IalvinchangI
  */
 public class PasswordField extends InputField {
+
+    /**
+     * 取得 textField
+     * @return textField
+     */
+    @Override
+    public JPasswordField getTextField() {
+        return (JPasswordField) this.textField;
+    }
 
     /**
      * 取得 密碼

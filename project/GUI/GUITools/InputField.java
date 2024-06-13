@@ -3,11 +3,9 @@ package project.GUI.GUITools;
 import java.awt.FlowLayout;
 import java.awt.Label;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import test.test;
 
 
 
@@ -20,9 +18,25 @@ public class InputField extends JPanel {
     /** Label */
     protected Label label = null;
 
+    /**
+     * 取得 label
+     * @return label
+     */
+    public Label getLabel() {
+        return this.label;
+    }
+
 
     /** TextField */
     protected JTextField textField = null;
+
+    /**
+     * 取得 textField
+     * @return textField
+     */
+    public JTextField getTextField() {
+        return this.textField;
+    }
 
     /**
      * 取得 TextField 內的字
@@ -35,8 +49,6 @@ public class InputField extends JPanel {
 
     /** FlowLayout */
     protected FlowLayout layout = null;
-
-
 
 
 

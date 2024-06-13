@@ -1,78 +1,80 @@
 package project.GUI;
 
+
+import java.io.IOException;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 import project.GUI.GUITools.InputField;
 import project.GUI.GUITools.PasswordField;
 
 
 
-
+/**
+ * login 頁面
+ * @author hanklo831
+ * @author IalvinchangI
+ */
 public class LoginPanel extends JPanel {
 
-
-    JPanel root = null;
-
-
-    InputField userKey = null;
+    /** input user secret key */
+    private InputField userKey = null;
 
 
-    PasswordField userId = null;
+    /** input user key id */
+    private PasswordField userId = null;
 
 
-    JButton login = null;
+    /** 觸發 login 的按鈕 */
+    private JButton loginButton = null;
 
 
-    JButton register = null;
+    /** 如果未註冊過 Alpaca，可用此按鈕跳轉至 Alpaca 的網頁 */
+    private JButton registerButton = null;
 
 
+    /** 製作 login 頁面 */
     public LoginPanel() {
-        root = new JPanel();
-        this.root.setLayout(new );
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setPreferredSize(new Dimension(340, 256));
 
-        //key lable
-        userKeyLable = new JLabel("K E Y : ");
-        userKeyLable.setBounds (52, 33, 54, 15);
-        root.add (userKeyLable);
 
-        //key field
-        userKeyField = new JTextField(20);
-        userKeyField.setBounds(100, 30, 139, 21);
-        root.add(userKeyField);
+        // set
+        this.userKey = new InputField("K E Y : ");
+        this.userId = new PasswordField("I D : ", '*');
+        this.loginButton = new JButton("login");
+        this.registerButton = new JButton("register");
 
-        //id lable
-        userIdLable = new JLabel("I D : ");
-        userIdLable.setBounds (52, 73, 54, 15);
-        root.add (userIdLable);
 
-        //id field
-        userIdField = new JPasswordField(20);
-        userIdField.setBounds(100, 70, 139, 21);
-        userIdField.setEchoChar('*');
-        root.add(userIdField);
+        // alignment
+        this.userKey.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.userId.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        //login 
-        login = new JButton("login");
-        login.setBounds(64, 116, 80, 23);
-        root.add (login);
 
-        //register
-        register = new JButton("register");
-        register.setBounds(174, 116, 80, 23);
-        root.add (register);
+        // add
+        this.add(this.userKey);
+        this.add(this.userId);
+        this.add(this.loginButton);
+        this.add(this.registerButton);
 
-        //set 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(400, 300, 340, 256);
-
-        
-        register.addActionListener(new ActionListener() {
+    
+        // add listener
+        this.registerButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed (ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 try {
                     URI uri = new URI("https://alpaca.markets/");
                     Desktop.getDesktop().browse(uri);
@@ -83,18 +85,30 @@ public class LoginPanel extends JPanel {
         });
     }
 
+
+    /**
+     * 取得在 userKey 輸入的 key
+     * @return 輸入的 key
+     */
     public String getUserKey() {
-        return userKeyField.getText();
+        return this.userKey.getText();
     }
 
+
+    /**
+     * 取得在 userId 輸入的 ID
+     * @return 輸入的 ID
+     */
     public String getUserId() {
-        return new String(userIdField.getPassword());
+        return this.userId.getText();
     }
 
+
+    /**
+     * 取得 loginButton
+     * @return loginButton
+     */
     public JButton getLoginButton() {
-        return login;
+        return this.loginButton;
     }
-
-
-
 }
