@@ -24,3 +24,8 @@
 > ```java
 > public static void stockDataProcessing()
 > ```
+
+> * 存取歷史紀錄
+> ```java
+> public static void historyTradingProcessing()
+> ```
