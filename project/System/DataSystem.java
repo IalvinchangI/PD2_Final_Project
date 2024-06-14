@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class DataSystem implements StockDataSystem {
 
-    private StockMarketInfoRecorder stockMarketInfoRecorder = null;
+    private HashMap< String, HashMap< String, StockMarketInfoRecorder >> marketInfoRecorderMap = null;
     private HistoryRecord historyRecord = null;
     private KeyAndID keyAndID = null;
     private StockBuyingSetting stockBuyingSetting = null;
@@ -222,6 +222,91 @@ public class DataSystem implements StockDataSystem {
             ArrayList<Deal> deals = new ArrayList<>();
             deals.add(deal);
             historyRecord.record.put(stockName, deals);
+        }
+    }
+
+    /**
+     * 將對特定股票的單次觀察存入紀錄陣列recorder (List<MarketInfo>)中
+     * @param stockName : 股票名稱
+     * @param mode : 單一觀察的時間段長度 (mode: 每日"DAY", 每周"WEEK", 每月"MON")(預設為"DAY")
+     * @param highPrice : 最高價
+     * @param lowPrice : 最低價
+     * @param openingPrice : 開盤價
+     * @param closingPrice : 收盤價
+     * @param year : 年份
+     * @param month : 月份
+     * @param date : 日期
+     */
+    public void addStockMarketInfo2Recorder(
+        String stockName, String mode,
+        double highPrice, double lowPrice, double openingPrice, double closingPrice,
+        int year, int month, int date
+    ) {
+
+        if (marketInfoRecorderMap.size() > 0) {
+
+            if (marketInfoRecorderMap.containsKey(stockName)) {
+
+                if (marketInfoRecorderMap.get(stockName).containsKey(mode)) {
+
+                    marketInfoRecorderMap.get(stockName).get(mode).addMarketInfo2Recorder(
+                        stockName, mode, highPrice, lowPrice, openingPrice, closingPrice, year, month, date
+                    );
+                }
+                else {
+                    StockMarketInfoRecorder stockMarketInfoRecorder = new StockMarketInfoRecorder(stockName, mode);
+
+                    stockMarketInfoRecorder.addMarketInfo2Recorder(
+                        stockName, mode, highPrice, lowPrice, openingPrice, closingPrice, year, month, date
+                    );
+                    marketInfoRecorderMap.get(stockName).put(mode, stockMarketInfoRecorder);
+                }
+            }
+            else {
+                StockMarketInfoRecorder stockMarketInfoRecorder = new StockMarketInfoRecorder(stockName, mode);
+                
+                stockMarketInfoRecorder.addMarketInfo2Recorder(
+                    stockName, mode, highPrice, lowPrice, openingPrice, closingPrice, year, month, date
+                );
+                HashMap<String, StockMarketInfoRecorder> map = new HashMap<>();
+                map.put(mode, stockMarketInfoRecorder);
+                marketInfoRecorderMap.put(stockName, map);
+            }
+        }
+        else {
+            StockMarketInfoRecorder stockMarketInfoRecorder = new StockMarketInfoRecorder(stockName, mode);
+
+            stockMarketInfoRecorder.addMarketInfo2Recorder(
+                stockName, mode, highPrice, lowPrice, openingPrice, closingPrice, year, month, date
+            );
+            HashMap<String, StockMarketInfoRecorder> map = new HashMap<>();
+            map.put(mode, stockMarketInfoRecorder);
+            marketInfoRecorderMap.put(stockName, map);
+        }
+    }
+
+    /**
+     * 取得對特定股票在市場上的資訊的觀察紀錄陣列recorder (List<MarketInfo>)
+     * @param stockName : 股票名稱
+     * @param mode : 單一觀察的時間段長度 (mode: 每日"DAY", 每周"WEEK", 每月"MON")(預設為"DAY")
+     * @return 觀察紀錄陣列recorder (List<MarketInfo>)
+     */
+    public List<MarketInfo> getRecorder(String stockName, String mode) {
+
+        if (marketInfoRecorderMap.containsKey(stockName)) {
+
+            if (marketInfoRecorderMap.containsKey(mode)) {
+
+                return marketInfoRecorderMap.get(stockName).get(mode).getRecorder();
+            }
+            else {
+                System.out.println("recorder about " + stockName + " with mode: " + "\"mode\" not exist");
+                return null;
+            }
+        }
+        else {
+            System.out.println("recorders about " + stockName + " not exist");
+            return null;
         }
     }
 }
