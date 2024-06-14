@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "project.App",
+            "projectName": "Final_Project_7697895e"
+        },
+        {
+            "type": "java",
             "name": "AlpacaAPICall",
             "request": "launch",
             "mainClass": "project.AlpacaAPICall.AlpacaAPICall"

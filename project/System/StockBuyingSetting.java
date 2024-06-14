@@ -28,6 +28,7 @@ public class StockBuyingSetting {
         setBidPrice(bidPrice);
         setOfferStep(offerStep);
         setBidStep(bidStep);
+        setStockCount(stockCount);
         
     }
 
