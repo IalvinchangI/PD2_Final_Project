@@ -11,7 +11,6 @@ public class DataSystem implements StockDataSystem {
     private HashMap< String, HashMap< String, StockMarketInfoRecorder >> marketInfoRecorderMap = null;
     private HistoryRecord historyRecord = null;
     private KeyAndID keyAndID = null;
-    private StockBuyingSetting stockBuyingSetting = null;
 
     private HashMap<String, StockBuyingSetting> buyingSettings = null;
     private HashMap<String, Stock> stocksMap = null;

@@ -1,9 +1,9 @@
 package project.System;
 
 import java.time.LocalDate;
+
 import java.util.List;
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -12,7 +12,6 @@ public class StockMarketInfoRecorder {
 
     private String stockName = null;
     private ArrayList< MarketInfo > recorder = null;
-    private MarketInfo marketInfo = null;
     private String mode = null;
 
     /**
