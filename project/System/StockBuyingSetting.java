@@ -17,10 +17,12 @@ public class StockBuyingSetting {
      * 建立一個買賣設定
      * @param stockName : 股票名稱
      * @param bidPrice : 目標買價
-     * @param offerStep : 下降多少錢時賣出
-     * @param bidStep : 上漲多少錢時買入
+     * @param offerStep : 上漲多少錢時賣出
+     * @param bidStep : 下降多少錢時買入
      */
-    public StockBuyingSetting(String stockName, double bidPrice, double offerStep, double bidStep, int stockCount) {
+    public StockBuyingSetting(
+        String stockName, double bidPrice, double offerStep, double bidStep, int stockCount
+    ) {
 
         setStockName(stockName);
         setBidPrice(bidPrice);
