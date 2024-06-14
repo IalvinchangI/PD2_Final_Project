@@ -1,5 +1,6 @@
 package project.GUI.GUITools;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,7 +12,7 @@ import javax.swing.JButton;
  * 圓框按鈕
  * @author IalvinchangI
  */
-class RoundButton extends JButton {
+public class RoundButton extends JButton {
     
     /** 背景色 */
     private Color backgroundColor = null;
@@ -24,7 +25,7 @@ class RoundButton extends JButton {
 
 
     /** 框的邊角圓弧 */
-    public int arcWidth = 10, arcHeight = 10;
+    public int arcWidth = 30, arcHeight = 30;
 
     /**  設定框的邊角圓弧 */
     public void setArc(int width, int height) {
@@ -50,15 +51,19 @@ class RoundButton extends JButton {
         this.borderColor = borderColor;
         this.clickBackgroundColor = clickBackgroundColor;
         this.clickBorderColor = clickBorderColor;
+
+        // setContentAreaFilled(false);  // 不繪製按鈕區域的內容
+        setFocusPainted(false);  // 不繪製焦點框
+        setBorderPainted(false);  // 不繪製按鈕邊框
     }
 
     /**
      * 設定圓框按鈕
-     * @param text                  顯示的字
+     * @param text              顯示的字
      * @param bottomLayerColor  圓框按鈕的下面那層的顏色
      */
     public RoundButton(String text, Color bottomLayerColor) {
-        this(text, bottomLayerColor, new Color(121, 206, 172), new Color(121, 206, 172), new Color(121, 206, 172), new Color(121, 206, 172));
+        this(text, bottomLayerColor, new Color(133, 205, 144), new Color(86, 171, 99), new Color(133, 205, 144), new Color(182, 226, 189));
     }
 
 
@@ -67,11 +72,20 @@ class RoundButton extends JButton {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
         
-        // background
-        g2d.setColor(backgroundColor);
-        g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
-        g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
+        g2d.setStroke(new BasicStroke(4));
 
+        // background and border
+        if (this.getModel().isArmed()) {
+            g2d.setColor(this.clickBackgroundColor);
+            g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
+            g2d.setColor(this.clickBorderColor);
+            g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
+        } else {
+            g2d.setColor(this.backgroundColor);
+            g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
+            g2d.setColor(this.borderColor);
+            g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
+        }
         
         // show
         g2d.dispose();
