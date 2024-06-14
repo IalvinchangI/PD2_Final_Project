@@ -69,7 +69,6 @@ public class App {
         else {
             System.out.println("Not Open");
         }
-
         // schedule BackgroundExecute if market open
         BackgroundExexute backgroundExexute = null;
         if (marketOpen_TF == true) {

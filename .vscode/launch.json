@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "WebCrawler",
+            "request": "launch",
+            "mainClass": "project.AlpacaAPICall.WebCrawler",
+            "projectName": "PD2_Final_Project_20bb4b97"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "project.App",
+            "projectName": "PD2_Final_Project_20bb4b97"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "project.App",
