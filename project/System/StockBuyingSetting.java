@@ -69,7 +69,11 @@ public class StockBuyingSetting {
         return bidStep;
     }
 
-    public int getstockCount() {
+    /**
+     * 取得該股票交易的股數
+     * @return 該股票交易的股數
+     */
+    public int getStockCount() {
 
         assert stockCount > 0 : "stockCount <= 0";
         return stockCount;

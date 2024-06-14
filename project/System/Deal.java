@@ -120,6 +120,12 @@ public class Deal {
         this.stockCount = stockCount;
     }
 
+    public double getStockPrice() {
+
+        assert stockCount > 0 : "stockCount <= 0";
+        return Math.abs(profitAndLoss/stockCount);
+    }
+
     /**
      * 確認這筆交易是有效的
      * @return 交易的有效性
