@@ -26,11 +26,11 @@ public class AlpacaAPICall {
     static private String activityType = "FILL";
 
     public static void main(String[] args) {
-        try {
+        try {stockPriceProcessing();
             //user.get();
 
-            String jsonResponse = getTradingActivities(activityType);
-            parseAndPrintTradingActivities(jsonResponse);
+            // String jsonResponse = getTradingActivities(activityType);
+            // parseAndPrintTradingActivities(jsonResponse);
             // TODO 改寫成歷史資料
             //getStockData("AAPL");
             // // 獲取訂單狀態
@@ -96,7 +96,7 @@ public class AlpacaAPICall {
      * 提供要查詢 30 天股價時所 call 的函式
      * @author JackWu
      */
-    public static void StockDataProcessing() {
+    public static void stockDataProcessing() {
         for(String symbol : symbols){
             getStockData(symbol);
         }
@@ -124,6 +124,8 @@ public class AlpacaAPICall {
             response.append(inputLine);
         }
         in.close();
+
+        System.out.println(response);
 
         extractStockPrice(response.toString());
     }

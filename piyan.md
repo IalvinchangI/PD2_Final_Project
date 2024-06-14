@@ -22,5 +22,5 @@
 
 > * 存取30天股價資訊
 > ```java
-> public static void StockDataProcessing()
+> public static void stockDataProcessing()
 > ```
