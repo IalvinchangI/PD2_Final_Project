@@ -1,14 +1,7 @@
 package project.GUI;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.swing.JFrame;
-
-
-import project.GUI.*;
-import project.GUI.GUITools.*;
 
 
 /**
@@ -23,8 +16,12 @@ public class TestGUI {
         frame.setBackground(Color.WHITE);
         frame.setSize(600, 600);
 
-        LoginPanel loginPanel = new LoginPanel();
-        frame.add(loginPanel);
+        //LoginPanel loginPanel = new LoginPanel();
+        //frame.add(loginPanel);
+
+        HistoryPanel historyPanel = new HistoryPanel();
+        frame.add(historyPanel);
+        
 
         frame.setVisible(true);
     }

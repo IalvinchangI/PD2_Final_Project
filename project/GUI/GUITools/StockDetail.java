@@ -27,7 +27,7 @@ public class StockDetail extends JPanel {
      * @param stockPrice ：股票價格
      * @param stockHistoryPrice ：股票近三十天的最高價、最低價、開盤價、收盤價
      */
-    public StockDetail(String stockName, double stockPrice, HashMap <String, ArrayList <Double>> stockHistoryPrice) {
+    public StockDetail(String stockName, double stockPrice,ArrayList <Double> stockHistoryPrice) {
 
         // layout
         this.stockLayout = new FlowLayout();
