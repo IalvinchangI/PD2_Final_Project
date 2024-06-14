@@ -119,7 +119,6 @@ public class WebCrawler {
             try {
                 sendGetRequest_Market(symbol, stockName);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -345,10 +344,13 @@ public class WebCrawler {
             String side = extractJsonValue(activity, "\"side\":\"", "\"");
             String price = extractJsonValue(activity, "\"price\":\"", "\"");
             double tradingPrice = 0.0d;
+            int stockQty = 0;
             if(side.equals("sell")) {
+                stockQty = Integer.parseInt(qty) * (-1);
                 tradingPrice = Double.parseDouble(price);
             }
             else if(side.equals("buy")) {
+                stockQty = Integer.parseInt(qty);
                 tradingPrice = Double.parseDouble(price) * (-1);
             }
             String transactionTime = extractJsonValue(activity, "\"transaction_time\":\"", "\"");
@@ -358,7 +360,7 @@ public class WebCrawler {
 
             // TODO 傳資料給mason
 
-            System.out.println("Symbol: " + symbol + ", Qty: " + qty + ", Side: " + side + ", Price: " + tradingPrice + ", Transaction Time: " + year + "/" + month + "/" + day);
+            System.out.println("Symbol: " + symbol + ", Qty: " + stockQty + ", Side: " + side + ", Price: " + tradingPrice + ", Transaction Time: " + year + "/" + month + "/" + day);
         }
     }
 
