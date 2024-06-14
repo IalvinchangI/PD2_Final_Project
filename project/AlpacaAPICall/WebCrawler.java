@@ -30,14 +30,7 @@ public class WebCrawler {
     static private String[] symbols = {"AAPL", "GOOGL", "AMZN", "META", "MSFT", "TSLA"};
 
     public static void main(String[] args) {
-        try {
-            //stockPriceProcessing();
-            // historyTradingProcessing();
-            //user.get();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
     }
 
 
@@ -281,6 +274,7 @@ public class WebCrawler {
                 }
             }
 
+            // TODO　傳資料給ｍａｓｏｎ
             // System.out.println("stock name : " + symbol);
             // System.out.println(year + "/" + month + "/" + day);
             // System.out.println("Open: " + open);
