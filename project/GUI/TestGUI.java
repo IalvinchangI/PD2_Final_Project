@@ -14,13 +14,13 @@ public class TestGUI {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBackground(Color.WHITE);
-        frame.setSize(600, 600);
+        frame.setSize(800, 800);
 
-        //LoginPanel loginPanel = new LoginPanel();
-        //frame.add(loginPanel);
+        LoginPanel loginPanel = new LoginPanel();
+        frame.add(loginPanel);
 
-        HistoryPanel historyPanel = new HistoryPanel();
-        frame.add(historyPanel);
+        // HistoryPanel historyPanel = new HistoryPanel();
+        // frame.add(historyPanel);
         
 
         frame.setVisible(true);

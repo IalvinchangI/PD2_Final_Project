@@ -38,7 +38,7 @@ public class PasswordField extends InputField {
      * 左 Label，右 PasswordField 的輸入框
      * @param label         要顯示的字
      * @param echoChar      隱藏 密碼 的字元  (echoChar = 0 => 不會隱藏 密碼)
-     * @param defaultText   預設在 PasswordField 填入的字
+     * @param defaultText   預設在 PasswordField 填入的字 (null 代表沒有)
      * @param fieldLength   顯示字數
      * @param align         靠 ? 對齊 (說明: {@link FlowLayout})
      * @param hGap          上下間隔
@@ -55,11 +55,11 @@ public class PasswordField extends InputField {
      * 左 Label，右 TextField 的輸入框
      * @param label         要顯示的字
      * @param echoChar      隱藏 密碼 的字元  (echoChar = 0 => 不會隱藏 密碼)
-     * @param defaultText   預設在 TextField 填入的字
+     * @param defaultText   預設在 TextField 填入的字 (null 代表沒有)
      * @param fieldLength   顯示字數
      */
     public PasswordField(String label, char echoChar, String defaultText, int fieldLength) {
-        this(label, echoChar, defaultText, fieldLength, FlowLayout.LEFT, 5, 5);
+        this(label, echoChar, defaultText, fieldLength, FlowLayout.CENTER, 5, 5);
     }
 
 
@@ -82,7 +82,7 @@ public class PasswordField extends InputField {
      * @param echoChar      隱藏 密碼 的字元  (echoChar = 0 => 不會隱藏 密碼)
      */
     public PasswordField(String label, char echoChar) {
-        this(label, echoChar, "", 20, FlowLayout.LEFT, 5, 5);
+        this(label, echoChar, "", 20, FlowLayout.CENTER, 5, 5);
     }
 
 
@@ -91,6 +91,6 @@ public class PasswordField extends InputField {
      * @param label         要顯示的字
      */
     public PasswordField(String label) {
-        this(label, (char) 0, "", 20, FlowLayout.LEFT, 5, 5);
+        this(label, (char) 0, "", 20, FlowLayout.CENTER, 5, 5);
     }
 }
