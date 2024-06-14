@@ -1,36 +1,59 @@
 package project.System;
 
+
 public class KeyAndID {
-    /**
-     * 取得使用者的Key
-     * @return 使用者的Key
-     */
-    public abstract String getAPIKey();
+
+    private String APIKey = null;
+    private String APIID = null;
 
     /**
-     * 取得使用者的ID
-     * @return 使用者的ID
+     * 建立一個使用者的KeyAndID
+     * @param APIKey : 使用者的Secret Key
+     * @param APIID : 使用者的Key ID
      */
-    public String getAPIID(){
+    public KeyAndID(String APIKey, String APIID) {
 
-        //TODO
+        setAPIKey(APIKey);
+        setAPIID(APIID);
     }
 
     /**
-     * 設定使用者的Key
-     * @param APIKey : 使用者的Key
+     * 取得使用者的Secret Key
+     * @return 使用者的Secret Key
+     */
+    public String getAPIKey() {
+
+        assert APIKey != null && APIKey.length() > 0 : "APIKey is null or \\\"\\\"";
+        return APIKey;
+    }
+
+    /**
+     * 取得使用者的Key ID
+     * @return 使用者的Key ID
+     */
+    public String getAPIID() {
+
+        assert APIID != null && APIID.length() > 0  : "APIID is null or \"\"";
+        return APIID;
+    }
+
+    /**
+     * 設定使用者的Secret Key
+     * @param APIKey : 使用者的Secret Key
     */
-    public void setAPIKey(String APIKey){
+    public void setAPIKey(String APIKey) {
 
-        //TODO
+        assert APIKey != null && APIKey.length() > 0 : "APIKey is null or \"\"";
+        this.APIKey = APIKey;
     }
 
     /**
-     * 設定使用者的ID
-     * @param ID : 使用者的ID
+     * 設定使用者的Key ID
+     * @param ID : 使用者的Key ID
      */
-    public void setAPIID(String ID){
+    public void setAPIID(String APIID) {
 
-        //TODO
+        assert APIID != null && APIID.length() > 0 : "APIID is null or \"\"";
+        this.APIID = APIID;
     }
 }
