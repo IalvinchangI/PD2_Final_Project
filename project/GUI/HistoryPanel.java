@@ -9,7 +9,7 @@ import javax.swing.JScrollPane;
 
 /**
  * 歷史紀錄的顯示
- * @author Hanklo
+ * @author Hanklo831
  */
 public class HistoryPanel  extends JPanel {
 
@@ -18,7 +18,7 @@ public class HistoryPanel  extends JPanel {
 
     public HistoryPanel() {
 
-        this.setPreferredSize(new Dimension (700, 500));
+        this.setPreferredSize(new Dimension (1440, 900));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(this.pp);
@@ -27,8 +27,6 @@ public class HistoryPanel  extends JPanel {
         
 
     }
-
-    
 
 }
 
@@ -46,6 +44,7 @@ class ProfitPanel extends JPanel {
         this.profitLabel = new JLabel(Double.toString(profit));
         this.add(this.profixTextLabel);
         this.add(this.profitLabel);
+        this.setPreferredSize(new Dimension(1200, 100));
     }
     
 }
@@ -82,7 +81,7 @@ class HistoryTradePanel extends JPanel {
         this.historyTradeScrollPane = new JScrollPane(this.historyTradeLabel);
         this.historyTradeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.historyTradeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.historyTradeScrollPane.setPreferredSize(new Dimension(300, 300));
+        this.historyTradeScrollPane.setPreferredSize(new Dimension(1200, 700));
         this.add(this.historyTradeScrollPane);
 
     }   

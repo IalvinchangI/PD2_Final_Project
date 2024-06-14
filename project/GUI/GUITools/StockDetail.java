@@ -1,5 +1,6 @@
 package project.GUI.GUITools;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -11,8 +12,8 @@ import project.GUI.CandleStick;
 import java.util.*;
 
 /**
- * 股票的顯示細節
- * @author Hanklo
+ * 股票的顯示細節 (股票名、價格、K線圖、買賣設定)
+ * @author Hanklo831
  */
 public class StockDetail extends JPanel {
 
@@ -28,7 +29,7 @@ public class StockDetail extends JPanel {
      * @param stockPrice ：股票價格
      * @param stockHistoryPrice ：股票近三十天的最高價、最低價、開盤價、收盤價
      */
-    public StockDetail(String stockName, double stockPrice,ArrayList <HashMap <String, Double>> stockHistoryPrice) {
+    public StockDetail(String stockName, double stockPrice, ArrayList <HashMap <String, Double>> stockHistoryPrice) {
 
         // layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -57,7 +58,7 @@ public class StockDetail extends JPanel {
         this.add(this.buyPanel);
         this.add(this.sellPanel);
         this.add(this.intervalPanel);
-
+        this.setPreferredSize(new Dimension(1000, 800));
 
     }
 

@@ -1,5 +1,6 @@
 package project.GUI;
 
+import java.lang.management.PlatformLoggingMXBean;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -12,73 +13,51 @@ import org.jfree.data.xy.OHLCDataset;
 
 import javax.swing.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 
-public class CandleStick extends JFrame {
 
-    public CandleSticl(String title) {
-        super(title);
+/**
+ * 繪製K線圖
+ * @author Hanklo831
+ */
+public class CandleStick extends JPanel {
 
-        // 创建数据集
+    public CandleStick(String stockName, ArrayList <HashMap <String, Double>> stockHistoryPrice) {
+        String xAxisLable = "time";
+        String yAxisLable = "money";
         OHLCDataset dataset = createDataset();
+        JFreeChart chart = ChartFactory.createCandlestickChart(stockName, xAxisLable, yAxisLable, dataset, false);
 
-        // 创建图表
-        JFreeChart chart = createChart(dataset);
+        XYPlot plot = (XYPlot) chart.getPlot();
+        plot.setDomainPannable(true);
+        plot.setRangePannable(true);
+        plot.setDomainAxes(new DateAxis("date"));
+        plot.setRangeAxes(new NumberAxis("price"));
 
-        // 将图表放入面板
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(800, 400));
-        setContentPane(chartPanel);
+        DateAxis axis = (DateAxis) plot.getDomainAxis();
+        axis.setDateFormatOverride(new SimpleDateFormat("MM-dd-yyyy"));
+
+        CandlestickRenderer renderer = new CandlestickRenderer();
+        plot.setRenderer(renderer);
+        return new ChartPanel(chart);
+
     }
 
     private OHLCDataset createDataset() {
-        // 示例数据
-        Date[] date = new Date[5];
-        double[] high = new double[5];
-        double[] low = new double[5];
-        double[] open = new double[5];
-        double[] close = new double[5];
-        double[] volume = new double[5];
+        Date[] dates = new Date[] {
 
-        // 初始化数据
-        for (int i = 0; i < 5; i++) {
-            date[i] = new Date(2023, 1, i + 1);
-            high[i] = 100 + i;
-            low[i] = 90 - i;
-            open[i] = 95 + i;
-            close[i] = 98 + i;
-            volume[i] = 1000 * (i + 1);
-        }
+        };
+        double[] highs = new double[]{};
+        double[] lows = new double[]{};
+        double[] opens = new double[]{};
+        double[] closes = new double[]{};
+        double[] volumes = new double[]{};
 
-        return new DefaultHighLowDataset("Stock Data", date, high, low, open, close, volume);
+        return  new DefaultHighLowDataset("股票數據", dates, highs, lows, opens, closes, volumes);
+
     }
-
-    private JFreeChart createChart(OHLCDataset dataset) {
-        // 创建图表
-        JFreeChart chart = ChartFactory.createCandlestickChart(
-                "K Line Chart Example", "Date", "Price", dataset, false);
-
-        XYPlot plot = (XYPlot) chart.getPlot();
-        DateAxis xAxis = (DateAxis) plot.getDomainAxis();
-        xAxis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));
-        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
-        yAxis.setAutoRangeIncludesZero(false);
-
-        // 使用CandlestickRenderer来绘制K线图
-        CandlestickRenderer renderer = new CandlestickRenderer();
-        plot.setRenderer(renderer);
-
-        return chart;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            KLineChartExample example = new KLineChartExample("K Line Chart Example");
-            example.setSize(800, 400);
-            example.setLocationRelativeTo(null);
-            example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            example.setVisible(true);
-        });
-    }
+    
 }
