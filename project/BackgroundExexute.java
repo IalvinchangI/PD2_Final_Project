@@ -26,6 +26,7 @@ public class BackgroundExexute extends TimerTask {
     public void run() {
         // 更新股票資料
         WebCrawler.stockPriceProcessing();
+        System.out.println("BackgroundExexute");
 
         // 執行交易
         boolean trade_TF = this.tradingAgent.trade();

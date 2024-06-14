@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import project.System.StockDataSystem;
 import project.System.KeyAndID;
@@ -54,10 +55,10 @@ public class TradingAgent {
     public boolean trade() {
         boolean trade_TF = false;  // 是否有執行交易
 
-        HistoryRecord allHistoryrecord = stockDataSystem.getHistoryRecord();  // 交易紀錄
+        // HistoryRecord allHistoryrecord = stockDataSystem.getHistoryRecord();  // 交易紀錄
 
         
-        for (String stockName : stockDataSystem.getStockNamesHasBuyingSetting()) {
+        for (String stockName : this.stockDataSystem.getStockNamesHasBuyingSetting()) {
             // according to buyingSetting, decide what should do (buy or sell)
             // case1: throw buying request and (trade_TF = true)
             // case2: throw selling request and (trade_TF = true)
@@ -65,17 +66,18 @@ public class TradingAgent {
             
             // get data
             StockBuyingSetting buyingSetting = stockDataSystem.getBuyingSetting(stockName);
-            Deal newestStockHistoryRecord = allHistoryrecord.get_最新交易(stockName);  // 取得 某股票的最新交易紀錄
+            List<Deal> stockHistoryRecord = stockDataSystem.getHistoryRecord(stockName);
+            // Deal newestStockHistoryRecord = stockHistoryRecord.get(0);  // 取得 某股票的最新交易紀錄
             Stock stock = stockDataSystem.getStock(stockName);  // 現在股票資料
 
 
             // get detail
             double newestDealPrice = 0;
-            if (newestStockHistoryRecord == null) {  // if it is the first trade
+            if (stockHistoryRecord == null) {  // if it is the first trade
                 newestDealPrice = buyingSetting.getBidPrice();  // 將 上次交易價 設為 使用者設定的買入價格
             }
             else {
-                newestDealPrice = newestStockHistoryRecord.get_單張交易價();  // 取得 上次交易價 (單張股票)
+                newestDealPrice = stockHistoryRecord.get(0).getStockPrice();  // 取得 上次交易價 (單張股票)
             }
             double nowStockPrice = stock.getStockPrice();  // 取得 現在股價
             double priceDelta = nowStockPrice - newestDealPrice;  // 現在股價 和 上次交易價 (or 使用者設定的買入價格) 的價格差
@@ -134,6 +136,7 @@ public class TradingAgent {
         try {
             // order: json format
             String json = String.format(TRADING_CONTENT, stockName, quantity, side);
+            System.out.println(json);
 
             // new url
             URL url = new URL(ORDER_URL);
@@ -147,8 +150,8 @@ public class TradingAgent {
             // set HTTP header
             connection.setRequestProperty("Content-Type", "application/json");
             KeyAndID key_id = stockDataSystem.getKeyAndID();
-            connection.setRequestProperty("APCA-API-KEY-ID", key_id.getAPIKey());
-            connection.setRequestProperty("APCA-API-SECRET-KEY", key_id.getAPIID());
+            connection.setRequestProperty("APCA-API-KEY-ID", key_id.getKeyID());
+            connection.setRequestProperty("APCA-API-SECRET-KEY", key_id.getsecretKey());
 
             // ask for write
             connection.setDoOutput(true);
