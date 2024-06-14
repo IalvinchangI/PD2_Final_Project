@@ -30,7 +30,7 @@ public class WebCrawler {
     static private String[] symbols = {"AAPL", "GOOGL", "AMZN", "META", "MSFT", "TSLA"};
 
     public static void main(String[] args) {
-        
+        checkMarketOpen();
     }
 
 
@@ -84,7 +84,12 @@ public class WebCrawler {
     public static boolean checkMarketOpen() {
         int responseCode = -1;
 
+        String responseString = "";
+        StringBuilder response = new StringBuilder();
+
         try {
+            System.out.println(API_KEY_ID);
+            System.out.println(API_SECRET_KEY);
             URL url = new URL(BASE_URL + "/clock");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -92,11 +97,26 @@ public class WebCrawler {
             connection.setRequestProperty("APCA-API-SECRET-KEY", WebCrawler.API_SECRET_KEY);
 
             responseCode = connection.getResponseCode();
+            System.out.println(responseCode);
+            if(responseCode == 200) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+    
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+            }
         } catch(IOException e) {
             e.printStackTrace();
         }
-
-        if(responseCode == 200) return true;
+        // Manually parse the JSON response
+        responseString = response.toString();
+        if (responseString.contains("\"is_open\":true")) {
+            return true;
+        } else if (responseString.contains("\"is_open\":false")) {
+            return false;
+        }
         else return false;
     }
 

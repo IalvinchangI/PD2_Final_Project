@@ -131,6 +131,7 @@ public class TradingAgent {
      * @return 是否成功交易
      */
     private boolean request(String stockName, int quantity, String side) {
+        System.out.println("start connect");
         boolean success_TF = true;
         HttpURLConnection connection = null;
         try {
