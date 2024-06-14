@@ -1,20 +1,27 @@
 package project.AlpacaAPICall;
-import project.System.KeyAndID;
 import java.io.BufferedReader;
+import java.io.IOError;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import project.System.KeyAndID;
+import project.System.Deal;
+import project.System.StockDataSystem;
+
+
 public class WebCrawler {
     // 取得Key ID
-    Deal deal = new Deal();
-    KeyAndID user = null;
-    private static final String API_KEY_ID = "PKG2UYG7EYP063HG5USI";
-    //private static String API_KEY_ID = user.getAPIID();
-    private static final String API_SECRET_KEY = "dn8AVuR8Ux6VRZhI6IW0fP86HtMjldBhkPLFJPVa";
-    //private static String API_SECRET_KEY = user.getAPIID();
+    /** 存取資料的地方 */
+    private static StockDataSystem stockDataSystem = null;
+    private static String API_KEY_ID = null;
+    private static String API_SECRET_KEY = null;
+    // private static final String API_KEY_ID = "PKG2UYG7EYP063HG5USI";
+    // private static final String API_SECRET_KEY = "dn8AVuR8Ux6VRZhI6IW0fP86HtMjldBhkPLFJPVa";
+    
     private static final String BASE_URL = "https://paper-api.alpaca.markets/v2";
     private static final String MARKET_URL = "https://data.alpaca.markets/v2/stocks/bars?symbols=";
     private static final String ASSET_URL = "https://data.alpaca.markets/v2/stocks/";
@@ -25,7 +32,7 @@ public class WebCrawler {
     public static void main(String[] args) {
         try {
             //stockPriceProcessing();
-            historyTradingProcessing();
+            // historyTradingProcessing();
             //user.get();
 
         } catch (Exception e) {
@@ -33,20 +40,44 @@ public class WebCrawler {
         }
     }
 
+
+    /**
+     * 設定 存取資料的地方
+     * <p>
+     * 下載 API_KEY_IDㄝ, API_SECRET_KEY
+     * @param stockDataSystem 存取資料的地方
+     */
+    public static void downloadStockDataSystem(StockDataSystem stockDataSystem) {
+        WebCrawler.stockDataSystem = stockDataSystem;
+
+        KeyAndID keyAndID = stockDataSystem.getKeyAndID();
+        WebCrawler.API_KEY_ID = keyAndID.getAPIID();
+        WebCrawler.API_SECRET_KEY = keyAndID.getAPIKey();
+    }
+
+
     /**
      * 此函式測試使用者輸入的 Key ID 是否正確
      * @author JackWu
      * @return true 代表 Key ID 輸入正確
-     * @throws Exception
      */
-    public static boolean check_Key_ID() throws Exception {
-        URL url = new URL(BASE_URL + "/account");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("APCA-API-KEY-ID", AlpacaAPICall.API_KEY_ID);
-        connection.setRequestProperty("APCA-API-SECRET-KEY", AlpacaAPICall.API_SECRET_KEY);
+    public static boolean check_Key_ID() {
+        int responseCode = -1;
 
-        int responseCode = connection.getResponseCode();
+        try {
+            URL url = new URL(BASE_URL + "/account");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            // connection.setRequestProperty("APCA-API-KEY-ID", WebCrawler.API_KEY_ID);
+            // connection.setRequestProperty("APCA-API-SECRET-KEY", WebCrawler.API_SECRET_KEY);
+            connection.setRequestProperty("APCA-API-KEY-ID", WebCrawler.API_KEY_ID);
+            connection.setRequestProperty("APCA-API-SECRET-KEY", WebCrawler.API_SECRET_KEY);
+
+            responseCode = connection.getResponseCode();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        
 
         if(responseCode == 200) return true;
         else return false;
@@ -56,16 +87,21 @@ public class WebCrawler {
      * 此函式測試現在是否在美股開市時間
      * @author JackWu
      * @return true 代表有開市
-     * @throws Exception
      */
-    public static boolean checkMarketOpen() throws Exception {
-        URL url = new URL(BASE_URL + "/clock");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("APCA-API-KEY-ID", AlpacaAPICall.API_KEY_ID);
-        connection.setRequestProperty("APCA-API-SECRET-KEY", AlpacaAPICall.API_SECRET_KEY);
+    public static boolean checkMarketOpen() {
+        int responseCode = -1;
 
-        int responseCode = connection.getResponseCode();
+        try {
+            URL url = new URL(BASE_URL + "/clock");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("APCA-API-KEY-ID", WebCrawler.API_KEY_ID);
+            connection.setRequestProperty("APCA-API-SECRET-KEY", WebCrawler.API_SECRET_KEY);
+
+            responseCode = connection.getResponseCode();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
 
         if(responseCode == 200) return true;
         else return false;
@@ -74,14 +110,18 @@ public class WebCrawler {
     /**
      * 提供查詢時價要 call 的函式
      * @author JackWu
-     * @throws Exception
      */
-    public static void stockPriceProcessing() throws Exception{
+    public static void stockPriceProcessing() {
         for(String symbol : symbols){
             String stockName = symbol;
             symbol = symbol + "/bars?timeframe=1Day";
             System.out.println(symbol);
-            sendGetRequest_Market(symbol, stockName);
+            try {
+                sendGetRequest_Market(symbol, stockName);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 

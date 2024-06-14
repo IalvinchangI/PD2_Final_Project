@@ -5,6 +5,11 @@
 > 存取股票資訊
 
 ### 方法：
+> * 設定存取資料的地方以及下載 API_KEY_IDㄝ, API_SECRET_KEY
+> ```java
+> public static void downloadStockDataSystem(StockDataSystem stockDataSystem)
+> ```
+
 > * 測試是否開市
 > ```java
 > public static boolean checkMarketOpen()
