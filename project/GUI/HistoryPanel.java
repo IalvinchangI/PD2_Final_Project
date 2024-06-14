@@ -82,8 +82,8 @@ class HistoryTradePanel extends JPanel {
         this.historyTradeScrollPane = new JScrollPane(this.historyTradeLabel);
         this.historyTradeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.historyTradeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.historyTradeScrollPane.setPreferredSize(new Dimension(300, 300));
         this.add(this.historyTradeScrollPane);
-        //this.setSize(300, 300);
 
     }   
 }

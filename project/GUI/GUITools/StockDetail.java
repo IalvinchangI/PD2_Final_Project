@@ -2,8 +2,12 @@ package project.GUI.GUITools;
 
 import java.awt.FlowLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import project.GUI.CandleStick;
+
 import java.util.*;
 
 /**
@@ -12,12 +16,9 @@ import java.util.*;
  */
 public class StockDetail extends JPanel {
 
-    protected JPanel stock;
-    protected JLabel stockNameLabel, stockPriceLabel;
-
-    protected FlowLayout stockLayout;
-
-    protected JPanel buyPanel, sellPanel, intervalPanel;
+    private  JPanel stock = null;
+    private JLabel stockNameLabel = null, stockPriceLabel = null;
+    private JPanel buyPanel = null, sellPanel = null, intervalPanel = null;
 
 
 
@@ -27,10 +28,10 @@ public class StockDetail extends JPanel {
      * @param stockPrice ：股票價格
      * @param stockHistoryPrice ：股票近三十天的最高價、最低價、開盤價、收盤價
      */
-    public StockDetail(String stockName, double stockPrice,ArrayList <Double> stockHistoryPrice) {
+    public StockDetail(String stockName, double stockPrice,ArrayList <HashMap <String, Double>> stockHistoryPrice) {
 
         // layout
-        this.stockLayout = new FlowLayout();
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // panel
         this.stock = new JPanel();
@@ -43,7 +44,7 @@ public class StockDetail extends JPanel {
         this.stock.add(this.stockPriceLabel);
         
         // graph
-
+        this.graph = new CandleStick(stockHistoryPrice);
 
 
         //inputField    
@@ -51,8 +52,8 @@ public class StockDetail extends JPanel {
         this.sellPanel = new InputField("sell");
         this.intervalPanel = new InputField("interval");
 
-        this.setLayout(stockLayout);
         this.add(this.stock);
+        this.add(this.graph);
         this.add(this.buyPanel);
         this.add(this.sellPanel);
         this.add(this.intervalPanel);
