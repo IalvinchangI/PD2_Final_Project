@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import project.GUI.GUITools.InputField;
 import project.GUI.GUITools.PasswordField;
 import project.GUI.GUITools.ShadowPanel;
+import project.GUI.GUITools.RoundButton;
 
 
 
@@ -54,11 +55,11 @@ public class LoginPanel extends JPanel {
 
 
     /** 觸發 login 的按鈕 */
-    private JButton loginButton = null;
+    private RoundButton loginButton = null;
 
 
     /** 如果未註冊過 Alpaca，可用此按鈕跳轉至 Alpaca 的網頁 */
-    private JButton registerButton = null;
+    private RoundButton registerButton = null;
 
 
     /** 製作 login 頁面 */
@@ -69,9 +70,9 @@ public class LoginPanel extends JPanel {
 
 
         // inner
-        // this.centralPanel = new ShadowPanel(this.getBackground());
+        this.centralPanel = new ShadowPanel(this.getBackground());
         // this.centralPanel = new ShadowPanel(this.getBackground(), new Color(122, 149, 211), new Color(180, 180, 180));
-        this.centralPanel = new ShadowPanel(this.getBackground(), new Color(240, 240, 240), new Color(180, 180, 180));
+        // this.centralPanel = new ShadowPanel(this.getBackground(), new Color(240, 240, 240), new Color(180, 180, 180));
         this.centralPanel.setArc(40, 40);
         this.centralPanel.setPreferredSize(new Dimension(600, 450));
         this.centralPanel.setLayout(new BoxLayout(this.centralPanel.getRoot(), BoxLayout.Y_AXIS));
@@ -136,8 +137,8 @@ public class LoginPanel extends JPanel {
         this.userKey.setBackground(this.centralPanel.getBackground());
 
         this.userId.getTextField().setBorder(BorderFactory.createLineBorder(new Color(130, 130, 130), 3));
-        this.userKey.getTextField().setBorder(BorderFactory.createLineBorder(new Color(130, 130, 130), 3))
-        ;
+        this.userKey.getTextField().setBorder(BorderFactory.createLineBorder(new Color(130, 130, 130), 3));
+        
         this.userId.getTextField().setBackground(new Color(248, 222, 179));
         this.userKey.getTextField().setBackground(new Color(248, 222, 179));
 
@@ -153,10 +154,9 @@ public class LoginPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setBackground(this.centralPanel.getBackground());
-        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
-        this.loginButton = new JButton("login");
-        this.registerButton = new JButton("register");
+        this.loginButton = new RoundButton("login", this.centralPanel.getBackground());
+        this.registerButton = new RoundButton("register", this.centralPanel.getBackground());
         
         Dimension buttonSize = new Dimension(150, 50);
         this.loginButton.setMaximumSize(buttonSize);
