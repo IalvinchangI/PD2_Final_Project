@@ -1,5 +1,4 @@
-
-
+package project.GUI;
 
 import java.awt.BorderLayout
 import javax.swing.*;
