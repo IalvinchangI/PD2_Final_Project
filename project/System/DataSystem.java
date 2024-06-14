@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
-public interface StockDataSystem {
+interface StockDataSystem {
     /**
      * 取得Map<股票名稱, 該股票資訊>
      * @return Map<股票名稱, 該股票資訊>
@@ -83,7 +83,7 @@ public interface StockDataSystem {
     );
 }
 
-class DataSystem implements StockDataSystem {
+public class DataSystem implements StockDataSystem {
 
     private StockMarketInfoRecorder stockMarketInfoRecorder = null;
     private HistoryRecord historyRecord = null;
