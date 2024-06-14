@@ -5,6 +5,16 @@
 > 存取所有資料
 
 ### 方法：
+> * 取得所有股票的資料
+> ```java
+> public Map<String, Stock> getStocks()
+> ```
+
+> * 取得有買賣設定的股票集合
+> ```java
+> public Set<String> getStockNamesHasBuyingSetting()
+> ``` 
+
 > * 取得某股票的買賣設定
 > ```java
 > public StockBuyingSetting getBuyingSetting(String stockName)
@@ -32,7 +42,7 @@
 
 > * 儲存買賣設定
 > ```java
-> public void saveBuyingSetting(String stockName, double sellPrice, double buyPrice, double step)
+> public void saveBuyingSetting(String stockName, double offerPrice, double bidPrice, double step)
 > ```
 
 <br>
@@ -47,7 +57,7 @@
 > public String getStockName()
 > ```
 
-> *取得該股票的股價
+> * 取得該股票的股價
 > ```java
 > public double getStockPrice()
 > ```
@@ -103,7 +113,7 @@
 
 > * 寫入該次交易的時間
 > ```java
-> public void setDateAndTime(int yeat, int month, int date, int hour, int minute, int second)
+> public void setDateAndTime(int year, int month, int date)
 > ```
 
 > * 寫入該次交易的盈虧
@@ -118,6 +128,7 @@
 
 
 <br>
+
 
 ## KeyAndID
 ### 功能：
@@ -141,4 +152,72 @@
 > * 寫入API的ID
 > ```java
 > public void setAPIID(String ID)
-> ```  
+> ```
+
+
+<br>
+
+
+## StockBuyingSetting
+### 功能:
+> 買賣設定
+
+### 方法: 
+> * 取得要交易的股票名稱
+> ```java
+> public String getStockName()
+> ```
+
+> * 取得目標賣價
+> ```java
+> public double getOfferPrice()
+> ```
+
+> * 取得目標買價
+> ```java
+> public double getBidPrice()
+> ```
+
+> * 取得買賣間隔
+> ```java
+> public double getStep()
+> ```
+
+> * 設定要交易的股票名稱
+> ```java
+> public void setStockName(String stockName)
+> ```
+
+> * 設定目標賣價
+> ```java
+> public void setOfferPrice(double offerPrice)
+> ```
+
+> * 設定目標買價
+> ```java
+> public void setBidPrice(double bidPrice)
+> ```
+
+> * 設定買賣間隔
+> ```java
+> public void setStep(double step)
+> ``` 
+
+
+<br>
+
+
+## MarketAnalyser
+### 功能:
+> 做股票分析，產生分析圖
+
+### 方法:
+> * 儲存過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
+> ```java
+> public void saveMarketInfo(String stockName, int period, double highPrice, double lowPrice, double openingPrice, double closingPrice, int year, int month, int date)
+> ```
+
+> * 取得過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
+> ```java
+> public List getMarketInfo(String stockName, int period)
+> ```
