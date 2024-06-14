@@ -1,8 +1,11 @@
 package project.GUI.GUITools;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Label;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -15,6 +18,7 @@ import javax.swing.JTextField;
  * @author IalvinchangI
  */
 public class InputField extends JPanel {
+
     /** Label */
     protected Label label = null;
 
@@ -46,9 +50,11 @@ public class InputField extends JPanel {
         return this.textField.getText();
     }
 
-
-    /** FlowLayout */
-    protected FlowLayout layout = null;
+    
+    public void setAllFont(Font font) {
+        this.setFont(font);
+        this.textField.setFont(font);
+    }
 
 
 
@@ -61,18 +67,19 @@ public class InputField extends JPanel {
      * @param vGap          左右間隔
      */
     protected InputField(JTextField textField, String label, int align, int hGap, int vGap) {
-        // layout
-        this.layout = new FlowLayout(align, hGap, vGap);
+        this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         
         // label
         this.label = new Label(label);
+        this.label.setBackground(Color.ORANGE);
         
         // textField
         this.textField = textField;
+        this.textField.setBackground(Color.RED);
         
         
         // build
-        this.setLayout(layout);
+        this.setLayout(new FlowLayout(align, hGap, vGap));
         this.add(this.label);
         this.add(this.textField);
     }
@@ -111,7 +118,7 @@ public class InputField extends JPanel {
      * @param vGap          左右間隔
      */
     public InputField(String label, int align, int hGap, int vGap) {
-        this(label, "", 20, align, hGap, vGap);
+        this(label, null, 20, align, hGap, vGap);
     }
 
 
@@ -120,6 +127,6 @@ public class InputField extends JPanel {
      * @param label         要顯示的字
      */
     public InputField(String label) {
-        this(label, "", 20, FlowLayout.LEFT, 5, 5);
+        this(label, null, 20, FlowLayout.LEFT, 5, 5);
     }
 }

@@ -1,12 +1,10 @@
-package GUITools;
+package project.GUI.GUITools;
 
 import java.awt.FlowLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.util.*;
-import GUITools.InputField;
 
 /**
  * 股票的顯示細節
@@ -29,7 +27,7 @@ public class StockDetail extends JPanel {
      * @param stockPrice ：股票價格
      * @param stockHistoryPrice ：股票近三十天的最高價、最低價、開盤價、收盤價
      */
-    protected StockDetail(String stockName, double stockPrice, HashMap <String, ArrayList <Double>> stockHistoryPrice) {
+    public StockDetail(String stockName, double stockPrice, HashMap <String, ArrayList <Double>> stockHistoryPrice) {
 
         // layout
         this.stockLayout = new FlowLayout();
