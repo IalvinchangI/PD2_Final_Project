@@ -159,6 +159,7 @@ public class DataSystem implements StockDataSystem {
             }
         }
         else {
+            System.out.println(buyingSetting.getStockCount());
             buyingSettings.put(stockName, buyingSetting);
         }
     }
