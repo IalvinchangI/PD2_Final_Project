@@ -8,25 +8,20 @@ import java.net.URISyntaxException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 
 import project.GUI.GUITools.InputField;
 import project.GUI.GUITools.PasswordField;
@@ -45,12 +40,17 @@ public class LoginPanel extends JPanel {
     protected ShadowPanel centralPanel = null;
 
 
+    /** title */
+    private JLabel title = null;
+
+
     /** input user secret key */
-    private InputField userKey = null;
+    private PasswordField userKey = null;
 
 
     /** input user key id */
-    private PasswordField userId = null;
+    private InputField userId = null;
+
 
 
     /** 觸發 login 的按鈕 */
@@ -66,63 +66,44 @@ public class LoginPanel extends JPanel {
         // outer
         this.setLayout(new GridBagLayout());
         this.setBackground(new Color(0, 0, 0, 0));
-        GridBagConstraints constraint = new GridBagConstraints();
 
 
         // inner
-        this.centralPanel = new ShadowPanel(this.getBackground(), new Color(122, 149, 211), new Color(185, 185, 185));
-        this.centralPanel.setArc(50, 50);
-        this.centralPanel.setPreferredSize(new Dimension(500, 375));
+        // this.centralPanel = new ShadowPanel(this.getBackground());
+        // this.centralPanel = new ShadowPanel(this.getBackground(), new Color(122, 149, 211), new Color(180, 180, 180));
+        this.centralPanel = new ShadowPanel(this.getBackground(), new Color(240, 240, 240), new Color(180, 180, 180));
+        this.centralPanel.setArc(40, 40);
+        this.centralPanel.setPreferredSize(new Dimension(600, 450));
         this.centralPanel.setLayout(new BoxLayout(this.centralPanel.getRoot(), BoxLayout.Y_AXIS));
         
+        
+        // set title
+        this.title = new JLabel("LOGIN");
+        this.title.setFont(new Font("Calibri", Font.BOLD, 60));
+        this.title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
         // set Field
-        Font font = new Font("Arial", Font.PLAIN, 15);
-
-        this.userKey = new InputField("S E C R E T - K E Y : ");
-        this.userId = new PasswordField("K E Y - I D : ", '*');
-        
-        this.userKey.setBackground(this.centralPanel.getBackground());
-        this.userId.setBackground(this.centralPanel.getBackground());
-
-        this.userKey.setAllFont(font);
-        this.userId.setAllFont(font);
-
-        this.userKey.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.userId.setAlignmentX(Component.CENTER_ALIGNMENT);
+        fieldSetting();
 
 
         // set Button
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(this.centralPanel.getBackground());
-
-        this.loginButton = new JButton("login");
-        this.registerButton = new JButton("register");
-        
-        Dimension buttonSize = new Dimension(200, 30);
-        this.loginButton.setSize(buttonSize);
-        this.registerButton.setSize(buttonSize);
-
-        buttonPanel.add(loginButton);
-        buttonPanel.add(Box.createHorizontalStrut(30));
-        buttonPanel.add(registerButton);
-
-        buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.userKey.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.userId.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel buttonPanel = buttonSetting();
 
 
         // add
-        this.centralPanel.add(this.userKey);
-        this.centralPanel.add(Box.createHorizontalStrut(10));
+        this.centralPanel.add(this.title);
+        this.centralPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         this.centralPanel.add(this.userId);
-        this.centralPanel.add(Box.createHorizontalStrut(10));
+        this.centralPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        this.centralPanel.add(this.userKey);
+        this.centralPanel.add(Box.createRigidArea(new Dimension(0, 30)));
         this.centralPanel.add(buttonPanel);
+        this.centralPanel.add(Box.createVerticalGlue());
 
-        constraint.gridx = 0;  // Column 0
-        constraint.gridy = 0;  // Row 0
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridx = 0;
+        constraint.gridy = 0;
         this.add(this.centralPanel, constraint);
 
     
@@ -138,6 +119,59 @@ public class LoginPanel extends JPanel {
                 }
             }
         });
+    }
+
+
+    /** 排 userId, userKey Field */
+    private void fieldSetting() {
+        Font font = new Font("Calibri", Font.BOLD, 18);
+
+        this.userId = new InputField("K E Y - I D : ");
+        this.userKey = new PasswordField("S E C R E T - K E Y : ", '*');
+
+        this.userId.setSize(180, 25);
+        this.userKey.setSize(180, 25);
+        
+        this.userId.setBackground(this.centralPanel.getBackground());
+        this.userKey.setBackground(this.centralPanel.getBackground());
+
+        this.userId.getTextField().setBorder(BorderFactory.createLineBorder(new Color(130, 130, 130), 3));
+        this.userKey.getTextField().setBorder(BorderFactory.createLineBorder(new Color(130, 130, 130), 3))
+        ;
+        this.userId.getTextField().setBackground(new Color(248, 222, 179));
+        this.userKey.getTextField().setBackground(new Color(248, 222, 179));
+
+        this.userId.setFont(font);
+        this.userKey.setFont(font);
+    }
+
+    /**
+     * 排 login, register Button
+     * @return buttonPanel
+     */
+    private JPanel buttonSetting() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setBackground(this.centralPanel.getBackground());
+        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+
+        this.loginButton = new JButton("login");
+        this.registerButton = new JButton("register");
+        
+        Dimension buttonSize = new Dimension(150, 50);
+        this.loginButton.setMaximumSize(buttonSize);
+        this.registerButton.setMaximumSize(buttonSize);
+        this.loginButton.setPreferredSize(buttonSize);
+        this.registerButton.setPreferredSize(buttonSize);
+        
+        this.loginButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        this.registerButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        
+        buttonPanel.add(this.loginButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(100, 0)));
+        buttonPanel.add(this.registerButton);
+
+        return buttonPanel;
     }
 
 
