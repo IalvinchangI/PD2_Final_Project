@@ -1,6 +1,6 @@
 # Documentation
 
-## WebCrawler `interface`
+## WebCrawler `class`
 ### 功能：
 > 存取股票資訊
 

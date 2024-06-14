@@ -7,7 +7,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class AlpacaAPICall {
+public class WebCrawler {
     // 取得Key ID
     Deal deal = new Deal();
     KeyAndID user = null;
