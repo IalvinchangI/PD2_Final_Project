@@ -3,57 +3,57 @@ package project.System;
 
 public class KeyAndID {
 
-    private String APIKey = null;
-    private String APIID = null;
+    private String secretKey = null;
+    private String KeyID = null;
 
     /**
      * 建立一個使用者的KeyAndID
-     * @param APIKey : 使用者的Secret Key
-     * @param APIID : 使用者的Key ID
+     * @param secretKey : 使用者的Secret Key
+     * @param KeyID : 使用者的Key ID
      */
-    public KeyAndID(String APIKey, String APIID) {
+    public KeyAndID(String secretKey, String keyID) {
 
-        setAPIKey(APIKey);
-        setAPIID(APIID);
+        setsecretKey(secretKey);
+        setKeyID(keyID);
     }
 
     /**
      * 取得使用者的Secret Key
      * @return 使用者的Secret Key
      */
-    public String getAPIKey() {
+    public String getsecretKey() {
 
-        assert APIKey != null && APIKey.length() > 0 : "APIKey is null or \\\"\\\"";
-        return APIKey;
+        assert secretKey != null && secretKey.length() > 0 : "secretKey is null or \\\"\\\"";
+        return secretKey;
     }
 
     /**
      * 取得使用者的Key ID
      * @return 使用者的Key ID
      */
-    public String getAPIID() {
+    public String getKeyID() {
 
-        assert APIID != null && APIID.length() > 0  : "APIID is null or \"\"";
-        return APIID;
+        assert KeyID != null && KeyID.length() > 0  : "KeyID is null or \"\"";
+        return KeyID;
     }
 
     /**
      * 設定使用者的Secret Key
-     * @param APIKey : 使用者的Secret Key
+     * @param secretKey : 使用者的Secret Key
     */
-    public void setAPIKey(String APIKey) {
+    public void setsecretKey(String secretKey) {
 
-        assert APIKey != null && APIKey.length() > 0 : "APIKey is null or \"\"";
-        this.APIKey = APIKey;
+        assert secretKey != null && secretKey.length() > 0 : "secretKey is null or \"\"";
+        this.secretKey = secretKey;
     }
 
     /**
      * 設定使用者的Key ID
      * @param ID : 使用者的Key ID
      */
-    public void setAPIID(String APIID) {
+    public void setKeyID(String KeyID) {
 
-        assert APIID != null && APIID.length() > 0 : "APIID is null or \"\"";
-        this.APIID = APIID;
+        assert KeyID != null && KeyID.length() > 0 : "KeyID is null or \"\"";
+        this.KeyID = KeyID;
     }
 }

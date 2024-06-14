@@ -16,7 +16,7 @@ public class Stock {
      * @param stockCount : (初始)預設為1股
      */
     public Stock(String stockName, double stockPrice, int stockCount) {
-        
+
         setStockName(stockName);
         setStockPrice(stockPrice);
         setStockCount(stockCount);
@@ -51,18 +51,30 @@ public class Stock {
         return stockCount;
     }
 
+    /**
+     * 設定股票名稱
+     * @param stockName : 股票名稱
+     */
     public void setStockName(String stockName) {
 
         assert stockName != null & stockName.length() > 0 : "stockName is null or \"\"";
         this.stockName = stockName;
     }
 
+    /**
+     * 設定股價
+     * @param stockPrice : 股價
+     */
     public void setStockPrice(double stockPrice) {
 
         assert stockPrice >= 0 : "stockPrice < 0";
         this.stockPrice = stockPrice;
     }
 
+    /**
+     * 設定該股票持有股數
+     * @param stockCount : 持有股數
+     */
     public void setStockCount(int stockCount) {
         assert stockCount > 0 : "stockCount <= 0";
         this.stockCount = stockCount;
