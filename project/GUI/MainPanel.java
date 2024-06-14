@@ -1,6 +1,8 @@
 package project.GUI;
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.*;
 
 
@@ -17,18 +19,28 @@ public class MainPanel extends JPanel {
 
 
     public MainPanel() {
-        this.buttonPanel.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.buttonPanel = new JPanel();
+        this.buttonPanel.setLayout(new BoxLayout(this.buttonPanel, BoxLayout.X_AXIS));
 
         this.stockButton = new JButton("stock");
         this.historyButton = new JButton("history");
+        this.stockButton.setFont(new Font("Serif", Font.PLAIN, 30));
+        this.historyButton.setFont(new Font("Serif", Font.PLAIN, 30));
 
+        
+
+        this.buttonPanel.add(Box.createRigidArea(new Dimension(470, 100)));
         this.buttonPanel.add(stockButton);
+        this.buttonPanel.add(Box.createRigidArea(new Dimension(100, 100)));
         this.buttonPanel.add(historyButton);
 
-        this.buttonPanel.setPreferredSize(new Dimension(1440, 100));
+        this.buttonPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+        this.buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        this.buttonPanel.setPreferredSize(new Dimension(1280, 100));
         this.add (this.buttonPanel);
 
-        this.setPreferredSize(new Dimension(1600, 1050));
+        this.setPreferredSize(new Dimension(1280, 800));
 
 
     }
