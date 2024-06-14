@@ -215,7 +215,7 @@
 > * 儲存過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
 > ```java
 > public void saveMarketInfo(String stockName, int period, double highPrice, double lowPrice, double openingPrice, double closingPrice)
-> ```java
+> ```
 
 > * 取得過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
 > ```java
