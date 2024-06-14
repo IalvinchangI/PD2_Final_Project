@@ -8,11 +8,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class AlpacaAPICall {
-    // 處理有沒有開市
     // 取得Key ID
     KeyAndID user = null;
     private static final String API_KEY_ID = "PKG2UYG7EYP063HG5USI";
@@ -30,13 +27,13 @@ public class AlpacaAPICall {
             //user.get();
             checkMarketOpen();
 
-            // String[] all_Stocks = {"AAPL", "GOOGL", "AMZN", "FB", "MSFT", "TSLA"};
-            // for(String each_Stock : all_Stocks){
-            //     getStockData(each_Stock);
-            // }
-            // ArrayList stockInformation = new ArrayList<>();
+            /* 獲取股票30天資料 */
+            String[] all_Stocks = {"AAPL", "GOOGL", "AMZN", "FB", "MSFT", "TSLA"};
+            for(String each_Stock : all_Stocks){
+                ArrayList stockInformation = new ArrayList<>();
+                getStockData(each_Stock, stockInformation);
+            }
 
-            getStockData("AAPL");
 
             // TODO 改寫成歷史資料
             //getStockData("AAPL");
@@ -153,7 +150,7 @@ public class AlpacaAPICall {
      * @author吳宗翰
      * @param symbol
      */
-    private static void getStockData(String symbol) {
+    private static void getStockData(String symbol, ArrayList stocksInformation) {
         try {
             LocalDate endDate = LocalDate.now().minusDays(2);
             LocalDate startDate = endDate.minusDays(32);
