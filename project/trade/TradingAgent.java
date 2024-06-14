@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import project.System.StockDataSystem;
@@ -71,19 +72,20 @@ public class TradingAgent {
             // get detail
             double newestDealPrice = 0;
             if (newestStockHistoryRecord == null) {  // if it is the first trade
-                newestDealPrice = buyingSetting.getBuyPrice();  // 將 上次交易價 設為 使用者設定的買入價格
+                newestDealPrice = buyingSetting.getBidPrice();  // 將 上次交易價 設為 使用者設定的買入價格
             }
             else {
-                newestDealPrice = newestStockHistoryRecord.get_交易價();  // 取得 上次交易價
+                newestDealPrice = newestStockHistoryRecord.get_單張交易價();  // 取得 上次交易價 (單張股票)
             }
             double nowStockPrice = stock.getStockPrice();  // 取得 現在股價
             double priceDelta = nowStockPrice - newestDealPrice;  // 現在股價 和 上次交易價 (or 使用者設定的買入價格) 的價格差
 
 
             // buy
-            if (nowStockPrice <= buyingSetting.getBuyPrice()) {  // 現在股價 比 設定的買入價格 低
-                if ((priceDelta / buyingSetting.getBidStep()) <= -1.) {  // 價格差 比 設定的買入間隔 大
+            if (nowStockPrice <= buyingSetting.getBidPrice()) {  // 現在股價 比 設定的買入價格 低or相等
+                if ((priceDelta / buyingSetting.getBidStep()) <= -1.) {  // 價格差(負的) 比 設定的買入間隔 大
                     if (this.buyingRequest(stockName, buyingSetting.getStockCount()) == true) {  // 買入
+                        System.out.println("TradingAgent\ttrade\tbuy -> 現在股價 : " + nowStockPrice + "\t上次交易價 : " + newestDealPrice + "\t時間 : " + LocalDateTime.now().toString());
                         trade_TF = true;
                     }
                     // else 買入失敗
@@ -93,13 +95,15 @@ public class TradingAgent {
 
 
             // sell
-            // TODO 判斷是否賣空
-            if ((priceDelta / buyingSetting.getOfferStep()) >= 1.) {  // 價格差 比 設定的賣出間隔 大
-                if (this.sellingRequest(stockName, buyingSetting.getStockCount()) == true) {  // 賣出
-                    trade_TF = true;
+            if (stock.getStockCount() > 0) {  // 判斷是否賣空
+                if ((priceDelta / buyingSetting.getOfferStep()) >= 1.) {  // 價格差(正的) 比 設定的賣出間隔 大
+                    if (this.sellingRequest(stockName, buyingSetting.getStockCount()) == true) {  // 賣出
+                        System.out.println("TradingAgent\ttrade\tsell -> 現在股價 : " + nowStockPrice + "\t上次交易價 : " + newestDealPrice + "\t時間 : " + LocalDateTime.now().toString());
+                        trade_TF = true;
+                    }
+                    // else 賣出失敗
+                    continue;
                 }
-                // else 賣出失敗
-                continue;
             }
 
             

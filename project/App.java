@@ -43,6 +43,15 @@ public class App {
         }
 
 
+        String[] symbols    = {"AAPL", "GOOGL", "META", "TSLA", "AMZN", "MSFT"};
+        double[] buyPrice   = {212.,   178.,    504.,   178.5,  183.,   442.  };  // 設定的買入價格
+        double[] bidStep    = {0.2,    0.05,    0.2,    0.1,    0.1,    0.2   };  // 設定的買入間隔
+        double[] offerStep  = {0.3,    0.1,     0.3,    0.2,    0.1,    0.4   };  // 設定的賣出間隔
+        for (int i = 0; i < symbols.length; i++) {
+            stockDataSystem.saveBuyingSetting(symbols[i], buyPrice[i], bidStep[i], offerStep[i]);
+        }
+
+
         // market is open?
         boolean marketOpen_TF = WebCrawler.checkMarketOpen();
 

@@ -69,7 +69,7 @@ public class StockBuyingSetting {
         return bidStep;
     }
 
-    public int getstockCount() {
+    public int getStockCount() {
 
         assert stockCount > 0 : "stockCount <= 0";
         return stockCount;
