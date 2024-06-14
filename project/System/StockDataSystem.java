@@ -6,7 +6,7 @@ import java.util.Set;
 public interface StockDataSystem {
     /**
      * 取得Map<股票名稱, 該股票資訊>
-     * @return
+     * @return Map<股票名稱, 該股票資訊>
      */
     public abstract Map<String, Stock> getStocks();
 
