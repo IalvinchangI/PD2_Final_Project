@@ -113,7 +113,7 @@
 
 > * 寫入該次交易的時間
 > ```java
-> public void setDateAndTime(int year, int month, int date, int hour, int minute, int second)
+> public void setDateAndTime(int year, int month, int date)
 > ```
 
 > * 寫入該次交易的盈虧
@@ -214,7 +214,7 @@
 ### 方法:
 > * 儲存過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
 > ```java
-> public void saveMarketInfo(String stockName, int period, double highPrice, double lowPrice, double openingPrice, double closingPrice)
+> public void saveMarketInfo(String stockName, int period, double highPrice, double lowPrice, double openingPrice, double closingPrice, int year, int month, int date)
 > ```
 
 > * 取得過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
