@@ -30,7 +30,6 @@ public class CandleStick extends JPanel {
         String yAxisLable = "money";
         OHLCDataset dataset = createDataset();
         JFreeChart chart = ChartFactory.createCandlestickChart(stockName, xAxisLable, yAxisLable, dataset, false);
-
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);

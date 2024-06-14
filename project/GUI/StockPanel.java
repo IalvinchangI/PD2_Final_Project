@@ -1,9 +1,15 @@
 package project.GUI;
 
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JPanel;
+
+import org.w3c.dom.events.MouseEvent;
+
 import project.GUI.GUITools.StockDetail;
 
 /**
@@ -24,8 +30,29 @@ public class StockPanel extends JPanel {
         this.stockList.setPreferredSize(new Dimension(100, 800));
         
         this.add (this.stockList);
+        
+
+        stockList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                int index = stockList.locationToIndex(e.getPoint());
+                if (index != -1) {
+                    String selectedItem = stockList.getModel().getElementAt(index);
+                    sd = new StockDetail(selectedItem, index, null);
+                }
+                
+            }
+        });
+
         this.add (sd);
+        
     }
 
+    /**
+     * 取得stockDetail
+     * @return stockDetail
+     */
+    public StockDetail getStockDetail() {
+        return sd;
+    }
 }
 
