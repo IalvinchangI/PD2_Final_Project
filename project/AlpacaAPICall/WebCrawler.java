@@ -51,8 +51,8 @@ public class WebCrawler {
         WebCrawler.stockDataSystem = stockDataSystem;
 
         KeyAndID keyAndID = stockDataSystem.getKeyAndID();
-        WebCrawler.API_KEY_ID = keyAndID.getAPIID();
-        WebCrawler.API_SECRET_KEY = keyAndID.getAPIKey();
+        WebCrawler.API_KEY_ID = keyAndID.getKeyID();
+        WebCrawler.API_SECRET_KEY = keyAndID.getsecretKey();
     }
 
 
@@ -115,7 +115,7 @@ public class WebCrawler {
         for(String symbol : symbols){
             String stockName = symbol;
             symbol = symbol + "/bars?timeframe=1Day";
-            System.out.println(symbol);
+            // System.out.println(symbol);
             try {
                 sendGetRequest_Market(symbol, stockName);
             } catch (Exception e) {
@@ -162,7 +162,7 @@ public class WebCrawler {
         connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
         int responseCode = connection.getResponseCode();
-        System.out.println("Response Code: " + responseCode);
+        // System.out.println("Response Code: " + responseCode);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
@@ -173,8 +173,9 @@ public class WebCrawler {
         in.close();
 
         double stockPrice = extractStockPrice(response.toString());
-        System.out.println(stockName + " Price = " + stockPrice);
+        // System.out.println(stockName + " Price = " + stockPrice);
 
+        stockDataSystem.addStock2StocksMap(stockName, stockPrice);
         // TODO 傳資料給mason
 
     }
@@ -214,7 +215,7 @@ public class WebCrawler {
             connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
             int responseCode = connection.getResponseCode();
-            System.out.println(responseCode);
+            // System.out.println(responseCode);
 
             if (responseCode == 200) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -280,13 +281,13 @@ public class WebCrawler {
                 }
             }
 
-            System.out.println("stock name : " + symbol);
-            System.out.println(year + "/" + month + "/" + day);
-            System.out.println("Open: " + open);
-            System.out.println("Close: " + close);
-            System.out.println("High: " + high);
-            System.out.println("Low: " + low);
-            System.out.println("-----------------------------");
+            // System.out.println("stock name : " + symbol);
+            // System.out.println(year + "/" + month + "/" + day);
+            // System.out.println("Open: " + open);
+            // System.out.println("Close: " + close);
+            // System.out.println("High: " + high);
+            // System.out.println("Low: " + low);
+            // System.out.println("-----------------------------");
         }
     }
 
@@ -309,7 +310,7 @@ public class WebCrawler {
         connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
         int responseCode = connection.getResponseCode();
-        System.out.println("Response Code: " + responseCode);
+        // System.out.println("Response Code: " + responseCode);
 
         if (responseCode == 200) {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -332,7 +333,7 @@ public class WebCrawler {
      */
     private static void parseAndPrintAccountActivities(String jsonResponse) {
         if (jsonResponse.startsWith("Error:")) {
-            System.out.println(jsonResponse);
+            // System.out.println(jsonResponse);
             return;
         }
 
@@ -359,8 +360,9 @@ public class WebCrawler {
             int day = Integer.parseInt(transactionTime.substring(8, 10).trim());
 
             // TODO 傳資料給mason
+            stockDataSystem.addDeal2HistoryRecord(symbol, stockQty, tradingPrice, year, month, day);
 
-            System.out.println("Symbol: " + symbol + ", Qty: " + stockQty + ", Side: " + side + ", Price: " + tradingPrice + ", Transaction Time: " + year + "/" + month + "/" + day);
+            // System.out.println("Symbol: " + symbol + ", Qty: " + stockQty + ", Side: " + side + ", Price: " + tradingPrice + ", Transaction Time: " + year + "/" + month + "/" + day);
         }
     }
 
