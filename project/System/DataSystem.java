@@ -151,6 +151,7 @@ public class DataSystem implements StockDataSystem {
             if (buyingSettings.containsKey(stockName)) {
 
                 buyingSettings.remove(stockName);
+                System.out.println(buyingSetting.getStockCount());
                 buyingSettings.put(stockName, buyingSetting);
             }
             else {
