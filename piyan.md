@@ -1,6 +1,6 @@
 # Documentation
 
-## WebCrawler `interface`
+## WebCrawler `class`
 ### 功能：
 > 存取股票資訊
 
@@ -23,4 +23,9 @@
 > * 存取30天股價資訊
 > ```java
 > public static void stockDataProcessing()
+> ```
+
+> * 存取歷史紀錄
+> ```java
+> public static void historyTradingProcessing()
 > ```
