@@ -42,7 +42,7 @@
 
 > * 儲存買賣設定
 > ```java
-> public void saveBuyingSetting(String stockName, double sellPrice, double buyPrice, double step)
+> public void saveBuyingSetting(String stockName, double offerPrice, double bidPrice, double step)
 > ```
 
 <br>
@@ -160,9 +160,9 @@
 
 ## StockBuyingSetting
 ### 功能:
->買賣設定
+> 買賣設定
 
-###方法: 
+### 方法: 
 > * 取得要交易的股票名稱
 > ```java
 > public String getStockName()
@@ -170,12 +170,12 @@
 
 > * 取得目標賣價
 > ```java
-> public double getSellPrice()
+> public double getOfferPrice()
 > ```
 
 > * 取得目標買價
 > ```java
-> public double getBuyPrice()
+> public double getBidPrice()
 > ```
 
 > * 取得買賣間隔
@@ -190,15 +190,34 @@
 
 > * 設定目標賣價
 > ```java
-> public void setSellPrice(double sellPrice)
+> public void setOfferPrice(double offerPrice)
 > ```
 
 > * 設定目標買價
 > ```java
-> public void setBuyPrice(double buyPrice)
+> public void setBidPrice(double bidPrice)
 > ```
 
 > * 設定買賣間隔
 > ```java
 > public void setStep(double step)
 > ``` 
+
+
+<br>
+
+
+## MarketAnalyser
+### 功能:
+> 做股票分析，產生分析圖
+
+### 方法:
+> * 儲存過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
+> ```java
+> public void saveMarketInfo(String stockName, int period, double highPrice, double lowPrice, double openingPrice, double closingPrice)
+> ```java
+
+> * 取得過去一段時間(月、周、日)內，特定股票的最高價、最低價、開盤價、收盤價
+> ```java
+> public List getMarketInfo(String stockName, int period)
+> ```
