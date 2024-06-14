@@ -42,6 +42,7 @@ public class App {
         }
 
 
+        System.out.println("saveBuyingSetting");
         String[] symbols    = {"AAPL", "GOOGL", "META", "TSLA", "AMZN", "MSFT"};
         double[] buyPrice   = {212.6,  178.,    504.,   178.5,  183.,   442.  };  // 設定的買入價格
         double[] bidStep    = {0.2,    0.05,    0.2,    0.1,    0.1,    0.2   };  // 設定的買入間隔
@@ -52,13 +53,17 @@ public class App {
 
 
         // market is open?
+        System.out.println("checkMarketOpen");
         boolean marketOpen_TF = WebCrawler.checkMarketOpen();
 
 
         // crawl data
+        System.out.println("stockDataProcessing");
         WebCrawler.stockDataProcessing();  // 查詢 30 天股價
+        System.out.println("historyTradingProcessing");
         WebCrawler.historyTradingProcessing();  // 爬歷史資料
         if (marketOpen_TF == true) {
+            System.out.println("stockPriceProcessing");
             WebCrawler.stockPriceProcessing();  // 查詢時價
         }
         else {
@@ -68,6 +73,7 @@ public class App {
         // schedule BackgroundExecute if market open
         BackgroundExexute backgroundExexute = null;
         if (marketOpen_TF == true) {
+            System.out.println("backgroundExexute");
             backgroundExexute = new BackgroundExexute(stockDataSystem);
             backgroundTimer.schedule(backgroundExexute, TRANSACTION_INTERVAL, TRANSACTION_INTERVAL);
         }
