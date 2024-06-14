@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import project.GUI.GUITools.StockDetail;
 
 public class MainWindow {
+
     public void showGUI() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +81,7 @@ public class MainWindow {
             }
         });
 
-        
+        frame.setVisible(true);
 
     }
 }

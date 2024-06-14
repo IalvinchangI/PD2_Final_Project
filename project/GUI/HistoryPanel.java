@@ -1,6 +1,8 @@
 package project.GUI;
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -18,8 +20,9 @@ public class HistoryPanel  extends JPanel {
 
     public HistoryPanel() {
 
-        this.setPreferredSize(new Dimension (1440, 900));
+        this.setPreferredSize(new Dimension (800, 600));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.pp.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(this.pp);
         this.add(Box.createHorizontalStrut(10));
@@ -35,16 +38,21 @@ public class HistoryPanel  extends JPanel {
  */
 class ProfitPanel extends JPanel {
 
-    private JLabel profixTextLabel = null;
+    private JLabel profitTextLabel = null;
     private double profit = 10.01;
     private JLabel profitLabel = null;
 
     ProfitPanel() {
-        this.profixTextLabel = new JLabel("profit and loss:");
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.profitTextLabel = new JLabel("profit and loss:");
         this.profitLabel = new JLabel(Double.toString(profit));
-        this.add(this.profixTextLabel);
+
+        this.profitTextLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+        this.profitLabel.setFont(new Font("Serif", Font.PLAIN, 60));
+        this.add(this.profitTextLabel);
         this.add(this.profitLabel);
-        this.setPreferredSize(new Dimension(1200, 100));
+        this.setPreferredSize(new Dimension(700, 150));
     }
     
 }
@@ -78,10 +86,11 @@ class HistoryTradePanel extends JPanel {
         }
         html.append("</html>");
         this.historyTradeLabel = new JLabel(html.toString());
+        this.historyTradeLabel.setFont(new Font("Serif", Font.PLAIN, 30));
         this.historyTradeScrollPane = new JScrollPane(this.historyTradeLabel);
         this.historyTradeScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.historyTradeScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.historyTradeScrollPane.setPreferredSize(new Dimension(1200, 700));
+        this.historyTradeScrollPane.setPreferredSize(new Dimension(700, 400));
         this.add(this.historyTradeScrollPane);
 
     }   
