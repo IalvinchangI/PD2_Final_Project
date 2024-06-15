@@ -2,8 +2,11 @@ package project.GUI.GUITools;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
 
 import javax.swing.JButton;
 
@@ -14,13 +17,15 @@ import javax.swing.JButton;
  */
 public class RoundButton extends JButton {
     
-    /** 背景色 */
+    /** 圓框按鈕的下面那層的顏色 */
+    private Color bottomLayerColor = null;
+    /** 圓框按鈕的背景色 */
     private Color backgroundColor = null;
-    /** 背景色 */
+    /** 邊框的背景色 */
     private Color borderColor = null;
-    /** 背景色 */
+    /** 按下後，圓框按鈕的背景色 */
     private Color clickBackgroundColor = null;
-    /** 背景色 */
+    /** 按下後，邊框的背景色 */
     private Color clickBorderColor = null;
 
 
@@ -49,7 +54,9 @@ public class RoundButton extends JButton {
      */
     public RoundButton(String text, Color bottomLayerColor, Color backgroundColor, Color borderColor, Color clickBackgroundColor, Color clickBorderColor) {
         super(text);
+        this.text = text;
         this.setBackground(bottomLayerColor);
+        this.bottomLayerColor = bottomLayerColor;
         this.backgroundColor = backgroundColor;
         this.borderColor = borderColor;
         this.clickBackgroundColor = clickBackgroundColor;
@@ -57,7 +64,6 @@ public class RoundButton extends JButton {
 
         this.text = text;
 
-        // setContentAreaFilled(false);  // 不繪製按鈕區域的內容
         setFocusPainted(false);  // 不繪製焦點框
         setBorderPainted(false);  // 不繪製按鈕邊框
     }
@@ -72,28 +78,49 @@ public class RoundButton extends JButton {
     }
 
 
+    /** 畫框時，要往內縮的距離 */
+    private final static int PAINT_CENTER_INDENTATION = 2;
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
+
         
         g2d.setStroke(new BasicStroke(4));
-
-        // background and border
-        if (this.getModel().isArmed()) {
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        // background
+        if (this.getModel().isRollover()) {
             g2d.setColor(this.clickBackgroundColor);
-            g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
-            g2d.setColor(this.clickBorderColor);
-            g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
         } else {
             g2d.setColor(this.backgroundColor);
-            g2d.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
-            g2d.setColor(this.borderColor);
-            g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
         }
+        g2d.fillRoundRect(
+            PAINT_CENTER_INDENTATION, PAINT_CENTER_INDENTATION, 
+            getWidth() - PAINT_CENTER_INDENTATION * 2, getHeight() - PAINT_CENTER_INDENTATION * 2, 
+            arcWidth, arcHeight
+        );
+        
+        // border
+        if (this.getModel().isRollover()) {
+            g2d.setColor(this.clickBorderColor);
+        } else {
+            g2d.setColor(this.borderColor);
+        }
+        g2d.drawRoundRect(
+            PAINT_CENTER_INDENTATION, PAINT_CENTER_INDENTATION, 
+            getWidth() - PAINT_CENTER_INDENTATION * 2, getHeight() - PAINT_CENTER_INDENTATION * 2, 
+            arcWidth, arcHeight
+        );
 
-        int textWidth = this.text.length() * 2;
-        g2d.drawString(this.text, getWidth() / 2 - textWidth - 3, getHeight() / 2 + 3);
+        // text
+        FontMetrics fm = g2d.getFontMetrics();
+        Rectangle stringBounds = fm.getStringBounds(getText(), g2d).getBounds();
+        int textX = (getWidth() - stringBounds.width) / 2;
+        int textY = (getHeight() - stringBounds.height) / 2 + fm.getAscent() + 2;
+        g2d.setColor(getForeground());
+        g2d.drawString(getText(), textX, textY);
         
         // show
         g2d.dispose();
