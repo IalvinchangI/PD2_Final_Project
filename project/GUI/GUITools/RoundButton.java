@@ -64,6 +64,7 @@ public class RoundButton extends JButton {
 
         this.text = text;
 
+        setContentAreaFilled(false);
         setFocusPainted(false);  // 不繪製焦點框
         setBorderPainted(false);  // 不繪製按鈕邊框
     }
@@ -91,26 +92,30 @@ public class RoundButton extends JButton {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         // background
-        if (this.getModel().isRollover()) {
+        if (this.getModel().isArmed()) {
+            g2d.setColor(this.backgroundColor);
+        } else if (this.getModel().isRollover()) {
             g2d.setColor(this.clickBackgroundColor);
         } else {
             g2d.setColor(this.backgroundColor);
         }
         g2d.fillRoundRect(
             PAINT_CENTER_INDENTATION, PAINT_CENTER_INDENTATION, 
-            getWidth() - PAINT_CENTER_INDENTATION * 2, getHeight() - PAINT_CENTER_INDENTATION * 2, 
+            getWidth() - PAINT_CENTER_INDENTATION * 2 - 1, getHeight() - PAINT_CENTER_INDENTATION * 2 - 1, 
             arcWidth, arcHeight
         );
         
         // border
-        if (this.getModel().isRollover()) {
+        if (this.getModel().isArmed()) {
+            g2d.setColor(this.borderColor);
+        } else if (this.getModel().isRollover()) {
             g2d.setColor(this.clickBorderColor);
         } else {
             g2d.setColor(this.borderColor);
         }
         g2d.drawRoundRect(
             PAINT_CENTER_INDENTATION, PAINT_CENTER_INDENTATION, 
-            getWidth() - PAINT_CENTER_INDENTATION * 2, getHeight() - PAINT_CENTER_INDENTATION * 2, 
+            getWidth() - PAINT_CENTER_INDENTATION * 2 - 1, getHeight() - PAINT_CENTER_INDENTATION * 2 - 1, 
             arcWidth, arcHeight
         );
 

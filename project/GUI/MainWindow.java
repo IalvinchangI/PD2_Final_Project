@@ -93,12 +93,13 @@ public class MainWindow extends JFrame {
                 if (WebCrawler.check_Key_ID(userId, userKey)) {
                     window.stockDataSystem.setKeyAndID(userKey, userId);
                     window.changePagePanel.showPage(MAIN_PANEL_NAME);
+                    repaint();
                 }
                 else {
                     JDialog wrong = new WrongInfo(window);
+                    wrong.setSize(200, 150);
                     wrong.setVisible(true);
                 }
-                repaint();
             }
         });
 
@@ -119,7 +120,7 @@ public class MainWindow extends JFrame {
         StockDataSystem dataSystem = new DataSystem();
         WebCrawler.downloadStockDataSystem(dataSystem);  // load StockDataSystem
         
-        MainWindow window = new MainWindow("股票機器人", 1400, 800, dataSystem);
+        MainWindow window = new MainWindow("股票機器人", 1400, 850, dataSystem);
         
         
         window.showGUI();

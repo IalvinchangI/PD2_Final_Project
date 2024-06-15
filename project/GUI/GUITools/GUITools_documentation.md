@@ -34,7 +34,9 @@
 
 ## ShadowPanel `JPanel`
 ### 功能：
-> 有陰影的框 (Panel)
+> 有陰影的框 (Panel) 
+> 
+> **`construct 後，須執行 setPreferredSize`**
 
 ### 新增方法：
 > * 框的邊角圓弧
@@ -46,6 +48,30 @@
 > ```java
 > public void setShadowShift(int shift)
 > ``` 
+
+> * 取得裝元件的 Panel
+> ```java
+> public JPanel getRoot()
+> ```
+
+> * 取得 背景色
+> ```java
+> public Color getRealBackground()
+> ``` 
+
+<br>
+
+## RoundPanel `JPanel`
+### 功能：
+> 圓框 (Panel)  
+> 
+> **`construct 後，須執行 setPreferredSize`**
+
+### 新增方法：
+> * 框的邊角圓弧
+> ```java
+> public void setArc(int width, int height)
+> ```
 
 > * 取得裝元件的 Panel
 > ```java

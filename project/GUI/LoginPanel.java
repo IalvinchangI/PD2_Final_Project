@@ -153,7 +153,7 @@ public class LoginPanel extends JPanel {
     private JPanel buttonSetting() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-        buttonPanel.setBackground(this.centralPanel.getBackground());
+        buttonPanel.setBackground(this.centralPanel.getRealBackground());
 
         this.loginButton = new RoundButton(
             "login", this.centralPanel.getRealBackground(),

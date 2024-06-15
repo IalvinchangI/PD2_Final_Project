@@ -50,11 +50,12 @@ public class MainPanel extends JPanel {
         
 
         // inner
-        this.centralPanel = new ShadowPanel(this.getBackground());
-        this.centralPanel.setPreferredSize(new Dimension(1280, 800));
+        this.centralPanel = new ShadowPanel(this.getBackground(), new Color(240, 240, 240), new Color(180, 180, 180));
+        this.centralPanel.setPreferredSize(new Dimension(1400, 750));
         this.centralPanel.setLayout(new BoxLayout(this.centralPanel.getRoot(), BoxLayout.Y_AXIS));
 
-        this.centralPanel.setShadowShift(0);
+        // this.centralPanel.setArc(0, 0);
+        // this.centralPanel.setShadowShift(0);
 
 
         // set panels
@@ -66,6 +67,7 @@ public class MainPanel extends JPanel {
         
         // add
         this.centralPanel.add(this.buttonPanel);
+        this.centralPanel.add(Box.createVerticalStrut(50));
         this.centralPanel.add(this.pageBody);
 
         GridBagConstraints constraints = new GridBagConstraints();
@@ -83,24 +85,36 @@ public class MainPanel extends JPanel {
         // new and setting
         this.buttonPanel = new JPanel();
         this.buttonPanel.setLayout(new BoxLayout(this.buttonPanel, BoxLayout.X_AXIS));
+        this.buttonPanel.setBackground(this.centralPanel.getRealBackground());
 
-        this.stockButton = new RoundButton("stock", this.getBackground());
-        this.historyButton = new RoundButton("history", this.getBackground());
+        this.stockButton = new RoundButton(
+            "Stock", this.centralPanel.getRealBackground(),
+            new Color(248, 222, 179), new Color(130, 130, 130), 
+            new Color(250, 205, 131), new Color(100, 100, 100)
+        );
+        this.historyButton = new RoundButton(
+            "History", this.centralPanel.getRealBackground(),
+            new Color(248, 222, 179), new Color(130, 130, 130), 
+            new Color(250, 205, 131), new Color(100, 100, 100)
+        );
 
-        Font font = new Font("Serif", Font.PLAIN, 30);
+        Dimension buttonSize = new Dimension(425, 50);
+        this.stockButton.setMaximumSize(buttonSize);
+        this.historyButton.setMaximumSize(buttonSize);
+        this.stockButton.setPreferredSize(buttonSize);
+        this.historyButton.setPreferredSize(buttonSize);
+
+        Font font = new Font("Calibri", Font.BOLD, 30);
         this.stockButton.setFont(font);
         this.historyButton.setFont(font);
 
         // this.buttonPanel.setAlignmentY(Component.TOP_ALIGNMENT);
         this.buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        this.buttonPanel.setPreferredSize(new Dimension(1280, 100));
-
 
         // add
-        // this.buttonPanel.add(Box.createRigidArea(new Dimension(470, 100)));
         this.buttonPanel.add(stockButton);
-        this.buttonPanel.add(Box.createRigidArea(new Dimension(100, 100)));
+        this.buttonPanel.add(Box.createRigidArea(new Dimension(150, 0)));
         this.buttonPanel.add(historyButton);
     }
 
@@ -147,8 +161,5 @@ public class MainPanel extends JPanel {
     public JButton getHistoryButton() {
         return  this.historyButton;
     }
-    
-
-    
 }
 
