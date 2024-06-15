@@ -42,7 +42,7 @@ public class InputField extends JPanel {
     }
 
     /**
-     * 取得 TextField 內的字
+     * 取得 textField 內的字
      * @return 輸入的字
      */
     public String getText() {
@@ -67,7 +67,7 @@ public class InputField extends JPanel {
      * @param textLength    顯示字數
      * @param height        label, textField 的高
      */
-    public void setSize(int labelWidth, int textLength, int height) {
+    public void setComponentSize(int labelWidth, int textLength, int height) {
         this.textField.setColumns(textLength);
         this.label.setPreferredSize(new Dimension(labelWidth, height));
         this.textField.setPreferredSize(new Dimension(this.textField.getPreferredSize().width, height));
@@ -78,7 +78,7 @@ public class InputField extends JPanel {
      * @param labelWidth    label 的寬
      * @param height        label, textField 的高
      */
-    public void setSize(int labelWidth, int height) {
+    public void setComponentSize(int labelWidth, int height) {
         this.label.setPreferredSize(new Dimension(labelWidth, height));
         this.textField.setPreferredSize(new Dimension(this.textField.getPreferredSize().width, height));
     }
@@ -87,7 +87,7 @@ public class InputField extends JPanel {
      * 調整內部元件大小
      * @param labelWidth    label 的寬
      */
-    public void setSize(int labelWidth) {
+    public void setComponentSize(int labelWidth) {
         this.label.setPreferredSize(new Dimension(labelWidth, this.label.getPreferredSize().height));
     }
 

@@ -15,12 +15,12 @@ import javax.swing.JPasswordField;
 public class PasswordField extends InputField {
 
     /**
-     * 取得 textField
-     * @return textField
+     * 取得 passwordField
+     * @return passwordField
      */
     @Override
     public JPasswordField getTextField() {
-        return (JPasswordField) this.textField;
+        return (JPasswordField) this.textField;  // passwordField
     }
 
     /**

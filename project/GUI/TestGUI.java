@@ -17,8 +17,8 @@ public class TestGUI {
         frame.setBackground(Color.WHITE);
         frame.setSize(1280, 800);
 
-        //LoginPanel loginPanel = new LoginPanel();
-        //frame.add(loginPanel);
+        LoginPanel loginPanel = new LoginPanel();
+        frame.add(loginPanel);
 
         // StockPanel stockPanel = new StockPanel();
         // frame.add(stockPanel);

@@ -130,11 +130,11 @@ public class LoginPanel extends JPanel {
         this.userId = new InputField("K E Y - I D : ");
         this.userKey = new PasswordField("S E C R E T - K E Y : ", '*');
 
-        this.userId.setSize(180, 25);
-        this.userKey.setSize(180, 25);
+        this.userId.setComponentSize(180, 25);
+        this.userKey.setComponentSize(180, 25);
         
-        this.userId.setBackground(this.centralPanel.getBackground());
-        this.userKey.setBackground(this.centralPanel.getBackground());
+        this.userId.setBackground(this.centralPanel.getRealBackground());
+        this.userKey.setBackground(this.centralPanel.getRealBackground());
 
         this.userId.getTextField().setBorder(BorderFactory.createLineBorder(new Color(130, 130, 130), 3));
         this.userKey.getTextField().setBorder(BorderFactory.createLineBorder(new Color(130, 130, 130), 3));
@@ -156,15 +156,19 @@ public class LoginPanel extends JPanel {
         buttonPanel.setBackground(this.centralPanel.getBackground());
 
         this.loginButton = new RoundButton(
-            "login", this.centralPanel.getBackground(),
+            "login", this.centralPanel.getRealBackground(),
             new Color(248, 222, 179), new Color(130, 130, 130), 
-            new Color(250, 241, 220), new Color(180, 180, 180)
+            new Color(250, 205, 131), new Color(100, 100, 100)
         );
         this.registerButton = new RoundButton(
-            "register", this.centralPanel.getBackground(), 
+            "register", this.centralPanel.getRealBackground(), 
             new Color(248, 222, 179), new Color(130, 130, 130), 
-            new Color(250, 241, 220), new Color(180, 180, 180)
+            new Color(250, 205, 131), new Color(100, 100, 100)
         );
+
+        Font font  = new Font("Calibri", Font.BOLD, 18);
+        this.loginButton.setFont(font);
+        this.registerButton.setFont(font);
         
         Dimension buttonSize = new Dimension(150, 50);
         this.loginButton.setMaximumSize(buttonSize);

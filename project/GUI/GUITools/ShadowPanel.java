@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
+import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
@@ -97,7 +98,8 @@ public class ShadowPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
 
-
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
         // shadow
         g2d.setColor(shadowColor);
         g2d.fillRoundRect(shadowShift, shadowShift, getWidth() - shadowShift -1, getHeight() - shadowShift - 1, arcWidth, arcHeight);
@@ -134,6 +136,15 @@ public class ShadowPanel extends JPanel {
         if (this.root != null) {
             this.root.setLayout(mgr);
         }
+    }
+
+
+    /**
+     * 取得 背景色
+     * @return 背景色
+     */
+    public Color getRealBackground() {
+        return this.backgroundColor;
     }
 
 

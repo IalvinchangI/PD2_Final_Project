@@ -30,7 +30,8 @@ public class MainWindow extends JFrame {
         this.setTitle(title);
         // this.setSize(1600, 1050);
         this.setSize(width, height);
-        this.setBackground(Color.WHITE);
+        this.setBackground(new Color(253, 232, 181));
+        // this.setBackground(Color.WHITE);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
