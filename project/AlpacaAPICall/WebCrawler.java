@@ -17,8 +17,6 @@ public class WebCrawler {
     // 取得Key ID
     /** 存取資料的地方 */
     private static StockDataSystem stockDataSystem = null;
-    private static String API_KEY_ID = null;
-    private static String API_SECRET_KEY = null;
     // private static final String API_KEY_ID = "PKG2UYG7EYP063HG5USI";
     // private static final String API_SECRET_KEY = "dn8AVuR8Ux6VRZhI6IW0fP86HtMjldBhkPLFJPVa";
     
@@ -36,16 +34,10 @@ public class WebCrawler {
 
     /**
      * 設定 存取資料的地方
-     * <p>
-     * 下載 API_KEY_IDㄝ, API_SECRET_KEY
      * @param stockDataSystem 存取資料的地方
      */
     public static void downloadStockDataSystem(StockDataSystem stockDataSystem) {
         WebCrawler.stockDataSystem = stockDataSystem;
-
-        KeyAndID keyAndID = stockDataSystem.getKeyAndID();
-        WebCrawler.API_KEY_ID = keyAndID.getKeyID();
-        WebCrawler.API_SECRET_KEY = keyAndID.getsecretKey();
     }
 
 
@@ -54,17 +46,15 @@ public class WebCrawler {
      * @author JackWu
      * @return true 代表 Key ID 輸入正確
      */
-    public static boolean check_Key_ID() {
+    public static boolean check_Key_ID(String API_KEY_ID, String API_SECRET_KEY) {
         int responseCode = -1;
 
         try {
             URL url = new URL(BASE_URL + "/account");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            // connection.setRequestProperty("APCA-API-KEY-ID", WebCrawler.API_KEY_ID);
-            // connection.setRequestProperty("APCA-API-SECRET-KEY", WebCrawler.API_SECRET_KEY);
-            connection.setRequestProperty("APCA-API-KEY-ID", WebCrawler.API_KEY_ID);
-            connection.setRequestProperty("APCA-API-SECRET-KEY", WebCrawler.API_SECRET_KEY);
+            connection.setRequestProperty("APCA-API-KEY-ID", API_KEY_ID);
+            connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
             responseCode = connection.getResponseCode();
         } catch(IOException e) {
@@ -82,6 +72,10 @@ public class WebCrawler {
      * @return true 代表有開市
      */
     public static boolean checkMarketOpen() {
+        KeyAndID keyAndID = stockDataSystem.getKeyAndID();
+        String API_KEY_ID = keyAndID.getKeyID();
+        String API_SECRET_KEY = keyAndID.getsecretKey();
+
         int responseCode = -1;
 
         String responseString = "";
@@ -93,8 +87,8 @@ public class WebCrawler {
             URL url = new URL(BASE_URL + "/clock");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
-            connection.setRequestProperty("APCA-API-KEY-ID", WebCrawler.API_KEY_ID);
-            connection.setRequestProperty("APCA-API-SECRET-KEY", WebCrawler.API_SECRET_KEY);
+            connection.setRequestProperty("APCA-API-KEY-ID", API_KEY_ID);
+            connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
             responseCode = connection.getResponseCode();
             System.out.println(responseCode);
@@ -168,6 +162,10 @@ public class WebCrawler {
      * 需要有Market 的 url 去寫請求，並且response回傳200為成功
      */
     private static void sendGetRequest_Market(String endpoint, String stockName) throws Exception {
+        KeyAndID keyAndID = stockDataSystem.getKeyAndID();
+        String API_KEY_ID = keyAndID.getKeyID();
+        String API_SECRET_KEY = keyAndID.getsecretKey();
+
         URL url = new URL(ASSET_URL + endpoint);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -189,8 +187,6 @@ public class WebCrawler {
         // System.out.println(stockName + " Price = " + stockPrice);
 
         stockDataSystem.addStock2StocksMap(stockName, stockPrice);
-        // TODO 傳資料給mason
-
     }
 
     /**
@@ -216,6 +212,10 @@ public class WebCrawler {
      */
     private static void getStockData(String symbol) {
         try {
+            KeyAndID keyAndID = stockDataSystem.getKeyAndID();
+            String API_KEY_ID = keyAndID.getKeyID();
+            String API_SECRET_KEY = keyAndID.getsecretKey();
+
             LocalDate endDate = LocalDate.now().minusDays(2);
             LocalDate startDate = endDate.minusDays(32);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -228,7 +228,6 @@ public class WebCrawler {
             connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
             int responseCode = connection.getResponseCode();
-            // System.out.println(responseCode);
 
             if (responseCode == 200) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -305,6 +304,10 @@ public class WebCrawler {
      * @throws Exception
      */
     private static String getAccountActivities() throws Exception {
+        KeyAndID keyAndID = stockDataSystem.getKeyAndID();
+        String API_KEY_ID = keyAndID.getKeyID();
+        String API_SECRET_KEY = keyAndID.getsecretKey();
+
         LocalDate endDate = LocalDate.now().minusDays(1);
         LocalDate startDate = endDate.minusDays(30);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -317,7 +320,6 @@ public class WebCrawler {
         connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
         int responseCode = connection.getResponseCode();
-        // System.out.println("Response Code: " + responseCode);
 
         if (responseCode == 200) {
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -366,7 +368,6 @@ public class WebCrawler {
             int month = Integer.parseInt(transactionTime.substring(5, 7).trim());
             int day = Integer.parseInt(transactionTime.substring(8, 10).trim());
 
-            // TODO 傳資料給mason
             stockDataSystem.addDeal2HistoryRecord(symbol, stockQty, tradingPrice, year, month, day);
 
             // System.out.println("Symbol: " + symbol + ", Qty: " + stockQty + ", Side: " + side + ", Price: " + tradingPrice + ", Transaction Time: " + year + "/" + month + "/" + day);
