@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import project.GUI.GUITools.ChangeablePanel;
 import project.GUI.GUITools.StockDetail;
 import project.System.DataSystem;
+import project.AlpacaAPICall.WebCrawler;
 
 public class MainWindow extends JFrame {
 
@@ -90,9 +91,9 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String userKey = loginPanel.getUserKey();
                 String userId = loginPanel.getUserId();
-                setKeyAndID(userKey, userId);
+                project.System.DataSystem.setKeyAndID(userKey, userId);
                 
-                if (true) {
+                if (project.AlpacaAPICall.WebCrawler.check_Key_ID()) {
                     changePage.showPage("HistoryPanel");
                 }
                 else {

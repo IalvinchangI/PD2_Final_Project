@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
-import project.System.StockMarketInfoRecord;
+import project.System.StockMarketInfoRecorder;
 
 
 
@@ -31,7 +31,7 @@ import project.System.StockMarketInfoRecord;
  */
 public class CandleStick extends JPanel {
 
-    public CandleStick(String stockName, List<MarketInfo> stockHistoryPrice) {
+    public ChartPanel CandleStick(String stockName, List<MarketInfo> stockHistoryPrice) {
         String xAxisLable = "time";
         String yAxisLable = "money";
         OHLCDataset dataset = createDataset(stockName, stockHistoryPrice);
