@@ -25,7 +25,7 @@ public class StockPanel extends JPanel {
 
     StockDetail sd = new StockDetail(getName(), 10.0, null);
 
-    public StockPanel () {
+    public StockPanel() {
         
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.stockList = new JList<>(this.stockNameList);
@@ -51,7 +51,7 @@ public class StockPanel extends JPanel {
             }
         });
 
-        //this.add (sd);
+        this.add (sd);
         
     }
 
