@@ -192,6 +192,22 @@ public class DataSystem implements StockDataSystem {
     }
 
     /**
+     * 取得所有有歷史交易紀錄的股票集合
+     * @return 所有有歷史交易紀錄的股票集合
+     */
+    public Set<String> getStockHasHistoryRecord() {
+
+        if (historyRecord.record.size() > 0) {
+
+            return historyRecord.record.keySet();
+        }
+        else {
+            System.out.println("history record has no content");
+            return null;
+        }
+    }
+
+    /**
      * 將一筆交易紀錄到History Record中
      * @param stockName :股票名稱
      * @param stockCount : 交易股數
