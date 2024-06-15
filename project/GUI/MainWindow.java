@@ -69,7 +69,7 @@ public class MainWindow extends JFrame {
         this.changePagePanel = new ChangeablePanel();
 
         this.loginPanel = new LoginPanel();
-        this.mainPanel = new MainPanel();
+        this.mainPanel = new MainPanel(stockDataSystem);
 
 
         // add

@@ -14,8 +14,9 @@ import project.GUI.CandleStick;
 import java.util.*;
 import javax.print.attribute.standard.JobImpressions;
 import javax.swing.JButton;
-import project.System.StockMarketInfoRecord;
-
+import project.System.StockDataSystem;
+import project.System.MarketInfo;
+import project.System.Stock;
 /**
  * 股票的顯示細節 (股票名、價格、K線圖、買賣設定)
  * @author Hanklo831
@@ -26,7 +27,7 @@ public class StockDetail extends JPanel {
     private JLabel stockNameLabel = null, stockPriceLabel = null;
     private InputField buyPanel = null, sellPanel = null, intervalPanel = null, stockCountPanel = null;
     private JButton finishButton = null;
-    private ChartPanel graph;
+    private JPanel graph;
 
 
 

@@ -38,26 +38,18 @@ public class CandleStick extends JPanel {
         OHLCDataset dataset = createDataset(stockName, stockHistoryPrice);
         JFreeChart chart = ChartFactory.createCandlestickChart(stockName, xAxisLable, yAxisLable, dataset, false);
         TextTitle title = chart.getTitle();
-        title.setPaint(Color.WHITE); 
-        chart.setBackgroundPaint(Color.BLACK); 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
-        plot.setBackgroundPaint(Color.BLACK);  
-        plot.setDomainGridlinePaint(Color.WHITE);  
-        plot.setRangeGridlinePaint(Color.WHITE);    
+  
         plot.setDomainAxis(new DateAxis("date"));
         plot.setRangeAxis(new NumberAxis("price"));
 
         DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("MM-dd-yyyy"));
 
-        axis.setLabelPaint(Color.WHITE);
-        axis.setTickLabelPaint(Color.WHITE);
-        
-        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setLabelPaint(Color.WHITE);
-        rangeAxis.setTickLabelPaint(Color.WHITE);
+
+
 
         CandlestickRenderer renderer = new CandlestickRenderer();
         plot.setRenderer(renderer);

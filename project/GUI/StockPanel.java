@@ -6,14 +6,14 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import project.GUI.GUITools.StockDetail;
-import project.System.StockDataSystem;
+import project.System.MarketInfo;
 import project.System.Stock;
+import project.System.StockDataSystem;
 
 /**
  * 股票列、股票細節
@@ -23,9 +23,9 @@ public class StockPanel extends JPanel {
     private String[] stockNameList = {"AAPL", "GOOGL", "AMZN", "META", "MSFT", "TSLA"};
     private JList<String> stockList = null;
 
-    StockDetail sd = new StockDetail(getName(), 10.0, null);
+    StockDetail sd;
 
-    public StockPanel() {
+    public StockPanel(StockDataSystem stockDataSystem) {
         
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.stockList = new JList<>(this.stockNameList);
@@ -41,10 +41,9 @@ public class StockPanel extends JPanel {
                 int index = stockList.locationToIndex(e.getPoint());
                 if (index != -1) {
                     String selectedItem = stockList.getModel().getElementAt(index);
-                    Stock selectedStock = getStock(selectedItem);
+                    Stock selectedStock = stockDataSystem.getStock(selectedItem);
                     Double StockPrice = selectedStock.getStockPrice();
-                    List<MarketInfo> record = getRecorder(selectedItemm, "DAY");
-                    System.out.println(selectedItem);
+                    List<MarketInfo> record = stockDataSystem.getRecorder(selectedItem, "DAY");
                     sd = new StockDetail(selectedItem, StockPrice, record);
                 }
                 

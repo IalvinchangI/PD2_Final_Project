@@ -3,26 +3,24 @@ package project.GUI;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.List;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JPanel;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import project.GUI.GUITools.StockDetail;
-import project.System.MarketInfo;
-import project.System.Stock;
+import project.System.HistoryRecord;
 
 public class HistoryPanel extends JPanel{
     private String[] stockNameList = {"AAPL", "GOOGL", "AMZN", "META", "MSFT", "TSLA"};
     private JList<String> stockList = null;
-    HistoryDetailPanel hdp = new HistoryDetailPanel("AAPL");
+    HistoryDetailPanel hdp;
+
     public  HistoryPanel() {
 
+
+        HistoryRecord historyRecord = new HistoryRecord();
+        hdp = new HistoryDetailPanel("AAPL", historyRecord);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.stockList = new JList<>(this.stockNameList);
         this.stockList.setPreferredSize(new Dimension(100, 500));
@@ -36,7 +34,7 @@ public class HistoryPanel extends JPanel{
                 int index = stockList.locationToIndex(e.getPoint());
                 if (index != -1) {
                     String selectedItem = stockList.getModel().getElementAt(index);
-                    hdp = new HistoryDetailPanel(selectedItem);
+                    hdp = new HistoryDetailPanel(selectedItem, historyRecord);
                 }
                 
             }

@@ -6,15 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import project.GUI.GUITools.ChangeablePanel;
 import project.GUI.GUITools.RoundButton;
 import project.GUI.GUITools.ShadowPanel;
+import project.System.StockDataSystem;
 
 
 /**
@@ -44,7 +43,7 @@ public class MainPanel extends JPanel {
 
 
     /** 製作 main page 頁面 */
-    public MainPanel() {
+    public MainPanel(StockDataSystem stockDataSystem) {
         this.setBackground(new Color(0, 0, 0, 0));
         this.setLayout(new GridBagLayout());
         
@@ -60,7 +59,7 @@ public class MainPanel extends JPanel {
 
         // set panels
         settingButtonPanel();
-        settingPageBody();
+        settingPageBody(stockDataSystem);
 
         addListener();
 
@@ -120,12 +119,12 @@ public class MainPanel extends JPanel {
 
 
     /** 設定 pageBody */
-    private void settingPageBody() {
+    private void settingPageBody(StockDataSystem stockDataSystem) {
         // new and set
         this.pageBody = new ChangeablePanel();
 
         this.historyPanel = new HistoryPanel();
-        this.stockPanel = new StockPanel();
+        this.stockPanel = new StockPanel(stockDataSystem);
 
         this.pageBody.setAlignmentX(Component.CENTER_ALIGNMENT);
 
