@@ -20,6 +20,7 @@ public class DataSystem implements StockDataSystem {
         stocksMap = new HashMap<>();
         buyingSettings = new HashMap<>();
         historyRecord = new HistoryRecord();
+        marketInfoRecorderMap = new HashMap<>();
     }
 
     /**
