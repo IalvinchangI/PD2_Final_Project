@@ -10,17 +10,16 @@ import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import project.System.HistoryRecord;
+import project.System.StockDataSystem;
 
 public class HistoryPanel extends JPanel{
     private String[] stockNameList = {"AAPL", "GOOGL", "AMZN", "META", "MSFT", "TSLA"};
     private JList<String> stockList = null;
     HistoryDetailPanel hdp;
 
-    public  HistoryPanel() {
+    public  HistoryPanel(StockDataSystem stockDataSystem) {
 
-
-        HistoryRecord historyRecord = new HistoryRecord();
-        hdp = new HistoryDetailPanel("AAPL", historyRecord);
+        hdp = new HistoryDetailPanel("AAPL", stockDataSystem);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.stockList = new JList<>(this.stockNameList);
         this.stockList.setPreferredSize(new Dimension(100, 500));
@@ -34,7 +33,7 @@ public class HistoryPanel extends JPanel{
                 int index = stockList.locationToIndex(e.getPoint());
                 if (index != -1) {
                     String selectedItem = stockList.getModel().getElementAt(index);
-                    hdp = new HistoryDetailPanel(selectedItem, historyRecord);
+                    hdp = new HistoryDetailPanel(selectedItem, stockDataSystem);
                 }
                 
             }

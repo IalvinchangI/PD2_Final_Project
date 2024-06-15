@@ -44,7 +44,7 @@ public class StockPanel extends JPanel {
                     Stock selectedStock = stockDataSystem.getStock(selectedItem);
                     Double StockPrice = selectedStock.getStockPrice();
                     List<MarketInfo> record = stockDataSystem.getRecorder(selectedItem, "DAY");
-                    sd = new StockDetail(selectedItem, StockPrice, record);
+                    sd = new StockDetail(selectedItem, StockPrice, record, stockDataSystem);
                 }
                 
             }

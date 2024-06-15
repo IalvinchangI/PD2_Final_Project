@@ -1,6 +1,7 @@
 package project.GUI;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.lang.management.PlatformLoggingMXBean;
 import java.lang.reflect.Array;
 import java.text.ParseException;
@@ -22,6 +23,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
+
+import project.System.MarketInfo;
 import project.System.StockMarketInfoRecorder;
 
 
@@ -32,7 +35,13 @@ import project.System.StockMarketInfoRecorder;
  */
 public class CandleStick extends JPanel {
 
-    public ChartPanel CandleStick(String stockName, List<MarketInfo> stockHistoryPrice) {
+    public CandleStick(String stockName, List<MarketInfo> stockHistoryPrice) {
+        JPanel panel = CandleStickPanel(stockName, stockHistoryPrice);
+        panel.setPreferredSize(new Dimension(600, 250));
+        this.add(panel);
+    }
+
+    public ChartPanel CandleStickPanel(String stockName, List<MarketInfo> stockHistoryPrice) {
         String xAxisLable = "time";
         String yAxisLable = "money";
         OHLCDataset dataset = createDataset(stockName, stockHistoryPrice);
@@ -69,7 +78,7 @@ public class CandleStick extends JPanel {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (MarketInfo tmp : stockHistoryPrice) {
             String dateString = tmp.getDate();
-            Date date;
+            Date date = null;
             try {
                 date = dateFormat.parse(dateString);
             } catch(ParseException e) {

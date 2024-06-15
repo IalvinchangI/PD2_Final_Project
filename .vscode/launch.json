@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainWindow",
+            "request": "launch",
+            "mainClass": "project.GUI.MainWindow",
+            "projectName": "PD2_Final_Project_e86e290f"
+        },
+        {
+            "type": "java",
             "name": "WebCrawler",
             "request": "launch",
             "mainClass": "project.AlpacaAPICall.WebCrawler",

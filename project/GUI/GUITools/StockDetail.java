@@ -2,6 +2,8 @@ package project.GUI.GUITools;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -37,7 +39,7 @@ public class StockDetail extends JPanel {
      * @param stockPrice ：股票價格
      * @param stockHistoryPrice ：股票近三十天的最高價、最低價、開盤價、收盤價
      */
-    public StockDetail(String stockName, double stockPrice, List<MarketInfo> stockHistoryPrice) {
+    public StockDetail(String stockName, double stockPrice, List<MarketInfo> stockHistoryPrice, StockDataSystem stockDataSystem) {
 
         // layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -53,7 +55,7 @@ public class StockDetail extends JPanel {
         this.stock.add(this.stockPriceLabel);
         
         // graph
-        this.graph = CandleStick(stockName, stockHistoryPrice);
+        this.graph = new CandleStick(stockName, stockHistoryPrice);
 
 
         //inputField    
@@ -64,6 +66,7 @@ public class StockDetail extends JPanel {
 
         this.finishButton = new JButton("finish setting");
 
+
         this.add(this.stock);
         this.add(this.graph);
         this.add(this.buyPanel);
@@ -72,6 +75,17 @@ public class StockDetail extends JPanel {
         this.add(this.stockCountPanel);
         this.add(this.finishButton);
         this.setPreferredSize(new Dimension(1000, 800));
+
+        this.finishButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buy = getBuy();
+                String sell = getSell();
+                String interval = getInterval();
+                String stockCount = getStockCount();
+                stockDataSystem.saveBuyingSetting(stockName, Double.parseDouble(buy), Double.parseDouble(sell), Double.parseDouble(interval), Integer.parseInt(stockCount));
+            }
+        });
         
     }
 

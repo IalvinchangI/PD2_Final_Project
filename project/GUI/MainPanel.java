@@ -123,7 +123,7 @@ public class MainPanel extends JPanel {
         // new and set
         this.pageBody = new ChangeablePanel();
 
-        this.historyPanel = new HistoryPanel();
+        this.historyPanel = new HistoryPanel(stockDataSystem);
         this.stockPanel = new StockPanel(stockDataSystem);
 
         this.pageBody.setAlignmentX(Component.CENTER_ALIGNMENT);

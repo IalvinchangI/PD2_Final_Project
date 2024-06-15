@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import project.System.Deal;
 import project.System.HistoryRecord;
+import project.System.StockDataSystem;
 
 /**
  * 歷史紀錄的顯示
@@ -21,9 +22,9 @@ public class HistoryDetailPanel  extends JPanel {
     private ProfitPanel pp;
     private  HistoryTradePanel htp = null;
 
-    public HistoryDetailPanel(String stockName, HistoryRecord historyRecord) {
-        this.pp = new ProfitPanel(stockName, historyRecord);
-        this.htp = new HistoryTradePanel(stockName, historyRecord);
+    public HistoryDetailPanel(String stockName,StockDataSystem stockDataSystem) {
+        this.pp = new ProfitPanel(stockName, stockDataSystem);
+        this.htp = new HistoryTradePanel(stockName, stockDataSystem);
         this.setPreferredSize(new Dimension (600, 500));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.pp.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -46,8 +47,8 @@ class ProfitPanel extends JPanel {
     private double profit;
     private JLabel profitLabel = null;
 
-    ProfitPanel(String stockName, HistoryRecord historyRecord) {
-        List <Deal> tradeRecord = historyRecord.getRecords(stockName);
+    ProfitPanel(String stockName, StockDataSystem stockDataSystem) {
+        List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
         for (Deal tmp : tradeRecord) {
             profit += tmp.getProfitAndLoss();
         }
@@ -78,8 +79,8 @@ class HistoryTradePanel extends JPanel {
     
     
 
-    HistoryTradePanel(String stockName, HistoryRecord historyRecord) {
-        List <Deal> tradeRecord = historyRecord.getRecords(stockName);
+    HistoryTradePanel(String stockName, StockDataSystem stockDataSystem) {
+        List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
         StringBuilder html = new StringBuilder("<html>");
         for (Deal tmp : tradeRecord) {
             String date = tmp.getDateAndTime();

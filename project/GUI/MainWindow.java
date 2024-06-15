@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import project.GUI.GUITools.ChangeablePanel;
+import project.GUI.GUITools.StockDetail;
 import project.System.DataSystem;
 import project.System.StockDataSystem;
 import project.AlpacaAPICall.WebCrawler;
@@ -103,16 +104,6 @@ public class MainWindow extends JFrame {
             }
         });
 
-
-        // StockDetail sd = stockPanel.getStockDetail();
-        // JButton finishButton = sd.getFinishButton();
-        // finishButton.addActionListener(new ActionListener() {
-        //     public void actionPerformed(ActionEvent e) {
-        //         String buy = sd.getBuy();
-        //         String sell = sd.getSell();
-        //         String interval = sd.getInterval();
-        //     }
-        // });
     }
 
 
