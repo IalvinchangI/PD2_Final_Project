@@ -24,6 +24,9 @@ public class RoundButton extends JButton {
     private Color clickBorderColor = null;
 
 
+    private String text = null;
+
+
     /** 框的邊角圓弧 */
     public int arcWidth = 30, arcHeight = 30;
 
@@ -51,6 +54,8 @@ public class RoundButton extends JButton {
         this.borderColor = borderColor;
         this.clickBackgroundColor = clickBackgroundColor;
         this.clickBorderColor = clickBorderColor;
+
+        this.text = text;
 
         // setContentAreaFilled(false);  // 不繪製按鈕區域的內容
         setFocusPainted(false);  // 不繪製焦點框
@@ -86,6 +91,9 @@ public class RoundButton extends JButton {
             g2d.setColor(this.borderColor);
             g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arcWidth, arcHeight);
         }
+
+        int textWidth = this.text.length() * 2;
+        g2d.drawString(this.text, getWidth() / 2 - textWidth - 3, getHeight() / 2 + 3);
         
         // show
         g2d.dispose();

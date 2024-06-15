@@ -70,9 +70,9 @@ public class LoginPanel extends JPanel {
 
 
         // inner
-        this.centralPanel = new ShadowPanel(this.getBackground());
+        // this.centralPanel = new ShadowPanel(this.getBackground());
         // this.centralPanel = new ShadowPanel(this.getBackground(), new Color(122, 149, 211), new Color(180, 180, 180));
-        // this.centralPanel = new ShadowPanel(this.getBackground(), new Color(240, 240, 240), new Color(180, 180, 180));
+        this.centralPanel = new ShadowPanel(this.getBackground(), new Color(240, 240, 240), new Color(180, 180, 180));
         this.centralPanel.setArc(40, 40);
         this.centralPanel.setPreferredSize(new Dimension(600, 450));
         this.centralPanel.setLayout(new BoxLayout(this.centralPanel.getRoot(), BoxLayout.Y_AXIS));
@@ -155,8 +155,16 @@ public class LoginPanel extends JPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.setBackground(this.centralPanel.getBackground());
 
-        this.loginButton = new RoundButton("login", this.centralPanel.getBackground());
-        this.registerButton = new RoundButton("register", this.centralPanel.getBackground());
+        this.loginButton = new RoundButton(
+            "login", this.centralPanel.getBackground(),
+            new Color(248, 222, 179), new Color(130, 130, 130), 
+            new Color(250, 241, 220), new Color(180, 180, 180)
+        );
+        this.registerButton = new RoundButton(
+            "register", this.centralPanel.getBackground(), 
+            new Color(248, 222, 179), new Color(130, 130, 130), 
+            new Color(250, 241, 220), new Color(180, 180, 180)
+        );
         
         Dimension buttonSize = new Dimension(150, 50);
         this.loginButton.setMaximumSize(buttonSize);
