@@ -11,6 +11,7 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.OHLCDataset;
 
@@ -36,6 +37,9 @@ public class CandleStick extends JPanel {
         String yAxisLable = "money";
         OHLCDataset dataset = createDataset(stockName, stockHistoryPrice);
         JFreeChart chart = ChartFactory.createCandlestickChart(stockName, xAxisLable, yAxisLable, dataset, false);
+        TextTitle title = chart.getTitle();
+        title.setPaint(Color.WHITE); 
+        chart.setBackgroundPaint(Color.BLACK); 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
@@ -47,6 +51,13 @@ public class CandleStick extends JPanel {
 
         DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("MM-dd-yyyy"));
+
+        axis.setLabelPaint(Color.WHITE);
+        axis.setTickLabelPaint(Color.WHITE);
+        
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setLabelPaint(Color.WHITE);
+        rangeAxis.setTickLabelPaint(Color.WHITE);
 
         CandlestickRenderer renderer = new CandlestickRenderer();
         plot.setRenderer(renderer);
