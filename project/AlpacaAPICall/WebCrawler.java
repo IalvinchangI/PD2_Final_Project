@@ -294,14 +294,7 @@ public class WebCrawler {
                 }
             }
 
-            // TODO　傳資料給ｍａｓｏｎ
-            // System.out.println("stock name : " + symbol);
-            // System.out.println(year + "/" + month + "/" + day);
-            // System.out.println("Open: " + open);
-            // System.out.println("Close: " + close);
-            // System.out.println("High: " + high);
-            // System.out.println("Low: " + low);
-            // System.out.println("-----------------------------");
+            stockDataSystem.addStockMarketInfo2Recorder(symbol, "DAY", high, low, open, close, year, month, day);
         }
     }
 
