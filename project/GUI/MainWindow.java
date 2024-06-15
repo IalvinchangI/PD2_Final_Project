@@ -9,10 +9,17 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import project.GUI.GUITools.ChangeablePanel;
-import project.GUI.GUITools.StockDetail;
 import project.System.DataSystem;
+import project.GUI.GUITools.StockDetail;
+import project.System.StockDataSystem;
 import project.AlpacaAPICall.WebCrawler;
 
+
+/**
+ * 主視窗
+ * @author Hanklo831
+ * @author IalvinchangI
+ */
 public class MainWindow extends JFrame {
 
     private LoginPanel loginPanel = null;
@@ -20,6 +27,10 @@ public class MainWindow extends JFrame {
     private MainPanel mainHistoryPanel = null;
 
     private ChangeablePanel changePagePanel = null;
+
+
+    /** 存取資料的地方 */
+    private StockDataSystem stockDataSystem = null;
     
 
     /**
@@ -28,7 +39,8 @@ public class MainWindow extends JFrame {
      * @param width     視窗的寬
      * @param height    視窗的高
      */
-    public MainWindow(String title, int width, int height) {
+    public MainWindow(String title, int width, int height, StockDataSystem stockDataSystem) {
+        this.stockDataSystem = stockDataSystem;
         this.setTitle(title);
         // this.setSize(1600, 1050);
         this.setSize(width, height);
@@ -85,20 +97,19 @@ public class MainWindow extends JFrame {
         historyButton.addActionListener(this.changePagePanel.createChangePagePerformed("HistoryPanel"));
 
 
-        JFrame frame = this;
-        ChangeablePanel changePage = this.changePagePanel;
+        MainWindow window = this;
 
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String userKey = loginPanel.getUserKey();
                 String userId = loginPanel.getUserId();
-                project.System.DataSystem.setKeyAndID(userKey, userId);
+                window.stockDataSystem.setKeyAndID(userKey, userId);
                 
-                if (project.AlpacaAPICall.WebCrawler.check_Key_ID()) {
-                    changePage.showPage("HistoryPanel");
+                if (WebCrawler.check_Key_ID()) {
+                    window.changePagePanel.showPage("HistoryPanel");
                 }
                 else {
-                    JDialog wrong = new WrongInfo(frame);
+                    JDialog wrong = new WrongInfo(window);
                     wrong.setVisible(true);
                 }
             }
@@ -116,7 +127,9 @@ public class MainWindow extends JFrame {
 
 
     public static void main(String[] args) {
-        MainWindow window = new MainWindow("股票機器人", 1400, 800);
+        StockDataSystem dataSystem = new DataSystem();
+        MainWindow window = new MainWindow("股票機器人", 1400, 800, dataSystem);
+        
         window.showGUI();
     }
 }
