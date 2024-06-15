@@ -356,7 +356,7 @@ public class WebCrawler {
             double tradingPrice = 0.0d;
             int stockQty = 0;
             if(side.equals("sell")) {
-                stockQty = Integer.parseInt(qty) * (-1);
+                stockQty = Integer.parseInt(qty);
                 tradingPrice = Double.parseDouble(price);
             }
             else if(side.equals("buy")) {

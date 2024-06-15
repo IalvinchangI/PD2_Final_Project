@@ -203,7 +203,7 @@ public class DataSystem implements StockDataSystem {
     public void addDeal2HistoryRecord(
         String stockName, int stockCount, double profitAndLoss, int year, int month, int date
     ) {
-
+        System.out.println("addDeal2HistoryRecord : " + stockName + " " + stockCount + " " + profitAndLoss + " " + year + " " + month + " " + date);
         Deal deal = new Deal(stockName, stockCount, profitAndLoss, year, month, date);
 
         if (historyRecord.record.size() > 0) {

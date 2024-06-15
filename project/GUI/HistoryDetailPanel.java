@@ -49,9 +49,15 @@ class ProfitPanel extends JPanel {
 
     ProfitPanel(String stockName, StockDataSystem stockDataSystem) {
         List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
-        for (Deal tmp : tradeRecord) {
-            profit += tmp.getProfitAndLoss();
+        if (tradeRecord == null) {
+            profit = 0.00;
         }
+        else {
+            for (Deal tmp : tradeRecord) {
+                profit += tmp.getProfitAndLoss();
+            }
+        }
+        
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -82,26 +88,28 @@ class HistoryTradePanel extends JPanel {
     HistoryTradePanel(String stockName, StockDataSystem stockDataSystem) {
         List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
         StringBuilder html = new StringBuilder("<html>");
-        for (Deal tmp : tradeRecord) {
-            String date = tmp.getDateAndTime();
-            double profit = tmp.getProfitAndLoss();
-            int stockCount = tmp.getStockCount();
-            boolean buy = true;
-            if (profit > 0) {
-                buy = false;
+        if (tradeRecord != null) {
+            for (Deal tmp : tradeRecord) {
+                String date = tmp.getDateAndTime();
+                double profit = tmp.getProfitAndLoss();
+                int stockCount = tmp.getStockCount();
+                boolean buy = true;
+                if (profit > 0) {
+                    buy = false;
+                }
+                else {
+                    profit *= (-1);
+                }
+                double stockPrice = (double) profit / stockCount;
+                String detail = "";
+                if (buy) {
+                    detail = "On " + date + ", buy " +  Integer.toString(stockCount) + "shares of " + stockName + " at " + String.format("%.2f", stockPrice) + " per share.";
+                }
+                else {
+                    detail = "On " + date + ", sell " +  Integer.toString(stockCount) + "shares of " + stockName + " at " + String.format("%.2f", stockPrice) + " per share.";
+                }
+                html.append(detail).append("<br>");
             }
-            else {
-                profit *= (-1);
-            }
-            double stockPrice = (double) profit / stockCount;
-            String detail = "";
-            if (buy) {
-                detail = "On " + date + ", buy " +  Integer.toString(stockCount) + "shares of " + stockName + " at " + String.format("%.2f", stockPrice) + " per share.";
-            }
-            else {
-                detail = "On " + date + ", sell " +  Integer.toString(stockCount) + "shares of " + stockName + " at " + String.format("%.2f", stockPrice) + " per share.";
-            }
-            html.append(detail).append("<br>");
         }
         html.append("</html>");
         this.historyTradeLabel = new JLabel(html.toString());

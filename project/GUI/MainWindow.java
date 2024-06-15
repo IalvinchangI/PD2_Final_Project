@@ -9,9 +9,10 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import project.GUI.GUITools.ChangeablePanel;
-import project.GUI.GUITools.StockDetail;
+
 import project.System.DataSystem;
 import project.System.StockDataSystem;
+
 import project.AlpacaAPICall.WebCrawler;
 
 
@@ -52,9 +53,11 @@ public class MainWindow extends JFrame {
         // this.setBackground(Color.WHITE);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        this.changePagePanel = new ChangeablePanel();
 
-        this.newAndAddPanel();
-        this.addListener();
+        this.newAndAddLoginPanel();
+        this.addLoginListener();
     }
 
     
@@ -65,24 +68,30 @@ public class MainWindow extends JFrame {
 
 
     /** new 頁面 */
-    private void newAndAddPanel() {
+    private void newAndAddLoginPanel() {
         // new
-        this.changePagePanel = new ChangeablePanel();
-
         this.loginPanel = new LoginPanel();
-        this.mainPanel = new MainPanel(stockDataSystem);
 
 
         // add
         this.changePagePanel.add(this.loginPanel, LOGIN_PANEL_NAME);
-        this.changePagePanel.add(this.mainPanel, MAIN_PANEL_NAME);
+        this.add(this.changePagePanel);
+    }
 
+
+    private void newAndAddMainPanel() {
+        // new
+        this.mainPanel = new MainPanel(stockDataSystem);
+
+
+        // add
+        this.changePagePanel.add(this.mainPanel, MAIN_PANEL_NAME);
         this.add(this.changePagePanel);
     }
 
 
     /** 加 button 的 listener 和 action */
-    private void addListener() {
+    private void addLoginListener() {
         MainWindow window = this;
         
         JButton loginButton = loginPanel.getLoginButton();
@@ -93,6 +102,8 @@ public class MainWindow extends JFrame {
                 
                 if (WebCrawler.check_Key_ID(userId, userKey)) {
                     window.stockDataSystem.setKeyAndID(userKey, userId);
+                    getWebData();
+                    newAndAddMainPanel();
                     window.changePagePanel.showPage(MAIN_PANEL_NAME);
                     repaint();
                 }
@@ -103,7 +114,28 @@ public class MainWindow extends JFrame {
                 }
             }
         });
+    }
 
+
+    private void getWebData() {
+        // market is open?
+        System.out.println("checkMarketOpen");
+        boolean marketOpen_TF = WebCrawler.checkMarketOpen();
+
+
+        // crawl data
+        System.out.println("stockDataProcessing");
+        WebCrawler.stockDataProcessing();  // 查詢 30 天股價
+        System.out.println("historyTradingProcessing");
+        WebCrawler.historyTradingProcessing();  // 爬歷史資料
+        if (marketOpen_TF == true) {
+            System.out.println("stockPriceProcessing");
+            WebCrawler.stockPriceProcessing();  // 查詢時價
+        }
+        else {
+            System.out.println("Not Open");
+        }
+        System.out.println("GET DATA FINISH");
     }
 
 
