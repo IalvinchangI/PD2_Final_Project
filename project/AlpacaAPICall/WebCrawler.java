@@ -356,12 +356,12 @@ public class WebCrawler {
             double tradingPrice = 0.0d;
             int stockQty = 0;
             if(side.equals("sell")) {
+                tradingPrice = Double.parseDouble(price) * Integer.parseInt(qty);
                 stockQty = Integer.parseInt(qty) * (-1);
-                tradingPrice = Double.parseDouble(price);
             }
             else if(side.equals("buy")) {
+                tradingPrice = Double.parseDouble(price) * (-1) * Integer.parseInt(qty);
                 stockQty = Integer.parseInt(qty);
-                tradingPrice = Double.parseDouble(price) * (-1);
             }
             String transactionTime = extractJsonValue(activity, "\"transaction_time\":\"", "\"");
             int year = Integer.parseInt(transactionTime.substring(0, 4).trim());
@@ -369,8 +369,6 @@ public class WebCrawler {
             int day = Integer.parseInt(transactionTime.substring(8, 10).trim());
 
             stockDataSystem.addDeal2HistoryRecord(symbol, stockQty, tradingPrice, year, month, day);
-
-            // System.out.println("Symbol: " + symbol + ", Qty: " + stockQty + ", Side: " + side + ", Price: " + tradingPrice + ", Transaction Time: " + year + "/" + month + "/" + day);
         }
     }
 
