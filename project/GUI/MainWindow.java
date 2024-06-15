@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 
 import project.GUI.GUITools.ChangeablePanel;
 import project.System.DataSystem;
-import project.GUI.GUITools.StockDetail;
 import project.System.StockDataSystem;
 import project.AlpacaAPICall.WebCrawler;
 
@@ -22,11 +21,15 @@ import project.AlpacaAPICall.WebCrawler;
  */
 public class MainWindow extends JFrame {
 
-    private LoginPanel loginPanel = null;
-    private MainPanel mainStockPanel = null;
-    private MainPanel mainHistoryPanel = null;
-
     private ChangeablePanel changePagePanel = null;
+    
+    private LoginPanel loginPanel = null;
+    private MainPanel mainPanel = null;
+
+    /** loginPanel 的名字 */
+    public static final String LOGIN_PANEL_NAME = "LoginPanel";
+    /** mainPanel 的名字 */
+    public static final String MAIN_PANEL_NAME = "MainPanel";
 
 
     /** 存取資料的地方 */
@@ -66,20 +69,12 @@ public class MainWindow extends JFrame {
         this.changePagePanel = new ChangeablePanel();
 
         this.loginPanel = new LoginPanel();
-        this.mainStockPanel = new MainPanel();
-        this.mainHistoryPanel = new MainPanel();
-
-        StockPanel stockPanel = new StockPanel();
-        HistoryPanel historyPanel = new HistoryPanel();
+        this.mainPanel = new MainPanel();
 
 
         // add
-        this.mainStockPanel.add(stockPanel);
-        this.mainHistoryPanel.add(historyPanel);
-
-        this.changePagePanel.add(loginPanel, "LoginPanel");
-        this.changePagePanel.add(mainStockPanel, "StockPanel");
-        this.changePagePanel.add(mainHistoryPanel, "HistoryPanel");
+        this.changePagePanel.add(this.loginPanel, LOGIN_PANEL_NAME);
+        this.changePagePanel.add(this.mainPanel, MAIN_PANEL_NAME);
 
         this.add(this.changePagePanel);
     }
@@ -87,35 +82,29 @@ public class MainWindow extends JFrame {
 
     /** 加 button 的 listener 和 action */
     private void addListener() {
-        JButton loginButton = loginPanel.getLoginButton();
-        JButton stockButton = mainHistoryPanel.getStockButton();
-        JButton historyButton = mainStockPanel.getHistoryButton();
-        // StockDetail sd = stockPanel.getStockDetail();
-        // JButton finishButton = sd.getFinishButton();
-        
-        stockButton.addActionListener(this.changePagePanel.createChangePagePerformed("StockPanel"));
-        historyButton.addActionListener(this.changePagePanel.createChangePagePerformed("HistoryPanel"));
-
-
         MainWindow window = this;
-
+        
+        JButton loginButton = loginPanel.getLoginButton();
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String userKey = loginPanel.getUserKey();
                 String userId = loginPanel.getUserId();
-                window.stockDataSystem.setKeyAndID(userKey, userId);
                 
-                if (WebCrawler.check_Key_ID()) {
-                    window.changePagePanel.showPage("HistoryPanel");
+                if (WebCrawler.check_Key_ID(userId, userKey)) {
+                    window.stockDataSystem.setKeyAndID(userKey, userId);
+                    window.changePagePanel.showPage(MAIN_PANEL_NAME);
                 }
                 else {
                     JDialog wrong = new WrongInfo(window);
                     wrong.setVisible(true);
                 }
+                repaint();
             }
         });
 
 
+        // StockDetail sd = stockPanel.getStockDetail();
+        // JButton finishButton = sd.getFinishButton();
         // finishButton.addActionListener(new ActionListener() {
         //     public void actionPerformed(ActionEvent e) {
         //         String buy = sd.getBuy();
@@ -128,7 +117,10 @@ public class MainWindow extends JFrame {
 
     public static void main(String[] args) {
         StockDataSystem dataSystem = new DataSystem();
+        WebCrawler.downloadStockDataSystem(dataSystem);  // load StockDataSystem
+        
         MainWindow window = new MainWindow("股票機器人", 1400, 800, dataSystem);
+        
         
         window.showGUI();
     }

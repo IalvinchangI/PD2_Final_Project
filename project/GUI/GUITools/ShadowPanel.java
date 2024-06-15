@@ -130,7 +130,10 @@ public class ShadowPanel extends JPanel {
     }
 
 
-    /** 設定元件的 Layout */
+    /**
+     * 設定元件的 Layout
+     * @implNote 若傳入 BoxLayout，須在 target 傳入 ShadowPanel.getRoot()
+     */
     @Override
     public void setLayout(LayoutManager mgr) {
         if (this.root != null) {

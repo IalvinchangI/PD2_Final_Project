@@ -43,14 +43,14 @@ public class LoginPanel extends JPanel {
 
     /** title */
     private JLabel title = null;
+    
+    
+    /** input user key id */
+    private InputField userId = null;
 
 
     /** input user secret key */
     private PasswordField userKey = null;
-
-
-    /** input user key id */
-    private InputField userId = null;
 
 
 
@@ -188,8 +188,8 @@ public class LoginPanel extends JPanel {
 
 
     /**
-     * 取得在 userKey 輸入的 key
-     * @return 輸入的 key
+     * 取得在 userKey 輸入的 secret key
+     * @return 輸入的 secret key
      */
     public String getUserKey() {
         return this.userKey.getText();
@@ -197,8 +197,8 @@ public class LoginPanel extends JPanel {
 
 
     /**
-     * 取得在 userId 輸入的 ID
-     * @return 輸入的 ID
+     * 取得在 userId 輸入的 key ID
+     * @return 輸入的 key ID
      */
     public String getUserId() {
         return this.userId.getText();
