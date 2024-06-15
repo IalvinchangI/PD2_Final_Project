@@ -46,7 +46,7 @@ public class CandleStick extends JPanel {
         String yAxisLable = "money";
         OHLCDataset dataset = createDataset(stockName, stockHistoryPrice);
         JFreeChart chart = ChartFactory.createCandlestickChart(stockName, xAxisLable, yAxisLable, dataset, false);
-        TextTitle title = chart.getTitle();
+
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
@@ -57,8 +57,8 @@ public class CandleStick extends JPanel {
         DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("MM-dd-yyyy"));
 
-
-
+        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+        yAxis.setAutoRangeIncludesZero(false);
 
         CandlestickRenderer renderer = new CandlestickRenderer();
         plot.setRenderer(renderer);
@@ -89,7 +89,6 @@ public class CandleStick extends JPanel {
             lows.add(tmp.getLowPrice());
             opens.add(tmp.getOpeningPrice());
             closes.add(tmp.getClosingPrice());
-            highs.add(tmp.getHighPrice());
             volumes.add(0.0);
 
         }

@@ -86,6 +86,8 @@ public class DataSystem implements StockDataSystem {
                 Stock stock = new Stock(stockName, stockPrice, 1);
                 stocksMap.put(stockName, stock);
             }
+            System.out.println(stockName + "has been put into stocksMap");
+            System.out.println(stocksMap.get(stockName).getStockName());
         }
         else {
             Stock stock = new Stock(stockName, stockPrice, 1);
@@ -243,6 +245,7 @@ public class DataSystem implements StockDataSystem {
         int year, int month, int date
     ) {
 
+        System.out.println("mode: " + mode);
         if (marketInfoRecorderMap.size() > 0) {
 
             if (marketInfoRecorderMap.containsKey(stockName)) {
@@ -295,12 +298,12 @@ public class DataSystem implements StockDataSystem {
 
         if (marketInfoRecorderMap.containsKey(stockName)) {
 
-            if (marketInfoRecorderMap.containsKey(mode)) {
+            if (marketInfoRecorderMap.get(stockName).containsKey(mode)) {
 
                 return marketInfoRecorderMap.get(stockName).get(mode).getRecorder();
             }
             else {
-                System.out.println("recorder about " + stockName + " with mode: " + "\"mode\" not exist");
+                System.out.println("recorder about " + stockName + " with mode: " + "\"" + mode + "\"not exist");
                 return null;
             }
         }

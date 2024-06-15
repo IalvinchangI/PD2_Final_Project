@@ -40,7 +40,7 @@ public class MarketInfo {
         : "mode not equals to \"DAY\", \"WEEK\", or \"MON\"";
         this.mode = mode;
 
-        this.date = LocalDate.now().toString();
+        this.date = LocalDate.of(year, month, date).toString();
 
         setOpeningPrice(openingPrice);
         setClosingPrice(closingPrice);
