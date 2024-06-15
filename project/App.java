@@ -36,7 +36,7 @@ public class App {
         stockDataSystem.setKeyAndID(SECRET_KEY, KEY_ID);
         WebCrawler.downloadStockDataSystem(stockDataSystem);  // load StockDataSystem
 
-        if (WebCrawler.check_Key_ID() == false) {
+        if (WebCrawler.check_Key_ID(KEY_ID, SECRET_KEY) == false) {
             System.out.println("KEY_ID or SECRET_KEY 是錯的");
             System.exit(1);
         }
