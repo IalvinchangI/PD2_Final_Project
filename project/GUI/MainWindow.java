@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 
 import project.GUI.GUITools.ChangeablePanel;
 import project.GUI.GUITools.StockDetail;
+import project.System.DataSystem;
 
 public class MainWindow extends JFrame {
 
@@ -89,6 +90,8 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String userKey = loginPanel.getUserKey();
                 String userId = loginPanel.getUserId();
+                setKeyAndID(userKey, userId);
+                
                 if (true) {
                     changePage.showPage("HistoryPanel");
                 }

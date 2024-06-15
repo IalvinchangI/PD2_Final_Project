@@ -1,6 +1,9 @@
 package project.GUI;
 
+import java.awt.Color;
 import java.lang.management.PlatformLoggingMXBean;
+import java.lang.reflect.Array;
+import java.text.ParseException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -16,7 +19,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TimeZone;
+import project.System.StockMarketInfoRecord;
+
 
 
 /**
@@ -25,16 +31,19 @@ import java.util.TimeZone;
  */
 public class CandleStick extends JPanel {
 
-    public CandleStick(String stockName, ArrayList <HashMap <String, Double>> stockHistoryPrice) {
+    public CandleStick(String stockName, List<MarketInfo> stockHistoryPrice) {
         String xAxisLable = "time";
         String yAxisLable = "money";
-        OHLCDataset dataset = createDataset();
+        OHLCDataset dataset = createDataset(stockName, stockHistoryPrice);
         JFreeChart chart = ChartFactory.createCandlestickChart(stockName, xAxisLable, yAxisLable, dataset, false);
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
-        plot.setDomainAxes(new DateAxis("date"));
-        plot.setRangeAxes(new NumberAxis("price"));
+        plot.setBackgroundPaint(Color.BLACK);  
+        plot.setDomainGridlinePaint(Color.WHITE);  
+        plot.setRangeGridlinePaint(Color.WHITE);    
+        plot.setDomainAxis(new DateAxis("date"));
+        plot.setRangeAxis(new NumberAxis("price"));
 
         DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("MM-dd-yyyy"));
@@ -45,17 +54,51 @@ public class CandleStick extends JPanel {
 
     }
 
-    private OHLCDataset createDataset() {
-        Date[] dates = new Date[] {
+    private OHLCDataset createDataset(String stockName, List<MarketInfo> stockHistoryPrice) {
 
-        };
-        double[] highs = new double[]{};
-        double[] lows = new double[]{};
-        double[] opens = new double[]{};
-        double[] closes = new double[]{};
-        double[] volumes = new double[]{};
+        ArrayList <Date> dates = new ArrayList<>();
+        ArrayList <Double> highs = new ArrayList<>();
+        ArrayList <Double> lows = new ArrayList<>();
+        ArrayList <Double> opens = new ArrayList<>();
+        ArrayList <Double> closes = new ArrayList<>();
+        ArrayList <Double> volumes = new ArrayList<>();
 
-        return  new DefaultHighLowDataset("股票數據", dates, highs, lows, opens, closes, volumes);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        for (MarketInfo tmp : stockHistoryPrice) {
+            String dateString = tmp.getDate();
+            Date date;
+            try {
+                date = dateFormat.parse(dateString);
+            } catch(ParseException e) {
+                e.printStackTrace();
+            }
+            dates.add(date);
+            highs.add(tmp.getHighPrice());
+            lows.add(tmp.getLowPrice());
+            opens.add(tmp.getOpeningPrice());
+            closes.add(tmp.getClosingPrice());
+            highs.add(tmp.getHighPrice());
+            volumes.add(0.0);
+
+        }
+
+        Date[] datesArray = new Date[dates.size()];
+        double[] highsArray = new double[highs.size()];
+        double[] lowsArray = new double[lows.size()];
+        double[] opensArray = new double[opens.size()];
+        double[] closesArray = new double[closes.size()];
+        double[] volumesArray = new double[volumes.size()];
+
+        for (int i = 0; i < dates.size(); i++) {
+            datesArray[i] = dates.get(i);
+            highsArray[i] = highs.get(i);
+            lowsArray[i] = lows.get(i);
+            opensArray[i] = opens.get(i);
+            closesArray[i] = closes.get(i);
+            volumesArray[i] = volumes.get(i);
+        }
+
+        return  new DefaultHighLowDataset(stockName, datesArray, highsArray, lowsArray, opensArray, closesArray, volumesArray);
 
     }
     

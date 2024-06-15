@@ -7,11 +7,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jfree.chart.ChartPanel;
+
 import project.GUI.CandleStick;
 
 import java.util.*;
 import javax.print.attribute.standard.JobImpressions;
 import javax.swing.JButton;
+import project.System.StockMarketInfoRecord;
 
 /**
  * 股票的顯示細節 (股票名、價格、K線圖、買賣設定)
@@ -21,8 +24,9 @@ public class StockDetail extends JPanel {
 
     private JPanel stock = null;
     private JLabel stockNameLabel = null, stockPriceLabel = null;
-    private InputField buyPanel = null, sellPanel = null, intervalPanel = null;
+    private InputField buyPanel = null, sellPanel = null, intervalPanel = null, stockCountPanel = null;
     private JButton finishButton = null;
+    private ChartPanel graph;
 
 
 
@@ -32,7 +36,7 @@ public class StockDetail extends JPanel {
      * @param stockPrice ：股票價格
      * @param stockHistoryPrice ：股票近三十天的最高價、最低價、開盤價、收盤價
      */
-    public StockDetail(String stockName, double stockPrice, ArrayList <HashMap <String, Double>> stockHistoryPrice) {
+    public StockDetail(String stockName, double stockPrice, List<MarketInfo> stockHistoryPrice) {
 
         // layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -48,13 +52,14 @@ public class StockDetail extends JPanel {
         this.stock.add(this.stockPriceLabel);
         
         // graph
-        this.graph = new CandleStick(stockHistoryPrice);
+        this.graph = CandleStick(stockName, stockHistoryPrice);
 
 
         //inputField    
         this.buyPanel = new InputField("B U Y : ");
         this.sellPanel = new InputField("S E L L : ");
         this.intervalPanel = new InputField("I N T E R V A L : ");
+        this.stockCountPanel = new InputField("S T O C K   C O N U T : ");
 
         this.finishButton = new JButton("finish setting");
 
@@ -63,6 +68,7 @@ public class StockDetail extends JPanel {
         this.add(this.buyPanel);
         this.add(this.sellPanel);
         this.add(this.intervalPanel);
+        this.add(this.stockCountPanel);
         this.add(this.finishButton);
         this.setPreferredSize(new Dimension(1000, 800));
         
@@ -98,6 +104,14 @@ public class StockDetail extends JPanel {
      */
     public String getInterval() {
         return this.intervalPanel.getText();
+    }
+
+    /**
+     * 取得 stockCount 的設定
+     * @return 輸入的 stockCount 設定
+     */
+    public String getStockCount() {
+        return this.stockCountPanel.getText();
     }
 
 }
