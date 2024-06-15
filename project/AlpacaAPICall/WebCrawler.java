@@ -240,6 +240,7 @@ public class WebCrawler {
                 in.close();
                 
                 String responseBody = response.toString();
+                System.out.println(responseBody);
                 extractAndPrintStockData(responseBody, symbol);
             }
             
