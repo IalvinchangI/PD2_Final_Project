@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DataSystem implements StockDataSystem {
@@ -283,6 +284,7 @@ public class DataSystem implements StockDataSystem {
         System.out.println("deal about " + deal.getStockName() + " has been recorded");
         System.out.println("deal profitAndLoss: " + deal.getProfitAndLoss());
         System.out.println("stockCount: " + deal.getStockCount());
+        System.out.println("date: " + deal.getDateAndTime());
         System.out.println("********************************************\n");
     }
 

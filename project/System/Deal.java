@@ -92,7 +92,7 @@ public class Deal {
      */
     public void setDate(int year, int month, int date) {
 
-        this.date = LocalDate.of(year, month, month).toString();
+        this.date = LocalDate.of(year, month, date).toString();
     }
 
     /**
