@@ -132,7 +132,7 @@ public class ShadowPanel extends JPanel {
             arcWidth, arcHeight
         );
         
-        // show
+        // delete g2d
         g2d.dispose();
     }
 

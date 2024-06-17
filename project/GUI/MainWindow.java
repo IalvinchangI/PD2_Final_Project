@@ -3,6 +3,8 @@ package project.GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,7 +14,7 @@ import project.GUI.GUITools.ChangeablePanel;
 
 import project.System.DataSystem;
 import project.System.StockDataSystem;
-
+import project.App;
 import project.AlpacaAPICall.WebCrawler;
 
 
@@ -52,7 +54,17 @@ public class MainWindow extends JFrame {
         this.setBackground(new Color(253, 232, 181));
         // this.setBackground(Color.WHITE);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // set CloseOperation
+        MainWindow window = this;
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                App.stopBackgroundExecute();
+                
+                window.dispose();  // 釋放視窗相關的資源
+                System.exit(0);  // 退出程式
+            }
+        });
         
         this.changePagePanel = new ChangeablePanel();
 
@@ -101,8 +113,12 @@ public class MainWindow extends JFrame {
                 String userId = loginPanel.getUserId();
                 
                 if (WebCrawler.check_Key_ID(userId, userKey)) {
+                    // store
                     window.stockDataSystem.setKeyAndID(userKey, userId);
-                    getWebData();
+                    App.crawlAndStoreData();
+                    App.initBackgroundExecute();
+
+                    // GUI
                     newAndAddMainPanel();
                     window.changePagePanel.showPage(MAIN_PANEL_NAME);
                     repaint();
@@ -114,28 +130,6 @@ public class MainWindow extends JFrame {
                 }
             }
         });
-    }
-
-
-    private void getWebData() {
-        // market is open?
-        System.out.println("checkMarketOpen");
-        boolean marketOpen_TF = WebCrawler.checkMarketOpen();
-
-
-        // crawl data
-        System.out.println("stockDataProcessing");
-        WebCrawler.stockDataProcessing();  // 查詢 30 天股價
-        System.out.println("historyTradingProcessing");
-        WebCrawler.historyTradingProcessing();  // 爬歷史資料
-        if (marketOpen_TF == true) {
-            System.out.println("stockPriceProcessing");
-            WebCrawler.stockPriceProcessing();  // 查詢時價
-        }
-        else {
-            System.out.println("Not Open");
-        }
-        System.out.println("GET DATA FINISH");
     }
 
 
