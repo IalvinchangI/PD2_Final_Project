@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -45,9 +49,16 @@ public class StockPanel extends JPanel {
         this.add(this.changePage);
 
 
+        JPanel tmpPanel = new JPanel();
+        tmpPanel.setLayout(new GridBagLayout());
+        tmpPanel.setPreferredSize(new Dimension(1000, 800));
+
         JLabel tmpLabel = new JLabel("click the side bar");
         tmpLabel.setFont(new Font("Serif", Font.PLAIN, 50));
-        this.changePage.add(tmpLabel, "tmp");
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        tmpPanel.add(tmpLabel, constraints);
+        this.changePage.add(tmpPanel, "tmp");
         this.changePage.showPage("tmp");
         StockPanel stockPanel = this;
         stockList.addMouseListener(new MouseAdapter() {

@@ -33,10 +33,9 @@ import project.System.Stock;
  */
 public class StockDetail extends JPanel {
 
-    private JPanel stock = null;
     private JLabel stockNameLabel = null, stockPriceLabel = null;
     private InputField buyPanel = null, sellPanel = null, intervalPanel = null, stockCountPanel = null;
-    private JButton finishButton = null;
+    private RoundButton finishButton = null;
     private JPanel graph;
 
 
@@ -55,15 +54,16 @@ public class StockDetail extends JPanel {
         GridBagConstraints constraints = new GridBagConstraints();
         // constraints.fill = GridBagConstraints.BOTH;
 
-        // panel
-        this.stock = new JPanel();
-
         // label
         this.stockNameLabel = new JLabel(stockName);
-        this.stockPriceLabel = new JLabel(Double.toString(stockPrice));
-
-        this.stockNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
-        this.stockPriceLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+        if (stockPrice == 0.0) {
+            this.stockPriceLabel = new JLabel("close");
+        }
+        else {        
+            this.stockPriceLabel = new JLabel(Double.toString(stockPrice));
+        }
+        this.stockNameLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        this.stockPriceLabel.setFont(new Font("Serif", Font.BOLD, 30));
 
         
         
@@ -87,11 +87,14 @@ public class StockDetail extends JPanel {
             new Color(248, 222, 179), new Color(130, 130, 130), 
             new Color(250, 205, 131), new Color(100, 100, 100)
         );
-        // this.finishButton.setArc(5, 5);
+        this.finishButton.setPreferredSize(new Dimension(150, 50));
+        this.finishButton.setFont(new Font("Serif", Font.BOLD, 25));
+        this.finishButton.setArc(20, 20);
 
 
         // this.add(this.stock);
 
+        // y = 0
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 1;
@@ -113,31 +116,42 @@ public class StockDetail extends JPanel {
         this.add(this.stockPriceLabel, constraints);
 
 
+        // y = 1
         constraints.gridx = 0;
         constraints.gridy = 1;
+        constraints.gridwidth = 0;
+        constraints.gridheight = 1;
+        JLabel box = new JLabel();
+        box.setPreferredSize(new Dimension(1, 50));
+        this.add(box, constraints);
+
+
+        // y = 2 ~ 6
+        constraints.gridx = 0;
+        constraints.gridy = 2;
         constraints.gridwidth = 2;
-        constraints.gridheight = 2;
+        constraints.gridheight = 5;
         this.add(this.graph, constraints);
 
         constraints.gridx = 2;
-        constraints.gridy = 1;
+        constraints.gridy = 2;
         constraints.gridwidth = 1;
         constraints.gridheight = 1;
         this.add(this.buyPanel, constraints);
 
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         constraints.insets = new Insets(0,0,0,0);
         this.add(this.sellPanel, constraints);
 
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         constraints.insets = new Insets(0,0,0,0);
 
         this.add(this.intervalPanel, constraints);
 
-        constraints.gridy = 4;
+        constraints.gridy = 5;
         this.add(this.stockCountPanel, constraints);
 
-        constraints.gridy = 5;
+        constraints.gridy = 6;
         this.add(this.finishButton, constraints);
 
 
