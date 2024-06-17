@@ -35,6 +35,10 @@ public class DataSystem implements StockDataSystem {
         this.isLogin = isLogin;
     }
 
+    /**
+     * 檢查是否登入
+     * @return 是否登入
+     */
     public boolean checkIsLogin() {
 
         return isLogin;
