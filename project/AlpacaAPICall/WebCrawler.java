@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import project.System.KeyAndID;
@@ -318,9 +319,10 @@ public class WebCrawler {
             in.close();
 
             String jsonResponse = response.toString();
-            String createdAt = extractJsonValue(jsonResponse, "\"created_at\":\"", "\"");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            return LocalDate.parse(createdAt, formatter);
+             String createdAt = extractJsonValue(jsonResponse, "\"created_at\":\"", "\"");
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+            OffsetDateTime dateTime = OffsetDateTime.parse(createdAt, formatter);
+            return dateTime.toLocalDate();
         } else {
             throw new Exception("Error: " + responseCode);
         }
