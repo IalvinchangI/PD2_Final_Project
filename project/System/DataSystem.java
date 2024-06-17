@@ -209,7 +209,7 @@ public class DataSystem implements StockDataSystem {
      */
     public List<Deal> getHistoryRecord(String stockName) {
 
-        return (List<Deal>)historyRecord.getRecords(stockName);
+        return (List<Deal>)historyRecord.getRecord(stockName);
     }
 
     /**
@@ -218,12 +218,12 @@ public class DataSystem implements StockDataSystem {
      */
     public Set<String> getStockHasHistoryRecord() {
 
-        if (historyRecord.record.size() > 0) {
+        if (historyRecord.getRecords() != null){
 
-            return historyRecord.record.keySet();
+            return historyRecord.getRecords().keySet();
         }
         else {
-            System.out.println("history record has no content");
+            System.out.println("history records has no content");
             return null;
         }
     }
@@ -242,23 +242,24 @@ public class DataSystem implements StockDataSystem {
     ) {
 
         Deal deal = new Deal(stockName, stockCount, profitAndLoss, year, month, date);
+        HashMap< String, ArrayList<Deal> > records = historyRecord.getRecords();
 
-        if (historyRecord.record.size() > 0) {
+        if (records.size() > 0) {
 
-            if (historyRecord.record.containsKey(stockName)) {
+            if (records.containsKey(stockName)) {
 
-                historyRecord.record.get(stockName).add(deal);
+                records.get(stockName).add(deal);
             }
             else {
                 ArrayList<Deal> deals = new ArrayList<>();
                 deals.add(deal);
-                historyRecord.record.put(stockName, deals);
+                records.put(stockName, deals);
             }
         }
         else {
             ArrayList<Deal> deals = new ArrayList<>();
             deals.add(deal);
-            historyRecord.record.put(stockName, deals);
+            records.put(stockName, deals);
         }
     }
 

@@ -9,11 +9,11 @@ public class HistoryRecord {
     public static final double DOUBLE_MAX_VALUE = Double.MAX_VALUE;
     public static final double DOUBLE_MIN_VALUE = Double.MIN_VALUE;
 
-    HashMap< String, ArrayList<Deal> > record = null;
-    double profitAndLoss = -DOUBLE_MAX_VALUE;
+    private HashMap< String, ArrayList<Deal> > records = null;
+    private double profitAndLoss = -DOUBLE_MAX_VALUE;
 
     public HistoryRecord() {
-        record = new HashMap<>();
+        records = new HashMap<>();
         profitAndLoss = 0;
     }
 
@@ -26,13 +26,13 @@ public class HistoryRecord {
         assert deal.checkDealValid() == true : "deal is invalid";
         String stockName = deal.getStockName();
 
-        if (record.containsKey(stockName)) {
-            record.get(stockName).add(deal);
+        if (records.containsKey(stockName)) {
+            records.get(stockName).add(deal);
         }
         else {
             ArrayList<Deal> stockDeals = new ArrayList<>();
             stockDeals.add(deal);
-            record.put(stockName, stockDeals);
+            records.put(stockName, stockDeals);
         }
         profitAndLoss += deal.getProfitAndLoss();
         
@@ -42,11 +42,26 @@ public class HistoryRecord {
      * 取得特定股票的所有歷史交易紀錄
      * @return 存有歷史交易紀錄的陣列
      */
-    public List<Deal> getRecords(String stockName) {
+    public List<Deal> getRecord(String stockName) {
 
         assert stockName != null && stockName.length() > 0 : "stockName is null or \"\"";
-        if (record.containsKey(stockName)) {
-            return record.get(stockName);
+        if (records.containsKey(stockName)) {
+            return records.get(stockName);
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * 取得records(所有股票的歷史紀錄)
+     * @return records
+     */
+    public HashMap< String, ArrayList<Deal> > getRecords() {
+
+        if (records != null) {
+
+            return records;
         }
         else {
             return null;
