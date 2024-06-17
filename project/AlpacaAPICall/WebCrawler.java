@@ -1,15 +1,14 @@
 package project.AlpacaAPICall;
 import java.io.BufferedReader;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import project.System.KeyAndID;
-import project.System.Deal;
 import project.System.StockDataSystem;
 
 
@@ -17,8 +16,6 @@ public class WebCrawler {
     // 取得Key ID
     /** 存取資料的地方 */
     private static StockDataSystem stockDataSystem = null;
-    // private static final String API_KEY_ID = "PKG2UYG7EYP063HG5USI";
-    // private static final String API_SECRET_KEY = "dn8AVuR8Ux6VRZhI6IW0fP86HtMjldBhkPLFJPVa";
     
     private static final String BASE_URL = "https://paper-api.alpaca.markets/v2";
     private static final String MARKET_URL = "https://data.alpaca.markets/v2/stocks/bars?symbols=";
@@ -28,7 +25,7 @@ public class WebCrawler {
     static private String[] symbols = {"AAPL", "GOOGL", "AMZN", "META", "MSFT", "TSLA"};
 
     public static void main(String[] args) {
-        checkMarketOpen();
+
     }
 
 
@@ -172,9 +169,6 @@ public class WebCrawler {
         connection.setRequestProperty("APCA-API-KEY-ID", API_KEY_ID);
         connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
-        int responseCode = connection.getResponseCode();
-        // System.out.println("Response Code: " + responseCode);
-
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
         StringBuffer response = new StringBuffer();
@@ -298,6 +292,43 @@ public class WebCrawler {
     }
 
     /**
+     * 獲取帳號創立日期
+     * @author JackWu
+     * @return LocalDate 創立日期
+     * @throws Exception
+     */
+    private static LocalDate getAccountCreationDate() throws Exception {
+        KeyAndID keyAndID = stockDataSystem.getKeyAndID();
+        String API_KEY_ID = keyAndID.getKeyID();
+        String API_SECRET_KEY = keyAndID.getsecretKey();
+
+        URL url = new URL(BASE_URL + "/account");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("APCA-API-KEY-ID", API_KEY_ID);
+        connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == 200) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            String jsonResponse = response.toString();
+             String createdAt = extractJsonValue(jsonResponse, "\"created_at\":\"", "\"");
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+            OffsetDateTime dateTime = OffsetDateTime.parse(createdAt, formatter);
+            return dateTime.toLocalDate();
+        } else {
+            throw new Exception("Error: " + responseCode);
+        }
+    }
+
+    /**
      * 獲取歷史交易紀錄
      * @author JackWu
      * @return JSON response as String
@@ -309,7 +340,7 @@ public class WebCrawler {
         String API_SECRET_KEY = keyAndID.getsecretKey();
 
         LocalDate endDate = LocalDate.now().minusDays(1);
-        LocalDate startDate = endDate.minusDays(30);
+        LocalDate startDate = getAccountCreationDate();  // 使用帳號創立日期作為開始日期
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         String endpoint = "/account/activities?activity_types=FILL&after=" + startDate.format(formatter) + "T00:00:00Z&until=" + endDate.format(formatter) + "T23:59:59Z";
@@ -342,7 +373,6 @@ public class WebCrawler {
      */
     private static void parseAndPrintAccountActivities(String jsonResponse) {
         if (jsonResponse.startsWith("Error:")) {
-            // System.out.println(jsonResponse);
             return;
         }
 
