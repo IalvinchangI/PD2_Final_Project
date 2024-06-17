@@ -39,7 +39,6 @@ public class StockDetail extends JPanel {
     private JPanel graph;
 
 
-
     /**
      * 建造：左上股票名、右上股票價格、中間K線圖、下面買賣處理
      * @param stockName ：股票名稱
@@ -169,8 +168,18 @@ public class StockDetail extends JPanel {
                 stockDataSystem.saveBuyingSetting(stockName, Double.parseDouble(buy), Double.parseDouble(sell), Double.parseDouble(interval), Integer.parseInt(stockCount));
             }
         });
-        
     }
+
+
+    public void updateStockPrice(double stockPrice) {
+        if (stockPrice == 0.0) {
+            this.stockPriceLabel.setText("close");
+        }
+        else {        
+            this.stockPriceLabel.setText(Double.toString(stockPrice));
+        }
+    }
+    
 
     /**
      * 取得finishButton

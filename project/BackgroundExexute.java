@@ -5,6 +5,7 @@ import java.util.TimerTask;
 import project.trade.TradingAgent;
 import project.System.StockDataSystem;
 import project.AlpacaAPICall.WebCrawler;
+import project.GUI.MainWindow;
 
 
 /**
@@ -39,7 +40,9 @@ public class BackgroundExexute extends TimerTask {
                 WebCrawler.historyTradingProcessing();
             }
             // else 不更新
-            // TODO update GUI
+
+            // update GUI
+            this.window.updateMainWindow();
         }
         else {
             System.out.println("Not Open");
@@ -53,6 +56,12 @@ public class BackgroundExexute extends TimerTask {
      * StockDataSystem的方法 : {@link StockDataSystem}
      */
     private StockDataSystem stockDataSystem = null;
+    
+    
+    /**
+     * 主視窗
+     */
+    private MainWindow window = null;
 
 
     /**
@@ -69,8 +78,9 @@ public class BackgroundExexute extends TimerTask {
      * 3. 創建交易機器人
      * @param stockDataSystem 能存取資料的地方
      */
-    public BackgroundExexute(StockDataSystem stockDataSystem) {
+    public BackgroundExexute(StockDataSystem stockDataSystem, MainWindow window) {
         this.stockDataSystem = stockDataSystem;
+        this.window = window;
         this.tradingAgent = new TradingAgent(stockDataSystem);
     }
 }

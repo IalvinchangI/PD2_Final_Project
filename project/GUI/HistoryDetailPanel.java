@@ -32,8 +32,12 @@ public class HistoryDetailPanel  extends JPanel {
         this.add(this.pp);
         this.add(Box.createHorizontalStrut(10));
         this.add(this.htp);
-        
 
+    }
+
+    public void updateHistoryDetail() {
+        this.pp.updateProfit();
+        this.htp.updateHistoryTrade();
     }
 
 }
@@ -47,17 +51,16 @@ class ProfitPanel extends JPanel {
     private double profit;
     private JLabel profitLabel = null;
 
+
+    private StockDataSystem stockDataSystem = null;
+    private String stockName = "";
+    
+
     ProfitPanel(String stockName, StockDataSystem stockDataSystem) {
-        List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
-        if (tradeRecord == null) {
-            profit = 0.00;
-        }
-        else {
-            for (Deal tmp : tradeRecord) {
-                profit += tmp.getProfitAndLoss();
-            }
-        }
+        this.stockDataSystem = stockDataSystem;
+        this.stockName = stockName;
         
+        profit = getProfit(stockName, stockDataSystem);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -71,8 +74,25 @@ class ProfitPanel extends JPanel {
         this.setPreferredSize(new Dimension(550, 150));
     }
     
-}
+    private double getProfit(String stockName, StockDataSystem stockDataSystem) {
+        List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
+        double profit = 0.0;
+        if (tradeRecord == null) {
+            profit = 0.00;
+        }
+        else {
+            for (Deal tmp : tradeRecord) {
+                profit += tmp.getProfitAndLoss();
+            }
+        }
+        return profit;
+    }
 
+
+    public void updateProfit() {
+        this.profitLabel.setText(Double.toString(getProfit(this.stockName, this.stockDataSystem)));
+    }
+}
 
 /**
  * Panel of history trade record
@@ -82,6 +102,10 @@ class HistoryTradePanel extends JPanel {
 
     private JLabel historyTradeLabel = null;
     private JScrollPane historyTradeScrollPane = null;
+
+    
+    private String stockName = "";
+    private StockDataSystem stockDataSystem = null;
     
     
 
@@ -121,4 +145,40 @@ class HistoryTradePanel extends JPanel {
         this.add(this.historyTradeScrollPane);
 
     }   
+    public List <Deal> getTradeRecord(String stockName, StockDataSystem stockDataSystem) {
+        List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
+        return tradeRecord;
+
+    }
+
+    public void updateHistoryTrade() {
+        List <Deal> tradeRecord = getTradeRecord(this.stockName, this.stockDataSystem);
+        StringBuilder html = new StringBuilder("<html>");
+        if (tradeRecord != null) {
+            for (Deal tmp : tradeRecord) {
+                String date = tmp.getDateAndTime();
+                double profit = tmp.getProfitAndLoss();
+                int stockCount = tmp.getStockCount();
+                boolean buy = true;
+                if (profit > 0) {
+                    buy = false;
+                }
+                else {
+                    profit *= (-1);
+                }
+                double stockPrice = (double) profit / stockCount;
+                String detail = "";
+                if (buy) {
+                    detail = "On " + date + ", buy " +  Integer.toString(stockCount) + "shares of " + stockName + " at " + String.format("%.2f", stockPrice) + " per share.";
+                }
+                else {
+                    detail = "On " + date + ", sell " +  Integer.toString(stockCount) + "shares of " + stockName + " at " + String.format("%.2f", stockPrice) + " per share.";
+                }
+                html.append(detail).append("<br>");
+            }
+        }
+        html.append("</html>");
+        this.historyTradeLabel.setText(html.toString());
+    }
 }
+

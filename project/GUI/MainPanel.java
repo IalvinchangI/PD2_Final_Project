@@ -75,6 +75,11 @@ public class MainPanel extends JPanel {
         this.add(this.centralPanel);
     }
 
+    public void updateMainPanel() {
+        this.historyPanel.updateHistory();
+        this.stockPanel.updateStockPanel();
+    }
+
 
     
 
