@@ -15,12 +15,33 @@ public class DataSystem implements StockDataSystem {
     private HashMap<String, StockBuyingSetting> buyingSettings = null;
     private HashMap<String, Stock> stocksMap = null;
 
+    private boolean isLogin = false;
+
     public DataSystem() {
 
         stocksMap = new HashMap<>();
         buyingSettings = new HashMap<>();
         historyRecord = new HistoryRecord();
         marketInfoRecorderMap = new HashMap<>();
+        isLogin = false;
+    }
+
+    /**
+     * 設定是否完成登入
+     * @param isLogin : 是否登入
+     */
+    public void setLogin(boolean isLogin) {
+
+        this.isLogin = isLogin;
+    }
+
+    /**
+     * 檢查是否登入
+     * @return 是否登入
+     */
+    public boolean checkIsLogin() {
+
+        return isLogin;
     }
 
     /**
@@ -190,7 +211,32 @@ public class DataSystem implements StockDataSystem {
      */
     public List<Deal> getHistoryRecord(String stockName) {
 
-        return (List<Deal>)historyRecord.getRecords(stockName);
+        return (List<Deal>)historyRecord.getRecord(stockName);
+    }
+
+    /**
+     * 取得所有有歷史交易紀錄的股票集合
+     * @return 所有有歷史交易紀錄的股票集合
+     */
+    public Set<String> getStockHasHistoryRecord() {
+
+        if (historyRecord.getRecords() != null){
+
+            return historyRecord.getRecords().keySet();
+        }
+        else {
+            System.out.println("history records has no content");
+            return null;
+        }
+    }
+
+    /**
+     * 取得總盈虧
+     * @return 總盈虧
+     */
+    public double getTotalProfitAndLoss() {
+
+        return historyRecord.getTotalProfitAndLoss();
     }
 
     /**
@@ -207,23 +253,24 @@ public class DataSystem implements StockDataSystem {
     ) {
         System.out.println("addDeal2HistoryRecord : " + stockName + " " + stockCount + " " + profitAndLoss + " " + year + " " + month + " " + date);
         Deal deal = new Deal(stockName, stockCount, profitAndLoss, year, month, date);
+        HashMap< String, ArrayList<Deal> > records = historyRecord.getRecords();
 
-        if (historyRecord.record.size() > 0) {
+        if (records.size() > 0) {
 
-            if (historyRecord.record.containsKey(stockName)) {
+            if (records.containsKey(stockName)) {
 
-                historyRecord.record.get(stockName).add(deal);
+                records.get(stockName).add(deal);
             }
             else {
                 ArrayList<Deal> deals = new ArrayList<>();
                 deals.add(deal);
-                historyRecord.record.put(stockName, deals);
+                records.put(stockName, deals);
             }
         }
         else {
             ArrayList<Deal> deals = new ArrayList<>();
             deals.add(deal);
-            historyRecord.record.put(stockName, deals);
+            records.put(stockName, deals);
         }
     }
 

@@ -23,7 +23,7 @@ public class KeyAndID {
      */
     public String getsecretKey() {
 
-        assert secretKey != null && secretKey.length() > 0 : "secretKey is null or \\\"\\\"";
+        assert secretKey != null && secretKey.length() > 0 : "secretKey is null or \"\"";
         return secretKey;
     }
 
