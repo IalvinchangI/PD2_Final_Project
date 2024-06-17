@@ -1,0 +1,50 @@
+@startuml
+
+skinparam actorStyle awesome
+' left to right direction
+
+rectangle UserAccess {
+    usecase "登入alpaca" as UA
+    usecase "調整買賣設定" as UB
+    usecase "查看歷史紀錄" as UC
+    usecase "看股票曲線圖" as UD
+}
+actor User as User
+User --> UA
+User --> UB
+User --> UC
+User --> UD
+
+rectangle CrawlingData {
+    usecase "爬股票的資料" as CA
+    usecase "爬歷史資料" as CB
+}
+actor dataManager as DM
+DM --> CA
+DM --> CB
+
+rectangle DataAccessing {
+    usecase "存取User輸入的買賣設定" as DA
+    usecase "執行交易" as DB
+    usecase "存資料" as DC
+    usecase "輸出資料" as DD
+    usecase "算盈虧" as DE
+    usecase "畫股票曲線圖" as DF
+    usecase "計時器" as DG
+}
+actor TradingAgent as TA
+TA --> DA
+TA --> DB
+
+actor System as SY
+SY --> DC
+SY --> DD
+
+actor ProfitAndLoss_Calculator as PLC
+PLC --> DE
+
+actor Plotter as PLT
+PLT --> DF
+
+actor Timer as TM
+TM --> DG
