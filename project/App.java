@@ -40,7 +40,7 @@ public class App {
      */
     public static void main(String[] args) {
         // new StockDataSystem, Timer, GUI and load StockDataSystem
-        App.stockDataSystem = new DataSystem();  // TODO new StockDataSystem
+        App.stockDataSystem = new DataSystem();  // new StockDataSystem
         WebCrawler.downloadStockDataSystem(App.stockDataSystem);  // load StockDataSystem
         App.window = new MainWindow("股票機器人", 1400, 850, stockDataSystem);
         
