@@ -20,7 +20,7 @@ public class App {
      * <p>
      * 單位：ms
      */
-    public static final long TRANSACTION_INTERVAL = 10 * 1000;
+    public static final long TRANSACTION_INTERVAL = 5 * 60 * 1000;
 
 
     /** 背景執行的時鐘 */
@@ -105,7 +105,7 @@ public class App {
         // schedule BackgroundExecute
         BackgroundExexute backgroundExexute = new BackgroundExexute(App.stockDataSystem, App.window);
         System.out.println("backgroundExexute");
-        backgroundTimer.schedule(backgroundExexute, TRANSACTION_INTERVAL, TRANSACTION_INTERVAL);
+        backgroundTimer.schedule(backgroundExexute, 100, TRANSACTION_INTERVAL);
     }
 
 
