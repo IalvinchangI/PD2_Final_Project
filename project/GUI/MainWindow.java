@@ -12,10 +12,12 @@ import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 
 import project.GUI.GUITools.ChangeablePanel;
+import project.GUI.GUITools.LoadingPage;
 
-import project.System.DataSystem;
 import project.System.StockDataSystem;
+
 import project.App;
+
 import project.AlpacaAPICall.WebCrawler;
 
 
@@ -84,12 +86,11 @@ public class MainWindow extends JFrame {
     }
 
 
-    /** new 頁面 */
+    /** new Login 和 Loading 頁面 */
     private void newAndAddLoginLoadingPanel() {
         // new
         this.loginPanel = new LoginPanel();
         this.loadingPage = new LoadingPage(getBackground());
-
 
         // add
         this.changePagePanel.add(this.loginPanel, LOGIN_PANEL_NAME);
@@ -98,10 +99,10 @@ public class MainWindow extends JFrame {
     }
 
 
+    /** new Main 頁面 */
     private void newAndAddMainPanel() {
         // new
         this.mainPanel = new MainPanel(stockDataSystem);
-
 
         // add
         this.changePagePanel.add(this.mainPanel, MAIN_PANEL_NAME);
@@ -125,40 +126,60 @@ public class MainWindow extends JFrame {
     }
 
 
-    public static void main(String[] args) {
-        StockDataSystem dataSystem = new DataSystem();
-        WebCrawler.downloadStockDataSystem(dataSystem);  // load StockDataSystem
-        
-        MainWindow window = new MainWindow("股票機器人", 1400, 850, dataSystem);
-        
-        
-        window.showGUI();
-    }
-
-
     /**
-     * 背景執行
+     * 背景執行，不干擾 GUI 顯示
+     * <p>
+     * 先檢查使用者輸入的 Key ID 是否正確
+     * <p>
+     * <ul>
+     *      <li>
+     *          如果是對的
+     *          <ol>
+     *              <li> 把 KeyAndID 存到 stockDataSystem </li>
+     *              <li> 爬一開始的資料、存到 stockDataSystem </li>
+     *              <li> 啟動 backgroundTimer，並設定 backgroundExexute </li>
+     *              <li> new Main 頁面 </li>
+     *              <li> 切換至 Main 頁面 </li>
+     *          </ol>
+     *      </li>
+     *      <li>
+     *          如果是錯的
+     *          <ol>
+     *              <li> 跳出 WrongInfo </li>
+     *              <li> 切換至 Login 頁面 </li>
+     *          </ol>
+     *      </li>
+     * </ul>
      */
     private class LoginAndCrawl extends SwingWorker<Void, Void> {
-    
+        /** 主視窗 */
         private MainWindow window = null;
+
+
+        /** 紀錄 執行完後要換去的頁面 */
         private String changePageName = null;
     
+
+        /**
+         * 存主視窗是誰
+         * @param window 主視窗
+        */
         public LoginAndCrawl(MainWindow window) {
             this.window = window;
         }
     
+
         @Override
         protected Void doInBackground() throws Exception {
+            // 要執行的內容
             String userKey = loginPanel.getUserKey();
             String userId = loginPanel.getUserId();
             
-            if (WebCrawler.check_Key_ID(userId, userKey)) {
-
+            if (WebCrawler.check_Key_ID(userId, userKey)) {  // 檢查使用者輸入的 Key ID 是否正確
                 // store
-                this.window.stockDataSystem.setKeyAndID(userKey, userId);
-                App.crawlAndStoreData();
-                App.initBackgroundExecute();
+                this.window.stockDataSystem.setKeyAndID(userKey, userId);   // 把 KeyAndID 存到 stockDataSystem
+                App.crawlAndStoreData();                                    // 爬一開始的資料、存到 stockDataSystem
+                App.initBackgroundExecute();                                // 啟動 backgroundTimer，並設定 backgroundExexute
 
                 // GUI
                 newAndAddMainPanel();
@@ -177,12 +198,9 @@ public class MainWindow extends JFrame {
         
         @Override
         protected void done() {
+            // 結束後，把頁面切換成要的頁面
             this.window.changePagePanel.showPage(this.changePageName);
             repaint();
         }
     }
 }
-
-
-
-

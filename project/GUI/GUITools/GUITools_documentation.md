@@ -164,3 +164,11 @@
 > ```java
 > public void setTextLength(int labelWidth)
 > ``` 
+
+<br>
+
+## LoadingPage `JPanel`
+### 功能：
+> 載入頁面 (Panel)
+> 
+> 動畫 : 跳動的球
