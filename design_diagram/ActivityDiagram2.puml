@@ -1,0 +1,19 @@
+@startuml
+
+|#SteelBlue|Timer|
+start
+#SkyBlue:計時器;
+|#MediumTurquoise|Data Manager|
+#PaleTurquoise:爬股票資料;
+|#MediumAquaMarine|Trading Agent|
+#Aquamarine:存取User輸入的買賣設定;
+#Aquamarine:執行交易;
+|Data Manager|
+#PaleTurquoise:爬歷史資料;
+|#PHYSICAL|Profit&Loss Calculator|
+#SpringGreen:算盈虧;
+|#TECHNOLOGY|System|
+#White:存資料;
+end
+
+@enduml
