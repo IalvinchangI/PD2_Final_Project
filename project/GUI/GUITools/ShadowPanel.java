@@ -140,7 +140,6 @@ public class ShadowPanel extends JPanel {
     @Override
     public void setPreferredSize(Dimension preferredSize) {
         super.setPreferredSize(preferredSize);
-        System.out.println(preferredSize);
         if (this.root != null) {
             int xStart = Math.max(10, this.arcWidth);
             int yStart = Math.max(10, this.arcWidth);

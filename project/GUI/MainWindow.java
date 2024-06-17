@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.SwingWorker;
 
 import project.GUI.GUITools.ChangeablePanel;
 
@@ -24,14 +25,18 @@ import project.AlpacaAPICall.WebCrawler;
  * @author IalvinchangI
  */
 public class MainWindow extends JFrame {
-
+    // 換頁面的包裝
     private ChangeablePanel changePagePanel = null;
     
+    // 頁面
     private LoginPanel loginPanel = null;
+    private LoadingPage loadingPage = null;
     private MainPanel mainPanel = null;
 
     /** loginPanel 的名字 */
     public static final String LOGIN_PANEL_NAME = "LoginPanel";
+    /** loginPanel 的名字 */
+    public static final String LOADING_PAGE_NAME = "LoadingPage";
     /** mainPanel 的名字 */
     public static final String MAIN_PANEL_NAME = "MainPanel";
 
@@ -68,7 +73,7 @@ public class MainWindow extends JFrame {
         
         this.changePagePanel = new ChangeablePanel();
 
-        this.newAndAddLoginPanel();
+        this.newAndAddLoginLoadingPanel();
         this.addLoginListener();
     }
 
@@ -80,13 +85,15 @@ public class MainWindow extends JFrame {
 
 
     /** new 頁面 */
-    private void newAndAddLoginPanel() {
+    private void newAndAddLoginLoadingPanel() {
         // new
         this.loginPanel = new LoginPanel();
+        this.loadingPage = new LoadingPage(getBackground());
 
 
         // add
         this.changePagePanel.add(this.loginPanel, LOGIN_PANEL_NAME);
+        this.changePagePanel.add(this.loadingPage, LOADING_PAGE_NAME);
         this.add(this.changePagePanel);
     }
 
@@ -109,25 +116,10 @@ public class MainWindow extends JFrame {
         JButton loginButton = loginPanel.getLoginButton();
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String userKey = loginPanel.getUserKey();
-                String userId = loginPanel.getUserId();
-                
-                if (WebCrawler.check_Key_ID(userId, userKey)) {
-                    // store
-                    window.stockDataSystem.setKeyAndID(userKey, userId);
-                    App.crawlAndStoreData();
-                    App.initBackgroundExecute();
+                window.changePagePanel.showPage(LOADING_PAGE_NAME);
+                repaint();
 
-                    // GUI
-                    newAndAddMainPanel();
-                    window.changePagePanel.showPage(MAIN_PANEL_NAME);
-                    repaint();
-                }
-                else {
-                    JDialog wrong = new WrongInfo(window);
-                    wrong.setSize(200, 150);
-                    wrong.setVisible(true);
-                }
+                new MainWindow.LoginAndCrawl(window).execute();
             }
         });
     }
@@ -142,4 +134,55 @@ public class MainWindow extends JFrame {
         
         window.showGUI();
     }
+
+
+    /**
+     * 背景執行
+     */
+    private class LoginAndCrawl extends SwingWorker<Void, Void> {
+    
+        private MainWindow window = null;
+        private String changePageName = null;
+    
+        public LoginAndCrawl(MainWindow window) {
+            this.window = window;
+        }
+    
+        @Override
+        protected Void doInBackground() throws Exception {
+            String userKey = loginPanel.getUserKey();
+            String userId = loginPanel.getUserId();
+            
+            if (WebCrawler.check_Key_ID(userId, userKey)) {
+
+                // store
+                this.window.stockDataSystem.setKeyAndID(userKey, userId);
+                App.crawlAndStoreData();
+                App.initBackgroundExecute();
+
+                // GUI
+                newAndAddMainPanel();
+                this.changePageName = MainWindow.MAIN_PANEL_NAME;
+            }
+            else {
+                JDialog wrong = new WrongInfo(window);
+                wrong.setSize(200, 150);
+                wrong.setVisible(true);
+                
+                this.changePageName = MainWindow.LOGIN_PANEL_NAME;
+            }
+            return null;
+        }
+        
+        
+        @Override
+        protected void done() {
+            this.window.changePagePanel.showPage(this.changePageName);
+            repaint();
+        }
+    }
 }
+
+
+
+
