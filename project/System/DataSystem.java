@@ -94,26 +94,20 @@ public class DataSystem implements StockDataSystem {
 
             if (stocksMap.containsKey(stockName)) {
                 
-                Stock stock = stocksMap.get(stockName);
-                int currentStockCount = stock.getStockCount();
-
-                stock.setStockCount(currentStockCount + 1);
-                stock.setStockPrice(stockPrice);
-                stocksMap.remove(stockName);
-
-                stocksMap.put(stockName, stock);
+                stocksMap.get(stockName).setStockPrice(stockPrice);
             }
             else {
-                Stock stock = new Stock(stockName, stockPrice, 1);
+                Stock stock = new Stock(stockName, stockPrice, 0);
                 stocksMap.put(stockName, stock);
             }
-            System.out.println(stockName + "has been put into stocksMap");
-            System.out.println(stocksMap.get(stockName).getStockName());
         }
         else {
-            Stock stock = new Stock(stockName, stockPrice, 1);
+            Stock stock = new Stock(stockName, stockPrice, 0);
             stocksMap.put(stockName, stock);
         }
+        // System.out.println(stockName + "'s price has been uploaded");
+        // System.out.println(stocksMap.get(stockName).getStockPrice());
+        // System.out.println("stockCount: " + stocksMap.get(stockName).getStockCount() + "\n");
     }
 
     /**
@@ -251,7 +245,7 @@ public class DataSystem implements StockDataSystem {
     public void addDeal2HistoryRecord(
         String stockName, int stockCount, double profitAndLoss, int year, int month, int date
     ) {
-        System.out.println("addDeal2HistoryRecord : " + stockName + " " + stockCount + " " + profitAndLoss + " " + year + " " + month + " " + date);
+        //System.out.println("addDeal2HistoryRecord : " + stockName + " " + stockCount + " " + profitAndLoss + " " + year + " " + month + " " + date);
         Deal deal = new Deal(stockName, stockCount, profitAndLoss, year, month, date);
         HashMap< String, ArrayList<Deal> > records = historyRecord.getRecords();
 
@@ -272,6 +266,24 @@ public class DataSystem implements StockDataSystem {
             deals.add(deal);
             records.put(stockName, deals);
         }
+
+        if (stocksMap.containsKey(stockName)) {
+
+            int currentStockCount = stocksMap.get(stockName).getStockCount();
+            currentStockCount += stockCount;
+            stocksMap.get(stockName).setStockCount(currentStockCount);
+        }
+        else {
+            Stock stock = new Stock(stockName, deal.getStockPrice(), stockCount);
+            stocksMap.put(stockName, stock);
+        }
+
+
+        System.out.println("\n********************************************");
+        System.out.println("deal about " + deal.getStockName() + " has been recorded");
+        System.out.println("deal profitAndLoss: " + deal.getProfitAndLoss());
+        System.out.println("stockCount: " + deal.getStockCount());
+        System.out.println("********************************************\n");
     }
 
     /**
