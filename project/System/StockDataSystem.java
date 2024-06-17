@@ -31,6 +31,8 @@ public interface StockDataSystem {
      */
     public abstract Set<String> getStockNamesHasBuyingSetting();
 
+    public abstract boolean checkBuyingSettingIsSet(String stockName);
+
     /**
      * 取得某股票的買賣設定
      * @param stockName : 該股票名稱
