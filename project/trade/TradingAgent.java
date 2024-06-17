@@ -69,7 +69,7 @@ public class TradingAgent {
                 // Deal newestStockHistoryRecord = stockHistoryRecord.get(0);  // 取得 某股票的最新交易紀錄
                 Stock stock = stockDataSystem.getStock(stockName);  // 現在股票資料
                 System.out.println(stockName);
-                System.out.println(stock);
+                System.out.println(stock.getStockPrice());
 
 
                 // get detail
