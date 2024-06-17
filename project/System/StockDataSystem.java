@@ -1,8 +1,8 @@
 package project.System;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.List;
 
 public interface StockDataSystem {
     /**
@@ -30,6 +30,8 @@ public interface StockDataSystem {
      * @return 買賣設定的股票集合, Set<股票名稱>
      */
     public abstract Set<String> getStockNamesHasBuyingSetting();
+
+    public abstract boolean checkBuyingSettingIsSet(String stockName);
 
     /**
      * 取得某股票的買賣設定

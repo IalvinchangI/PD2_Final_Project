@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class DataSystem implements StockDataSystem {
@@ -94,24 +95,20 @@ public class DataSystem implements StockDataSystem {
 
             if (stocksMap.containsKey(stockName)) {
                 
-                Stock stock = stocksMap.get(stockName);
-                int currentStockCount = stock.getStockCount();
-
-                stock.setStockCount(currentStockCount + 1);
-                stock.setStockPrice(stockPrice);
-                stocksMap.remove(stockName);
-
-                stocksMap.put(stockName, stock);
+                stocksMap.get(stockName).setStockPrice(stockPrice);
             }
             else {
-                Stock stock = new Stock(stockName, stockPrice, 1);
+                Stock stock = new Stock(stockName, stockPrice, 0);
                 stocksMap.put(stockName, stock);
             }
         }
         else {
-            Stock stock = new Stock(stockName, stockPrice, 1);
+            Stock stock = new Stock(stockName, stockPrice, 0);
             stocksMap.put(stockName, stock);
         }
+        // System.out.println(stockName + "'s price has been uploaded");
+        // System.out.println(stocksMap.get(stockName).getStockPrice());
+        // System.out.println("stockCount: " + stocksMap.get(stockName).getStockCount() + "\n");
     }
 
     /**
@@ -129,6 +126,18 @@ public class DataSystem implements StockDataSystem {
         }
     }
 
+    public boolean checkBuyingSettingIsSet(String stockName) {
+        
+        if (buyingSettings.containsKey(stockName)) {
+
+            return buyingSettings.get(stockName).getIsSet();
+        }
+        else {
+            System.out.println(stockName + "has no buyingSetting");
+            return false;
+        }
+    }
+
     /**
      * 取得特定股票的買賣設定
      * @param stockName : 股票名稱
@@ -139,6 +148,7 @@ public class DataSystem implements StockDataSystem {
         if (buyingSettings.size() > 0) {
             
             if (buyingSettings.containsKey(stockName)) {
+                buyingSettings.get(stockName).setIsSet(false);
                 return buyingSettings.get(stockName);
             }
             else {
@@ -147,6 +157,7 @@ public class DataSystem implements StockDataSystem {
             }
         }
         else {
+            System.out.println(buyingSettings.size());
             System.out.println("buyingSettings has no content");
             return null;
         }
@@ -164,7 +175,7 @@ public class DataSystem implements StockDataSystem {
     ) {
 
         StockBuyingSetting buyingSetting = new StockBuyingSetting(
-            stockName, bidPrice, offerStep, bidStep, stockCount
+            stockName, bidPrice, offerStep, bidStep, stockCount, true
         );
 
         if (buyingSettings.size() > 0) {
@@ -181,6 +192,8 @@ public class DataSystem implements StockDataSystem {
         else {
             buyingSettings.put(stockName, buyingSetting);
         }
+        System.out.println("buyingSettings' size: " + buyingSettings.size());
+        System.out.println("bidPrice: " + buyingSettings.get(stockName).getBidPrice());
     }
 
     /**
@@ -249,7 +262,7 @@ public class DataSystem implements StockDataSystem {
     public void addDeal2HistoryRecord(
         String stockName, int stockCount, double profitAndLoss, int year, int month, int date
     ) {
-
+        //System.out.println("addDeal2HistoryRecord : " + stockName + " " + stockCount + " " + profitAndLoss + " " + year + " " + month + " " + date);
         Deal deal = new Deal(stockName, stockCount, profitAndLoss, year, month, date);
         HashMap< String, ArrayList<Deal> > records = historyRecord.getRecords();
 
@@ -270,6 +283,25 @@ public class DataSystem implements StockDataSystem {
             deals.add(deal);
             records.put(stockName, deals);
         }
+
+        if (stocksMap.containsKey(stockName)) {
+
+            int currentStockCount = stocksMap.get(stockName).getStockCount();
+            currentStockCount += stockCount;
+            stocksMap.get(stockName).setStockCount(currentStockCount);
+        }
+        else {
+            Stock stock = new Stock(stockName, deal.getStockPrice(), stockCount);
+            stocksMap.put(stockName, stock);
+        }
+
+
+        // System.out.println("\n********************************************");
+        // System.out.println("deal about " + deal.getStockName() + " has been recorded");
+        // System.out.println("deal profitAndLoss: " + deal.getProfitAndLoss());
+        // System.out.println("stockCount: " + deal.getStockCount());
+        // System.out.println("date: " + deal.getDateAndTime());
+        // System.out.println("********************************************\n");
     }
 
     /**
@@ -290,6 +322,7 @@ public class DataSystem implements StockDataSystem {
         int year, int month, int date
     ) {
 
+        System.out.println("mode: " + mode);
         if (marketInfoRecorderMap.size() > 0) {
 
             if (marketInfoRecorderMap.containsKey(stockName)) {
@@ -342,12 +375,12 @@ public class DataSystem implements StockDataSystem {
 
         if (marketInfoRecorderMap.containsKey(stockName)) {
 
-            if (marketInfoRecorderMap.containsKey(mode)) {
+            if (marketInfoRecorderMap.get(stockName).containsKey(mode)) {
 
                 return marketInfoRecorderMap.get(stockName).get(mode).getRecorder();
             }
             else {
-                System.out.println("recorder about " + stockName + " with mode: " + "\"mode\" not exist");
+                System.out.println("recorder about " + stockName + " with mode: " + "\"" + mode + "\"not exist");
                 return null;
             }
         }

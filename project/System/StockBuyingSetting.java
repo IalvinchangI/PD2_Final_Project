@@ -12,6 +12,7 @@ public class StockBuyingSetting {
     private double offerStep = -1;
     private double bidStep = -1;
     private int stockCount = 0;
+    private boolean isSet = false;
 
     /**
      * 建立一個買賣設定
@@ -19,17 +20,30 @@ public class StockBuyingSetting {
      * @param bidPrice : 目標買價
      * @param offerStep : 上漲多少錢時賣出
      * @param bidStep : 下降多少錢時買入
+     * @param stockCount : 股數
      */
     public StockBuyingSetting(
-        String stockName, double bidPrice, double offerStep, double bidStep, int stockCount
+        String stockName, double bidPrice, double offerStep, double bidStep, int stockCount, boolean isSet
     ) {
 
+        System.out.println("Buying setting of " + stockName + " has been set");
         setStockName(stockName);
         setBidPrice(bidPrice);
         setOfferStep(offerStep);
         setBidStep(bidStep);
         setStockCount(stockCount);
+        setIsSet(true);
         
+    }
+
+    public void setIsSet(boolean isSet) {
+
+        this.isSet = isSet;
+    }
+
+    public boolean getIsSet() {
+
+        return isSet;
     }
 
     /**

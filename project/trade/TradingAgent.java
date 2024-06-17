@@ -52,6 +52,7 @@ public class TradingAgent {
      * @return 是否有執行交易
      */
     public boolean trade() {
+        System.out.println("TRADING");
         boolean trade_TF = false;  // 是否有執行交易
 
         Set<String> stockNames = this.stockDataSystem.getStockNamesHasBuyingSetting();
@@ -63,23 +64,28 @@ public class TradingAgent {
                 // otherwise, check next stock
                 
                 // get data
+                boolean hasChanged_TF = stockDataSystem.checkBuyingSettingIsSet(stockName);  // 上次拿之後，有無更改 buyingSetting
                 StockBuyingSetting buyingSetting = stockDataSystem.getBuyingSetting(stockName);
                 List<Deal> stockHistoryRecord = stockDataSystem.getHistoryRecord(stockName);
-                // Deal newestStockHistoryRecord = stockHistoryRecord.get(0);  // 取得 某股票的最新交易紀錄
+                Deal newestStockHistoryRecord = stockHistoryRecord.get(0);  // 取得 某股票的最新交易紀錄
+                System.out.println("最新: " + newestStockHistoryRecord.getProfitAndLoss());
                 Stock stock = stockDataSystem.getStock(stockName);  // 現在股票資料
+                System.out.println(stockName);
+                System.out.println(stock.getStockPrice());
 
 
                 // get detail
                 double newestDealPrice = 0;
-                if (stockHistoryRecord == null) {  // if it is the first trade
+                if (hasChanged_TF == true || stockHistoryRecord == null) {  // if (it has changed) or (it is the first trade)
                     newestDealPrice = buyingSetting.getBidPrice();  // 將 上次交易價 設為 使用者設定的買入價格
                 }
-                else {
+                else {  // hasChanged_TF == false => 自上次 get 以來，buyingSetting 沒變
                     newestDealPrice = stockHistoryRecord.get(0).getStockPrice();  // 取得 上次交易價 (單張股票)
                 }
                 double nowStockPrice = stock.getStockPrice();  // 取得 現在股價
                 double priceDelta = nowStockPrice - newestDealPrice;  // 現在股價 和 上次交易價 (or 使用者設定的買入價格) 的價格差
 
+                System.out.println("TradingAgent\ttrade -> 現在股價 : " + nowStockPrice + "\t上次交易價 : " + newestDealPrice + "\t時間 : " + LocalDateTime.now().toString());
 
                 // buy
                 if (nowStockPrice <= buyingSetting.getBidPrice()) {  // 現在股價 比 設定的買入價格 低or相等
@@ -96,6 +102,7 @@ public class TradingAgent {
 
                 // sell
                 if (stock.getStockCount() > 0) {  // 判斷是否賣空
+                    System.out.println("sell : " + stock.getStockCount());
                     if ((priceDelta / buyingSetting.getOfferStep()) >= 1.) {  // 價格差(正的) 比 設定的賣出間隔 大
                         if (this.sellingRequest(stockName, buyingSetting.getStockCount()) == true) {  // 賣出
                             System.out.println("TradingAgent\ttrade\tsell -> 現在股價 : " + nowStockPrice + "\t上次交易價 : " + newestDealPrice + "\t時間 : " + LocalDateTime.now().toString());
@@ -172,7 +179,7 @@ public class TradingAgent {
                 while ((inputLine = reader.readLine()) != null) {
                     response.append(inputLine);
                 }
-                // TODO 有問題的話，要把 success_TF = false
+                // 沒用
                 // if (response.toString().equals(FORBIDDEN_CODE)) {
                 //     success_TF = false;
                 // }

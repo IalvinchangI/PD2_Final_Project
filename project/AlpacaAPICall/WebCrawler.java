@@ -181,6 +181,9 @@ public class WebCrawler {
         // System.out.println(stockName + " Price = " + stockPrice);
 
         stockDataSystem.addStock2StocksMap(stockName, stockPrice);
+        // System.out.println("********************************************************");
+        // System.out.println("Stock Name = " + stockName + " Stock Price = " + stockPrice);
+        // System.out.println("********************************************************");
     }
 
     /**
@@ -190,7 +193,7 @@ public class WebCrawler {
      * @return
      */
     private static double extractStockPrice(String jsonResponse) {
-        String searchKey = "o";
+        String searchKey = "c";
         int startIndex = jsonResponse.indexOf(searchKey) + 3;
         int endIndex = jsonResponse.indexOf(",", startIndex);
         if (endIndex == -1) {
@@ -398,6 +401,7 @@ public class WebCrawler {
             int month = Integer.parseInt(transactionTime.substring(5, 7).trim());
             int day = Integer.parseInt(transactionTime.substring(8, 10).trim());
 
+            // System.out.println("Stock Name : " + symbol + " qty : " + stockQty + " trading price " + tradingPrice);
             stockDataSystem.addDeal2HistoryRecord(symbol, stockQty, tradingPrice, year, month, day);
         }
     }

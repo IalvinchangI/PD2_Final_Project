@@ -49,7 +49,7 @@ public class HistoryRecord {
             return records.get(stockName);
         }
         else {
-            System.out.println(stockName + " has no history record");
+            System.out.println(stockName + " has no history record!!");
             return null;
         }
     }
