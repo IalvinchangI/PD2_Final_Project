@@ -15,12 +15,29 @@ public class DataSystem implements StockDataSystem {
     private HashMap<String, StockBuyingSetting> buyingSettings = null;
     private HashMap<String, Stock> stocksMap = null;
 
+    private boolean isLogin = false;
+
     public DataSystem() {
 
         stocksMap = new HashMap<>();
         buyingSettings = new HashMap<>();
         historyRecord = new HistoryRecord();
         marketInfoRecorderMap = new HashMap<>();
+        isLogin = false;
+    }
+
+    /**
+     * 設定是否完成登入
+     * @param isLogin : 是否登入
+     */
+    public void setLogin(boolean isLogin) {
+
+        this.isLogin = isLogin;
+    }
+
+    public boolean checkIsLogin() {
+
+        return isLogin;
     }
 
     /**
