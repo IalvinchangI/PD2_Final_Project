@@ -148,6 +148,7 @@ public class DataSystem implements StockDataSystem {
         if (buyingSettings.size() > 0) {
             
             if (buyingSettings.containsKey(stockName)) {
+                buyingSettings.get(stockName).setIsSet(false);
                 return buyingSettings.get(stockName);
             }
             else {
