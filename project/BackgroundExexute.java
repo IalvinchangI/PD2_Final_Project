@@ -44,6 +44,7 @@ public class BackgroundExexute extends TimerTask {
 
             // update GUI
             this.window.updateMainWindow();
+            this.window.repaint();
         }
         else {
             System.out.println("Not Open");
