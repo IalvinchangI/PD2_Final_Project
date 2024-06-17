@@ -296,12 +296,12 @@ public class DataSystem implements StockDataSystem {
         }
 
 
-        System.out.println("\n********************************************");
-        System.out.println("deal about " + deal.getStockName() + " has been recorded");
-        System.out.println("deal profitAndLoss: " + deal.getProfitAndLoss());
-        System.out.println("stockCount: " + deal.getStockCount());
-        System.out.println("date: " + deal.getDateAndTime());
-        System.out.println("********************************************\n");
+        // System.out.println("\n********************************************");
+        // System.out.println("deal about " + deal.getStockName() + " has been recorded");
+        // System.out.println("deal profitAndLoss: " + deal.getProfitAndLoss());
+        // System.out.println("stockCount: " + deal.getStockCount());
+        // System.out.println("date: " + deal.getDateAndTime());
+        // System.out.println("********************************************\n");
     }
 
     /**

@@ -20,7 +20,8 @@ public class App {
      * <p>
      * 單位：ms
      */
-    public static final long TRANSACTION_INTERVAL = 5 * 60 * 1000;
+    // public static final long TRANSACTION_INTERVAL = 30 * 1000;
+    public static final long TRANSACTION_INTERVAL = 4 * 60 * 1000;
 
 
     /** 背景執行的時鐘 */
