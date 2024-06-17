@@ -65,7 +65,7 @@ class ProfitPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.profitTextLabel = new JLabel("profit and loss:");
-        this.profitLabel = new JLabel(Double.toString(profit));
+        this.profitLabel = new JLabel(String.format("%.2f", profit));
 
         this.profitTextLabel.setFont(new Font("Serif", Font.PLAIN, 30));
         this.profitLabel.setFont(new Font("Serif", Font.PLAIN, 60));
@@ -90,7 +90,7 @@ class ProfitPanel extends JPanel {
 
 
     public void updateProfit() {
-        this.profitLabel.setText(Double.toString(getProfit(this.stockName, this.stockDataSystem)));
+        this.profitLabel.setText(String.format("%.2f", getProfit(this.stockName, this.stockDataSystem)));
     }
 }
 
@@ -121,6 +121,7 @@ class HistoryTradePanel extends JPanel {
                 boolean buy = true;
                 if (profit > 0) {
                     buy = false;
+                    stockCount *= (-1);
                 }
                 else {
                     profit *= (-1);
@@ -163,6 +164,7 @@ class HistoryTradePanel extends JPanel {
                 boolean buy = true;
                 if (profit > 0) {
                     buy = false;
+                    stockCount *= (-1);
                 }
                 else {
                     profit *= (-1);
