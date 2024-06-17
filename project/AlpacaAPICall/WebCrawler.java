@@ -79,8 +79,8 @@ public class WebCrawler {
         StringBuilder response = new StringBuilder();
 
         try {
-            System.out.println(API_KEY_ID);
-            System.out.println(API_SECRET_KEY);
+            // System.out.println(API_KEY_ID);
+            // System.out.println(API_SECRET_KEY);
             URL url = new URL(BASE_URL + "/clock");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -88,7 +88,7 @@ public class WebCrawler {
             connection.setRequestProperty("APCA-API-SECRET-KEY", API_SECRET_KEY);
 
             responseCode = connection.getResponseCode();
-            System.out.println(responseCode);
+            // System.out.println(responseCode);
             if(responseCode == 200) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String inputLine;
@@ -319,7 +319,7 @@ public class WebCrawler {
             in.close();
 
             String jsonResponse = response.toString();
-             String createdAt = extractJsonValue(jsonResponse, "\"created_at\":\"", "\"");
+            String createdAt = extractJsonValue(jsonResponse, "\"created_at\":\"", "\"");
             DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
             OffsetDateTime dateTime = OffsetDateTime.parse(createdAt, formatter);
             return dateTime.toLocalDate();
