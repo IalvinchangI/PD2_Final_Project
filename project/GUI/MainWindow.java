@@ -59,6 +59,7 @@ public class MainWindow extends JFrame {
         // this.setSize(1600, 1050);
         this.setSize(width, height);
         this.setBackground(new Color(253, 232, 181));
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         // this.setBackground(Color.WHITE);
 
         // set CloseOperation

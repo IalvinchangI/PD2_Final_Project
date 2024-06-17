@@ -64,6 +64,7 @@ public class TradingAgent {
                 // otherwise, check next stock
                 
                 // get data
+                boolean hasChanged_TF = stockDataSystem.checkBuyingSettingIsSet(stockName);  // 上次拿之後，有無更改 buyingSetting
                 StockBuyingSetting buyingSetting = stockDataSystem.getBuyingSetting(stockName);
                 List<Deal> stockHistoryRecord = stockDataSystem.getHistoryRecord(stockName);
                 // Deal newestStockHistoryRecord = stockHistoryRecord.get(0);  // 取得 某股票的最新交易紀錄
@@ -74,10 +75,10 @@ public class TradingAgent {
 
                 // get detail
                 double newestDealPrice = 0;
-                if (stockHistoryRecord == null) {  // if it is the first trade
+                if (hasChanged_TF == true || stockHistoryRecord == null) {  // if (it has changed) or (it is the first trade)
                     newestDealPrice = buyingSetting.getBidPrice();  // 將 上次交易價 設為 使用者設定的買入價格
                 }
-                else {
+                else {  // hasChanged_TF == false => 自上次 get 以來，buyingSetting 沒變
                     newestDealPrice = stockHistoryRecord.get(0).getStockPrice();  // 取得 上次交易價 (單張股票)
                 }
                 double nowStockPrice = stock.getStockPrice();  // 取得 現在股價
@@ -176,7 +177,7 @@ public class TradingAgent {
                 while ((inputLine = reader.readLine()) != null) {
                     response.append(inputLine);
                 }
-                // TODO 有問題的話，要把 success_TF = false
+                // 沒用
                 // if (response.toString().equals(FORBIDDEN_CODE)) {
                 //     success_TF = false;
                 // }
