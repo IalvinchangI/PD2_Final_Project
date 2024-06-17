@@ -110,6 +110,7 @@ class HistoryTradePanel extends JPanel {
     
 
     HistoryTradePanel(String stockName, StockDataSystem stockDataSystem) {
+        this.stockDataSystem = stockDataSystem;
         List <Deal> tradeRecord = stockDataSystem.getHistoryRecord(stockName);
         StringBuilder html = new StringBuilder("<html>");
         if (tradeRecord != null) {
