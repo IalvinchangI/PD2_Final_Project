@@ -33,6 +33,7 @@ public class BackgroundExexute extends TimerTask {
             // 執行交易
             System.out.println("trade");
             boolean trade_TF = this.tradingAgent.trade();
+            // boolean trade_TF = true;
 
             // 更新歷史資料 ?
             if (trade_TF == true) {

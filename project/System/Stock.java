@@ -76,7 +76,7 @@ public class Stock {
      * @param stockCount : 持有股數
      */
     public void setStockCount(int stockCount) {
-        assert stockCount > 0 : "stockCount <= 0";
+        assert stockCount >= 0 : "stockCount < 0";
         this.stockCount = stockCount;
     }
 }

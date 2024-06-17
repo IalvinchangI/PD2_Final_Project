@@ -70,14 +70,8 @@ public class Deal {
      * @return 該次交易的股數
      */
     public int getStockCount() {
-
-        if (stockCount <= 0) {
-            System.out.println("No stock count, may not be set yet");
-            return 0;
-        }
-        else {
-            return stockCount;
-        }
+            
+        return stockCount;
     }
 
     /**
@@ -116,7 +110,6 @@ public class Deal {
      */
     public void setStockCount(int stockCount) {
 
-        assert stockCount > 0 : "stock must > 0";
         this.stockCount = stockCount;
     }
 

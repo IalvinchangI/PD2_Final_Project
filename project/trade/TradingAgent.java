@@ -52,6 +52,7 @@ public class TradingAgent {
      * @return 是否有執行交易
      */
     public boolean trade() {
+        System.out.println("TRADING");
         boolean trade_TF = false;  // 是否有執行交易
 
         Set<String> stockNames = this.stockDataSystem.getStockNamesHasBuyingSetting();
@@ -67,6 +68,8 @@ public class TradingAgent {
                 List<Deal> stockHistoryRecord = stockDataSystem.getHistoryRecord(stockName);
                 // Deal newestStockHistoryRecord = stockHistoryRecord.get(0);  // 取得 某股票的最新交易紀錄
                 Stock stock = stockDataSystem.getStock(stockName);  // 現在股票資料
+                System.out.println(stockName);
+                System.out.println(stock);
 
 
                 // get detail
@@ -96,6 +99,7 @@ public class TradingAgent {
 
                 // sell
                 if (stock.getStockCount() > 0) {  // 判斷是否賣空
+                    System.out.println("sell : " + stock.getStockCount());
                     if ((priceDelta / buyingSetting.getOfferStep()) >= 1.) {  // 價格差(正的) 比 設定的賣出間隔 大
                         if (this.sellingRequest(stockName, buyingSetting.getStockCount()) == true) {  // 賣出
                             System.out.println("TradingAgent\ttrade\tsell -> 現在股價 : " + nowStockPrice + "\t上次交易價 : " + newestDealPrice + "\t時間 : " + LocalDateTime.now().toString());
