@@ -19,7 +19,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import project.GUI.GUITools.ChangeablePanel;
-import project.GUI.GUITools.StockDetail;
 import project.System.MarketInfo;
 import project.System.Stock;
 import project.System.StockDataSystem;

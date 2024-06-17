@@ -1,4 +1,4 @@
-package project.GUI.GUITools;
+package project.GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,12 +19,12 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 
-import project.GUI.CandleStick;
-
 import java.util.*;
 import javax.print.attribute.standard.JobImpressions;
 import javax.swing.JButton;
 import project.System.StockDataSystem;
+import project.GUI.GUITools.InputField;
+import project.GUI.GUITools.RoundButton;
 import project.System.MarketInfo;
 import project.System.Stock;
 /**
