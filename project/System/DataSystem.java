@@ -126,6 +126,18 @@ public class DataSystem implements StockDataSystem {
         }
     }
 
+    public boolean checkBuyingSettingIsSet(String stockName) {
+        
+        if (buyingSettings.containsKey(stockName)) {
+
+            return buyingSettings.get(stockName).getIsSet();
+        }
+        else {
+            System.out.println(stockName + "has no buyingSetting");
+            return false;
+        }
+    }
+
     /**
      * 取得特定股票的買賣設定
      * @param stockName : 股票名稱
@@ -144,6 +156,7 @@ public class DataSystem implements StockDataSystem {
             }
         }
         else {
+            System.out.println(buyingSettings.size());
             System.out.println("buyingSettings has no content");
             return null;
         }
@@ -161,7 +174,7 @@ public class DataSystem implements StockDataSystem {
     ) {
 
         StockBuyingSetting buyingSetting = new StockBuyingSetting(
-            stockName, bidPrice, offerStep, bidStep, stockCount
+            stockName, bidPrice, offerStep, bidStep, stockCount, true
         );
 
         if (buyingSettings.size() > 0) {
@@ -178,6 +191,8 @@ public class DataSystem implements StockDataSystem {
         else {
             buyingSettings.put(stockName, buyingSetting);
         }
+        System.out.println("buyingSettings' size: " + buyingSettings.size());
+        System.out.println("bidPrice: " + buyingSettings.get(stockName).getBidPrice());
     }
 
     /**

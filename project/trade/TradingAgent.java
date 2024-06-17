@@ -119,7 +119,7 @@ public class TradingAgent {
     }
 
     /** 買賣的 request 的內容 */
-    private static final String TRADING_CONTENT = "{\"1symbol\":\"%s\",\"qty\":%d,\"side\":\"%s\",\"type\":\"market\",\"time_in_force\":\"gtc\"}";
+    private static final String TRADING_CONTENT = "{\"symbol\":\"%s\",\"qty\":%d,\"side\":\"%s\",\"type\":\"market\",\"time_in_force\":\"gtc\"}";
 
     /** request失敗 的 respond (Buying power or shares is not sufficient.) */
     private static final String FORBIDDEN_CODE = "403";
