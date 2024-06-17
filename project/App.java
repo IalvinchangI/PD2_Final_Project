@@ -32,6 +32,7 @@ public class App {
     private static StockDataSystem stockDataSystem = null;
 
 
+    /** 主螢幕 */
     private static MainWindow window = null;
 
 
@@ -44,29 +45,6 @@ public class App {
         App.stockDataSystem = new DataSystem();  // new StockDataSystem
         WebCrawler.downloadStockDataSystem(App.stockDataSystem);  // load StockDataSystem
         App.window = new MainWindow("股票機器人", 1400, 850, stockDataSystem);
-        
-        
-        // GUI login
-
-
-        // String KEY_ID = "PKG2UYG7EYP063HG5USI";
-        // String SECRET_KEY = "dn8AVuR8Ux6VRZhI6IW0fP86HtMjldBhkPLFJPVa";
-        // stockDataSystem.setKeyAndID(SECRET_KEY, KEY_ID);
-
-        // if (WebCrawler.check_Key_ID() == false) {
-        //     System.out.println("KEY_ID or SECRET_KEY 是錯的");
-        //     System.exit(1);
-        // }
-
-
-        // System.out.println("saveBuyingSetting");
-        // String[] symbols    = {"AAPL", "GOOGL", "META", "TSLA", "AMZN", "MSFT"};
-        // double[] buyPrice   = {212.6,  178.,    504.,   178.5,  183.,   442.  };  // 設定的買入價格
-        // double[] bidStep    = {0.2,    0.05,    0.2,    0.1,    0.1,    0.2   };  // 設定的買入間隔
-        // double[] offerStep  = {0.3,    0.1,     0.3,    0.2,    0.1,    0.4   };  // 設定的賣出間隔
-        // for (int i = 0; i < symbols.length; i++) {
-        //     stockDataSystem.saveBuyingSetting(symbols[i], buyPrice[i], offerStep[i], bidStep[i], 1);
-        // }
 
         window.setVisible(true);
     }
