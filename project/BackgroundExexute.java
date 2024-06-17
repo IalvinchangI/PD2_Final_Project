@@ -15,6 +15,8 @@ public class BackgroundExexute extends TimerTask {
     /**
      * 定時執行
      * <p>
+     * 0. 檢查是否開市
+     * <p>
      * 1. 更新股票資料
      * <p>
      * 2. 執行交易 (透過{@code TradingAgent})
@@ -24,19 +26,24 @@ public class BackgroundExexute extends TimerTask {
      * 4. 更新 GUI 畫面
      */
     public void run() {
-        // 更新股票資料
-        WebCrawler.stockPriceProcessing();
+        if (WebCrawler.checkMarketOpen() == true) {
+            // 更新股票資料
+            WebCrawler.stockPriceProcessing();
 
-        // 執行交易
-        System.out.println("trade");
-        boolean trade_TF = this.tradingAgent.trade();
+            // 執行交易
+            System.out.println("trade");
+            boolean trade_TF = this.tradingAgent.trade();
 
-        // 更新歷史資料 ?
-        if (trade_TF == true) {
-            WebCrawler.historyTradingProcessing();
+            // 更新歷史資料 ?
+            if (trade_TF == true) {
+                WebCrawler.historyTradingProcessing();
+            }
+            // else 不更新
+            // TODO update GUI
         }
-        // else 不更新
-        // TODO update GUI
+        else {
+            System.out.println("Not Open");
+        }
     }
 
 

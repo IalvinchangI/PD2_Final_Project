@@ -53,8 +53,8 @@ public class StockBuyingSetting {
     }
 
     /**
-     * 取得下降多少錢時賣出
-     * @return 下降多少錢時賣出
+     * 取得上漲多少錢時賣出
+     * @return 上漲多少錢時賣出
      */
     public double getOfferStep() {
 
@@ -63,8 +63,8 @@ public class StockBuyingSetting {
     }
 
     /**
-     * 取得上漲多少錢時買入
-     * @return 上漲多少錢時買入
+     * 取得下跌多少錢時買入
+     * @return 下跌多少錢時買入
      */
     public double getBidStep() {
 
@@ -103,8 +103,8 @@ public class StockBuyingSetting {
     }
 
     /**
-     * 設定下降多少錢時賣出
-     * @param offerStep : 下降多少錢時賣出
+     * 設定上漲多少錢時賣出
+     * @param offerStep : 上漲多少錢時賣出
      */
     public void setOfferStep(double offerStep) {
 
@@ -113,8 +113,8 @@ public class StockBuyingSetting {
     }
 
     /**
-     * 設定上漲多少錢時買入
-     * @param bidStep : 上漲多少錢時買入
+     * 設定下跌多少錢時買入
+     * @param bidStep : 下跌多少錢時買入
      */
     public void setBidStep(double bidStep) {
 

@@ -1,0 +1,49 @@
+@startuml
+
+|#Orange|User|
+start
+#BurlyWood:輸入alpaca API金鑰、帳號;
+
+|#SandyBrown|System|
+#STRATEGY:儲存API金鑰、帳號;
+
+|#Wheat|Data Manager|
+fork
+    #BUSINESS:爬股票資料;
+    if (有無開市) then (有開市)
+    else (沒開市) 
+        |System|
+        #STRATEGY:回到登入頁面;
+        |Data Manager|
+    endif
+fork again
+    #BUSINESS:爬歷史資料;
+    |#PaleTurquoise|Profit&Loss Calculator|
+    #PowderBlue:算盈虧;
+    |Data Manager|
+end fork
+
+|System|
+#STRATEGY:存資料;
+
+|User|
+#BurlyWood:查看歷史紀錄;
+while ()
+    fork
+        #BurlyWood:查看歷史紀錄;
+    fork again
+        #BurlyWood:看股票曲線圖;
+        |#MediumTurquoise|Plotter|
+        #PaleTurquoise:畫股票曲線圖;
+        |User|
+    fork again
+        #BurlyWood:調整買賣設定;
+        |System|
+        #STRATEGY:儲存買賣設定;
+        |User|
+    end fork
+endwhile
+
+end
+
+@enduml

@@ -22,15 +22,23 @@ public class App {
      */
     public static final long TRANSACTION_INTERVAL = 10 * 1000;
 
+
+    /** 背景執行的時鐘 */
+    private static Timer backgroundTimer = null;
+
+
+    /** 存資料的地方 */
+    private static StockDataSystem stockDataSystem = null;
+
+
     /**
      * 程式進入點
      * @param args
      */
     public static void main(String[] args) {
         // new StockDataSystem, Timer, GUI and load StockDataSystem
-        StockDataSystem stockDataSystem = new DataSystem();  // TODO new StockDataSystem
-        // Timer backgroundTimer = new Timer();  // new Timer; running the program in BackgroundExecute
-        WebCrawler.downloadStockDataSystem(stockDataSystem);  // load StockDataSystem
+        App.stockDataSystem = new DataSystem();  // TODO new StockDataSystem
+        WebCrawler.downloadStockDataSystem(App.stockDataSystem);  // load StockDataSystem
         MainWindow window = new MainWindow("股票機器人", 1400, 850, stockDataSystem);
         
         
@@ -56,11 +64,19 @@ public class App {
         //     stockDataSystem.saveBuyingSetting(symbols[i], buyPrice[i], offerStep[i], bidStep[i], 1);
         // }
 
+        window.setVisible(true);
+    }
 
+
+    /**
+     * 1. 爬一開始的資料
+     * <p>
+     * 2. 存到 stockDataSystem
+     */
+    public static void crawlAndStoreData() {
         // market is open?
         System.out.println("checkMarketOpen");
         boolean marketOpen_TF = WebCrawler.checkMarketOpen();
-
 
         // crawl data
         System.out.println("stockDataProcessing");
@@ -74,12 +90,30 @@ public class App {
         else {
             System.out.println("Not Open");
         }
-        // schedule BackgroundExecute if market open
-        // BackgroundExexute backgroundExexute = null;
-        // if (marketOpen_TF == true) {
-        //     System.out.println("backgroundExexute");
-        //     backgroundExexute = new BackgroundExexute(stockDataSystem);
-        //     backgroundTimer.schedule(backgroundExexute, TRANSACTION_INTERVAL, TRANSACTION_INTERVAL);
-        // }
+    }
+
+
+    /**
+     * 啟動 backgroundTimer，並設定 backgroundExexute
+     */
+    public static void initBackgroundExecute() {
+        App.backgroundTimer = new Timer();  // new Timer; running the program in BackgroundExecute
+        
+        // schedule BackgroundExecute
+        BackgroundExexute backgroundExexute = new BackgroundExexute(App.stockDataSystem);;
+        System.out.println("backgroundExexute");
+        backgroundTimer.schedule(backgroundExexute, TRANSACTION_INTERVAL, TRANSACTION_INTERVAL);
+    }
+
+
+    /**
+     * 把 backgroundExexute 的 Timer 停掉
+     * <p>
+     * 如果還未執行 {@code initBackgroundExecute} 不做任何事
+     */
+    public static void stopBackgroundExecute() {
+        if (App.backgroundTimer != null) {
+            App.backgroundTimer.cancel();
+        }
     }
 }

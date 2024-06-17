@@ -43,8 +43,8 @@ public class Stock {
     }
 
     /**
-     * 
-     * @return
+     * 取得持有的股數
+     * @return 持有的股數
      */
     public int getStockCount() {
         assert stockCount >= 0 : "stockCount < 0";

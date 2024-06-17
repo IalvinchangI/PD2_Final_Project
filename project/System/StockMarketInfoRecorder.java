@@ -86,6 +86,7 @@ public class StockMarketInfoRecorder {
      * @return 紀錄陣列recorder
      */
     public List< MarketInfo > getRecorder() {
+        
         assert recorder != null : "recorder is null, may not be set yet";
 
         return recorder;

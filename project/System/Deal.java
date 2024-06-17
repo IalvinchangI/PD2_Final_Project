@@ -120,6 +120,10 @@ public class Deal {
         this.stockCount = stockCount;
     }
 
+    /**
+     * 取得股價 (abs(profitAndLoss)/stockCount)
+     * @return 股價
+     */
     public double getStockPrice() {
 
         assert stockCount > 0 : "stockCount <= 0";

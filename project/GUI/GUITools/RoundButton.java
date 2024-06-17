@@ -127,7 +127,7 @@ public class RoundButton extends JButton {
         g2d.setColor(getForeground());
         g2d.drawString(getText(), textX, textY);
         
-        // show
+        // delete g2d
         g2d.dispose();
     }
 }

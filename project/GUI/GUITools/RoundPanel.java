@@ -113,7 +113,7 @@ public class RoundPanel extends JPanel {
         // change root size
         // this.setPreferredSize(getSize());
 
-        // show
+        // delete g2d
         g2d.dispose();
     }
 
