@@ -1,4 +1,4 @@
-package project.GUI.GUITools;
+package project.GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,12 +19,12 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 
-import project.GUI.CandleStick;
-
 import java.util.*;
 import javax.print.attribute.standard.JobImpressions;
 import javax.swing.JButton;
 import project.System.StockDataSystem;
+import project.GUI.GUITools.InputField;
+import project.GUI.GUITools.RoundButton;
 import project.System.MarketInfo;
 import project.System.Stock;
 /**
@@ -37,7 +37,6 @@ public class StockDetail extends JPanel {
     private InputField buyPanel = null, sellPanel = null, intervalPanel = null, stockCountPanel = null;
     private RoundButton finishButton = null;
     private JPanel graph;
-
 
 
     /**
@@ -169,8 +168,18 @@ public class StockDetail extends JPanel {
                 stockDataSystem.saveBuyingSetting(stockName, Double.parseDouble(buy), Double.parseDouble(sell), Double.parseDouble(interval), Integer.parseInt(stockCount));
             }
         });
-        
     }
+
+
+    public void updateStockPrice(double stockPrice) {
+        if (stockPrice == 0.0) {
+            this.stockPriceLabel.setText("close");
+        }
+        else {        
+            this.stockPriceLabel.setText(Double.toString(stockPrice));
+        }
+    }
+    
 
     /**
      * 取得finishButton

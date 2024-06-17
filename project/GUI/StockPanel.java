@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -18,7 +19,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import project.GUI.GUITools.ChangeablePanel;
-import project.GUI.GUITools.StockDetail;
 import project.System.MarketInfo;
 import project.System.Stock;
 import project.System.StockDataSystem;
@@ -35,8 +35,13 @@ public class StockPanel extends JPanel {
 
     StockDetail sd;
 
+    private HashMap <String, StockDetail> panelHashMap = new HashMap<>();
+
+    private StockDataSystem stockDataSystem;
+
     public StockPanel(StockDataSystem stockDataSystem) {
         
+        this.stockDataSystem = stockDataSystem;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.stockList = new JList<>(this.stockNameList);
         this.stockList.setPreferredSize(new Dimension(100, 500));
@@ -81,6 +86,8 @@ public class StockPanel extends JPanel {
 
                         // show
                         stockPanel.changePage.showPage(selectedItem);
+
+                        stockPanel.panelHashMap.put(selectedItem, sd);
                     }
                 }
                 
@@ -89,6 +96,17 @@ public class StockPanel extends JPanel {
 
         
         
+    }
+
+    public void updateStockPanel() {
+        for (String str : this.panelHashMap.keySet()) {
+            Stock selectedStock = this.stockDataSystem.getStock(str);
+            Double stockPrice = 0.0;
+            if (selectedStock != null) {
+                stockPrice = selectedStock.getStockPrice();
+            }
+            this.panelHashMap.get(str).updateStockPrice(stockPrice);
+        }
     }
 
     /**

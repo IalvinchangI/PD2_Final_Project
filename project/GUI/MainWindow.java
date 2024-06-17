@@ -127,6 +127,15 @@ public class MainWindow extends JFrame {
 
 
     /**
+     * 更新 MainWindow 的資料
+     */
+    public void updateMainWindow() {
+        if (this.mainPanel != null) {
+            this.mainPanel.updateMainPanel();
+        }
+    }
+
+    /**
      * 背景執行，不干擾 GUI 顯示
      * <p>
      * 先檢查使用者輸入的 Key ID 是否正確

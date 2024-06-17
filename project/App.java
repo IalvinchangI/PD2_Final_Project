@@ -31,6 +31,9 @@ public class App {
     private static StockDataSystem stockDataSystem = null;
 
 
+    private static MainWindow window = null;
+
+
     /**
      * 程式進入點
      * @param args
@@ -39,7 +42,7 @@ public class App {
         // new StockDataSystem, Timer, GUI and load StockDataSystem
         App.stockDataSystem = new DataSystem();  // TODO new StockDataSystem
         WebCrawler.downloadStockDataSystem(App.stockDataSystem);  // load StockDataSystem
-        MainWindow window = new MainWindow("股票機器人", 1400, 850, stockDataSystem);
+        App.window = new MainWindow("股票機器人", 1400, 850, stockDataSystem);
         
         
         // GUI login
@@ -100,7 +103,7 @@ public class App {
         App.backgroundTimer = new Timer();  // new Timer; running the program in BackgroundExecute
         
         // schedule BackgroundExecute
-        BackgroundExexute backgroundExexute = new BackgroundExexute(App.stockDataSystem);;
+        BackgroundExexute backgroundExexute = new BackgroundExexute(App.stockDataSystem, App.window);
         System.out.println("backgroundExexute");
         backgroundTimer.schedule(backgroundExexute, TRANSACTION_INTERVAL, TRANSACTION_INTERVAL);
     }
