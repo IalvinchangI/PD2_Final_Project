@@ -72,10 +72,10 @@ public class StockDetail extends JPanel {
 
 
         //inputField    
-        this.buyPanel = new InputField("B U Y : ");
-        this.sellPanel = new InputField("S E L L : ");
-        this.intervalPanel = new InputField("I N T E R V A L : ");
-        this.stockCountPanel = new InputField("S T O C K   C O N U T : ");
+        this.buyPanel = new InputField("BIDPRICE : ");
+        this.sellPanel = new InputField("OFFERSTEP : ");
+        this.intervalPanel = new InputField("BIDSTEP : ");
+        this.stockCountPanel = new InputField("STOCK CONUT : ");
 
         this.buyPanel.setComponentSize(150, 5, 20);
         this.sellPanel.setComponentSize(150, 5, 20);

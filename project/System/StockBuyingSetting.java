@@ -19,11 +19,13 @@ public class StockBuyingSetting {
      * @param bidPrice : 目標買價
      * @param offerStep : 上漲多少錢時賣出
      * @param bidStep : 下降多少錢時買入
+     * @param stockCount : 股數
      */
     public StockBuyingSetting(
         String stockName, double bidPrice, double offerStep, double bidStep, int stockCount
     ) {
 
+        System.out.println("Buying setting of " + stockName + " has been set");
         setStockName(stockName);
         setBidPrice(bidPrice);
         setOfferStep(offerStep);
