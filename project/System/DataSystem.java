@@ -229,6 +229,15 @@ public class DataSystem implements StockDataSystem {
     }
 
     /**
+     * 取得總盈虧
+     * @return 總盈虧
+     */
+    public double getTotalProfitAndLoss() {
+
+        return historyRecord.getTotalProfitAndLoss();
+    }
+
+    /**
      * 將一筆交易紀錄到History Record中
      * @param stockName :股票名稱
      * @param stockCount : 交易股數

@@ -27,7 +27,7 @@ public class App {
     public static void main(String[] args) {
         // new StockDataSystem, Timer, GUI and load StockDataSystem
         StockDataSystem stockDataSystem = new DataSystem();  // TODO new StockDataSystem
-        Timer backgroundTimer = new Timer();  // new Timer; running the program in BackgroundExecute
+        //Timer backgroundTimer = new Timer();  // new Timer; running the program in BackgroundExecute
         // TODO new GUI
         
         // GUI login
@@ -70,11 +70,12 @@ public class App {
             System.out.println("Not Open");
         }
         // schedule BackgroundExecute if market open
-        BackgroundExexute backgroundExexute = null;
-        if (marketOpen_TF == true) {
-            System.out.println("backgroundExexute");
-            backgroundExexute = new BackgroundExexute(stockDataSystem);
-            backgroundTimer.schedule(backgroundExexute, TRANSACTION_INTERVAL, TRANSACTION_INTERVAL);
-        }
+        // BackgroundExexute backgroundExexute = null;
+        // if (marketOpen_TF == true) {
+        //     System.out.println("backgroundExexute");
+        //     backgroundExexute = new BackgroundExexute(stockDataSystem);
+        //     backgroundTimer.schedule(backgroundExexute, TRANSACTION_INTERVAL, TRANSACTION_INTERVAL);
+        // }
+
     }
 }

@@ -10,11 +10,11 @@ public class HistoryRecord {
     public static final double DOUBLE_MIN_VALUE = Double.MIN_VALUE;
 
     private HashMap< String, ArrayList<Deal> > records = null;
-    private double profitAndLoss = -DOUBLE_MAX_VALUE;
+    private double totalProfitAndLoss = -DOUBLE_MAX_VALUE;
 
     public HistoryRecord() {
         records = new HashMap<>();
-        profitAndLoss = 0;
+        totalProfitAndLoss = 0;
     }
 
     /**
@@ -34,7 +34,7 @@ public class HistoryRecord {
             stockDeals.add(deal);
             records.put(stockName, stockDeals);
         }
-        profitAndLoss += deal.getProfitAndLoss();
+        totalProfitAndLoss += deal.getProfitAndLoss();
         
     }
 
@@ -49,6 +49,7 @@ public class HistoryRecord {
             return records.get(stockName);
         }
         else {
+            System.out.println(stockName + " has no history record");
             return null;
         }
     }
@@ -72,9 +73,9 @@ public class HistoryRecord {
      * 取得(所有歷史交易)累積的盈虧
      * @return 所有歷史交易累積的盈虧
      */
-    public double getProfitAndLoss() {
+    public double getTotalProfitAndLoss() {
 
-        assert profitAndLoss >= -DOUBLE_MAX_VALUE : "profitAndLoss = -DOUBLE_MAX_VALUE, may not be initialized";
-        return profitAndLoss;
+        assert totalProfitAndLoss >= -DOUBLE_MAX_VALUE : "profitAndLoss = -DOUBLE_MAX_VALUE, may not be initialized";
+        return totalProfitAndLoss;
     }
 }

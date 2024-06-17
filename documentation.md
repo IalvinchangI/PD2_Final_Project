@@ -65,6 +65,11 @@
 > public List<Deal> getHistoryRecord(String stockName);
 > ```
 
+> * 取得總盈虧
+> ```java
+> public double getTotalProfitAndLoss();
+> ```
+
 > * 將一筆交易記錄到History Record中
 > ```java
 > public void addDeal2HistoryRecord(String stockName, int stockCount, double profitAndLoss, int year, int month, int date);
