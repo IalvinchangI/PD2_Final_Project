@@ -46,6 +46,7 @@ public class StockPanel extends JPanel {
 
 
         JLabel tmpLabel = new JLabel("click the side bar");
+        tmpLabel.setFont(new Font("Serif", Font.PLAIN, 50));
         this.changePage.add(tmpLabel, "tmp");
         this.changePage.showPage("tmp");
         StockPanel stockPanel = this;

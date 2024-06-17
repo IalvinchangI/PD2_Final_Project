@@ -1,10 +1,13 @@
 package project.GUI.GUITools;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,6 +62,9 @@ public class StockDetail extends JPanel {
         this.stockNameLabel = new JLabel(stockName);
         this.stockPriceLabel = new JLabel(Double.toString(stockPrice));
 
+        this.stockNameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+        this.stockPriceLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+
         
         
         // graph
@@ -76,7 +82,12 @@ public class StockDetail extends JPanel {
         this.intervalPanel.setComponentSize(150, 5, 20);
         this.stockCountPanel.setComponentSize(150, 5, 20);
         
-        this.finishButton = new JButton("finish setting");
+        this.finishButton = new RoundButton(
+            "finish", new Color(240, 240, 240),
+            new Color(248, 222, 179), new Color(130, 130, 130), 
+            new Color(250, 205, 131), new Color(100, 100, 100)
+        );
+        // this.finishButton.setArc(5, 5);
 
 
         // this.add(this.stock);
@@ -97,7 +108,7 @@ public class StockDetail extends JPanel {
         
         constraints.gridx = 2;
         constraints.gridy = 0;
-        constraints.gridwidth = 0;
+        constraints.gridwidth = 1;
         constraints.gridheight = 1;
         this.add(this.stockPriceLabel, constraints);
 
@@ -106,12 +117,32 @@ public class StockDetail extends JPanel {
         constraints.gridy = 1;
         constraints.gridwidth = 2;
         constraints.gridheight = 2;
-        this.add(this.graph);
-        // this.add(this.buyPanel);
-        // this.add(this.sellPanel);
-        // this.add(this.intervalPanel);
-        // this.add(this.stockCountPanel);
-        // this.add(this.finishButton);
+        this.add(this.graph, constraints);
+
+        constraints.gridx = 2;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.gridheight = 1;
+        this.add(this.buyPanel, constraints);
+
+        constraints.gridy = 2;
+        constraints.insets = new Insets(0,0,0,0);
+        this.add(this.sellPanel, constraints);
+
+        constraints.gridy = 3;
+        constraints.insets = new Insets(0,0,0,0);
+
+        this.add(this.intervalPanel, constraints);
+
+        constraints.gridy = 4;
+        this.add(this.stockCountPanel, constraints);
+
+        constraints.gridy = 5;
+        this.add(this.finishButton, constraints);
+
+
+
+        
         this.setPreferredSize(new Dimension(1000, 800));
 
         this.finishButton.addActionListener(new ActionListener() {
