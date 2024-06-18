@@ -5,11 +5,6 @@
 
 <br>
 
-## 待議：
-1. 股價更新速度 (由計時器決定) (看API?) 
-
-<br>
-
 ## 股票模擬網站
 * https://alpaca.markets/
 * Paper Trading Simulation API: https://docs.alpaca.markets/docs/trading-api
@@ -31,19 +26,17 @@
 ### 2. 交易 `Trade`
 > * 用 alpaca API 來買入賣出
 > * 根據股價更新速度來決定要不要買賣
+> * 股票更新速率 4 分鐘
 
 ### 3. 買賣設定
 > 1. 設定多少錢買 
-> 2. 設定多少錢賣 
-> 3. 設定隔多少錢要買賣 
+> 2. 設定隔多少錢要賣 
+> 3. 設定隔多少錢要買 
 > 4. 分別設定每個股票的買賣價格 
-<!-- > 5. User預算  -->
 
 ### 4. 買賣建議
 > 1. K線 
 > 2. 股票曲線圖 
-> 3. 適合購買哪些股票 
-> 4. 預測股票 `Bonus` 
 
 ### 5. 登入
 > 1. 使用者 (user) 
@@ -69,18 +62,17 @@
 > 3. 登入頁面 
 > 
 > ### 草稿： 
-> !["GUIdraft"](./design_diagram/GUIdraft.jpeg)
+> !["GUIdraft"](./design_diagram/GUIdraft.jpg)
 
 <br>
 
 ## 架構：
 ### Use Case
-> !["UseCase1"](./design_diagram/UseCase1.png) 
-> !["UseCase2"](./design_diagram/UseCase2.png) 
+> !["UseCase"](./design_diagram/UseCaseDiagram.png) 
 
 ### Activity Diagram
-> !["ActivityDiagram1"](./design_diagram/ActivityDiagram1.jpeg) 
-> !["ActivityDiagram2"](./design_diagram/ActivityDiagram2.jpeg) 
+> !["ActivityDiagram1"](./design_diagram/ActivityDiagram1.png) 
+> !["ActivityDiagram2"](./design_diagram/ActivityDiagram2.png) 
 
 ### system、GUI 的功能
 > !["架構圖"](./design_diagram/期末專題架構.png) 
