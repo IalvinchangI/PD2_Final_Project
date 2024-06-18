@@ -15,7 +15,7 @@ public class WrongInfo extends  JDialog {
     private JLabel wrong = null;
 
     public WrongInfo(Frame father) {
-        super(father, "Error!!!", false);
+        super(father, "Error!!!", true);
         this.wrong = new JLabel();
         this.setLocationRelativeTo(father);
         this.setPreferredSize(new Dimension(350, 250));
