@@ -22,6 +22,7 @@ import project.GUI.GUITools.ChangeablePanel;
 import project.System.MarketInfo;
 import project.System.Stock;
 import project.System.StockDataSystem;
+import project.AlpacaAPICall.WebCrawler;
 
 /**
  * 股票列、股票細節
@@ -76,8 +77,9 @@ public class StockPanel extends JPanel {
                         // 未成功切換 => 代表沒有頁面
                         Stock selectedStock = stockDataSystem.getStock(selectedItem);
                         Double stockPrice = 0.0;
-                        if (selectedStock != null) {
+                        if (WebCrawler.checkMarketOpen()) {
                             stockPrice = selectedStock.getStockPrice();
+                            System.out.println("price: "+stockPrice);
                         }
                         List<MarketInfo> record = stockDataSystem.getRecorder(selectedItem, "DAY");
                         sd = new StockDetail(selectedItem, stockPrice, record, stockDataSystem);
@@ -102,7 +104,7 @@ public class StockPanel extends JPanel {
         for (String str : this.panelHashMap.keySet()) {
             Stock selectedStock = this.stockDataSystem.getStock(str);
             Double stockPrice = 0.0;
-            if (selectedStock != null) {
+            if (WebCrawler.checkMarketOpen()) {
                 stockPrice = selectedStock.getStockPrice();
             }
             this.panelHashMap.get(str).updateStockPrice(stockPrice);

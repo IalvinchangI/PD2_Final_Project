@@ -5,7 +5,7 @@
 > 存取股票資訊
 
 ### 方法：
-> * 設定存取資料的地方以及下載 API_KEY_IDㄝ, API_SECRET_KEY
+> * 設定存取資料的地方以及下載 API_KEY_ID, API_SECRET_KEY
 > ```java
 > public static void downloadStockDataSystem(StockDataSystem stockDataSystem)
 > ```

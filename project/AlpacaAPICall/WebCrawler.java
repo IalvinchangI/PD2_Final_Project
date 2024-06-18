@@ -181,9 +181,9 @@ public class WebCrawler {
         // System.out.println(stockName + " Price = " + stockPrice);
 
         stockDataSystem.addStock2StocksMap(stockName, stockPrice);
-        // System.out.println("********************************************************");
-        // System.out.println("Stock Name = " + stockName + " Stock Price = " + stockPrice);
-        // System.out.println("********************************************************");
+        System.out.println("********************************************************");
+        System.out.println("Stock Name = " + stockName + " Stock Price = " + stockPrice);
+        System.out.println("********************************************************");
     }
 
     /**

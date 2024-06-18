@@ -90,7 +90,6 @@ public class DataSystem implements StockDataSystem {
      * @param stockPrice : 股價
      */
     public void addStock2StocksMap(String stockName, double stockPrice) {
-
         if (stocksMap.size() > 0) {
 
             if (stocksMap.containsKey(stockName)) {
@@ -106,9 +105,9 @@ public class DataSystem implements StockDataSystem {
             Stock stock = new Stock(stockName, stockPrice, 0);
             stocksMap.put(stockName, stock);
         }
-        // System.out.println(stockName + "'s price has been uploaded");
-        // System.out.println(stocksMap.get(stockName).getStockPrice());
-        // System.out.println("stockCount: " + stocksMap.get(stockName).getStockCount() + "\n");
+        System.out.println(stockName + "'s price has been uploaded");
+        System.out.println(stocksMap.get(stockName).getStockPrice());
+        System.out.println("stockCount: " + stocksMap.get(stockName).getStockCount() + "\n");
     }
 
     /**
