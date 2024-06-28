@@ -1,0 +1,3 @@
+Main-Class: project.App
+Class-Path: . ../lib/jcommon.jar ../lib/jfreechart.jar
+
