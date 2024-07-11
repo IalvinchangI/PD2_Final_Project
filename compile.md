@@ -3,7 +3,7 @@
 * 執行目錄 : `PD2_Final_Project`
 * 指令 : (windows)
 ```shell
-javac .\project\*.java .\project\AlpacaAPICall\*.java .\project\GUI\*.java .\project\GUI\GUITools\*.java .\project\System\*.java .\project\trade\*.java -cp ".;{lib的絕對路徑}/lib/jfreechart.jar;{lib的絕對路徑}/lib/jcommon.jar" -d .\out
+javac .\project\*.java .\project\AlpacaAPICall\*.java .\project\GUI\*.java .\project\GUI\GUITools\*.java .\project\System\*.java .\project\trade\*.java -cp "./project;./lib/jfreechart.jar;./lib/jcommon.jar" -d .\out
 ```
 * 註 : `lib`要放在`PD2_Final_Project`下
 
